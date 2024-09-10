@@ -7,7 +7,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.HideSource
 import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.PanoramaFishEye
+import androidx.compose.material.icons.filled.RemoveRedEye
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -31,6 +36,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 fun TextFieldWithIcons(
     label: String,
     placeholder: String,
+    maxLength : Int,
     keyboardType: KeyboardType,
     leadingIcon: ImageVector,
     onValueChanged : (String) -> Unit
@@ -59,10 +65,13 @@ fun TextFieldWithIcons(
         keyboardActions = KeyboardActions(
             onNext = { focusManager.moveFocus(FocusDirection.Down) }
         ),
-        onValueChange = {
-            text = it
-            onValueChanged.invoke(text.text)
+        onValueChange = { it ->
+            if (it.text.length <= maxLength) {
+                text = it
+                onValueChanged.invoke(text.text)
+            }
         },
+        maxLines = 1,
         label = { Text(text = label) },
         placeholder = { Text(text = placeholder) },
         singleLine = true,
@@ -90,14 +99,14 @@ fun PasswordTextFieldWithIcons(
             if (text.text.isNotEmpty()) {
                 if (passwordVisible) {
                     Icon(
-                        imageVector = Icons.Default.Check,
+                        imageVector = Icons.Default.Visibility,
                         contentDescription = null,
                         modifier = Modifier.clickable { passwordVisible = !passwordVisible },
                         tint = MaterialTheme.colorScheme.primary
                     )
                 } else {
                     Icon(
-                        imageVector = Icons.Default.Clear,
+                        imageVector = Icons.Filled.VisibilityOff,
                         contentDescription = null,
                         modifier = Modifier.clickable { passwordVisible = !passwordVisible },
                         tint = MaterialTheme.colorScheme.primary

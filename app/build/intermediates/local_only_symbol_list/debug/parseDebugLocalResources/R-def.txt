@@ -10,6 +10,7 @@ color teal_700
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable png_logo
 font falling_sky_black
 font falling_sky_bold
 font falling_sky_extra_bold
@@ -19,6 +20,7 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name
 string login_to_continue
+string signup_to_continue
 style Theme.Aggrabandhu
 xml backup_rules
 xml data_extraction_rules

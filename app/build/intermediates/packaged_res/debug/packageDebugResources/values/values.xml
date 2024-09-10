@@ -10,5 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Aggrabandhu</string>
     <string name="login_to_continue">Login to continue</string>
+    <string name="signup_to_continue">Fill in your details to begin</string>
     <style name="Theme.Aggrabandhu" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

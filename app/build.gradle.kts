@@ -67,4 +67,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Show Custom Toast
+    implementation ("com.github.GrenderG:Toasty:1.5.2")
+    // Custom icons
+    implementation (libs.androidx.material.icons.extended)
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.coroutines.core)
+
 }
