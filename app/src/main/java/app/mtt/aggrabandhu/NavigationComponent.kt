@@ -6,6 +6,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.mtt.aggrabandhu.authentication.LoginScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
+import app.mtt.aggrabandhu.dashboard.DashboardScreen
+import app.mtt.aggrabandhu.dashboard.MainScreen
+
+/*sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
+    object Home : BottomNavItem("home", Icons.Default.Home, "Home")
+    object Search : BottomNavItem("search", Icons.Default.Search, "Search")
+    object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
+}*/
 
 @Composable
 fun NavigationComponent() {
@@ -17,6 +25,9 @@ fun NavigationComponent() {
         }
         composable("signup_screen") {
             SignupScreen(navController = navController)
+        }
+        composable("dashboard_screen") {
+            MainScreen(navController = navController)
         }
     }
 
