@@ -7,7 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 fun TextFieldWithIcons(
     label: String,
     placeholder: String,
+    keyboardType: KeyboardType,
     leadingIcon: ImageVector,
     onValueChanged : (String) -> Unit
 ) {
@@ -50,7 +52,10 @@ fun TextFieldWithIcons(
                 )
             }
         },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = keyboardType,
+            imeAction = ImeAction.Next
+        ),
         keyboardActions = KeyboardActions(
             onNext = { focusManager.moveFocus(FocusDirection.Down) }
         ),
@@ -65,18 +70,18 @@ fun TextFieldWithIcons(
     )
 }
 
-
 @Composable
 fun PasswordTextFieldWithIcons(
+    label: String,
+    placeholder: String,
     onValueChanged : (String) -> Unit
 ) {
     var text by remember { mutableStateOf(TextFieldValue("")) }
     var passwordVisible by remember { mutableStateOf(false) }
 
-
     return OutlinedTextField(
         value = text,
-        leadingIcon = { Icon( Icons.Default.Person, contentDescription = "userIcon",
+        leadingIcon = { Icon( Icons.Default.Lock, contentDescription = "userIcon",
             tint = MaterialTheme.colorScheme.surfaceTint) },
 
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
@@ -104,8 +109,9 @@ fun PasswordTextFieldWithIcons(
             text = it
             onValueChanged.invoke(text.text)
         },
-        label = { Text(text = "Password") },
-        placeholder = { Text(text = "Enter Password") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        label = { Text(text = label) },
+        placeholder = { Text(text = placeholder) },
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
     )
