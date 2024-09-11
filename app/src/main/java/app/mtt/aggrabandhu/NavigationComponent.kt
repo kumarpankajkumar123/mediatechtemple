@@ -6,8 +6,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.mtt.aggrabandhu.authentication.LoginScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
-import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.MainScreen
+import app.mtt.aggrabandhu.dashboard.SideNavigation1
 
 /*sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
     object Home : BottomNavItem("home", Icons.Default.Home, "Home")
