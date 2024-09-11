@@ -1,6 +1,5 @@
 package app.mtt.aggrabandhu.dashboard
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -15,10 +14,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PeopleAlt
+import androidx.compose.material.icons.filled.Policy
+import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.Rule
+import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -50,6 +54,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.dashboard.pages.DonationsPage
@@ -75,10 +80,11 @@ fun MainScreen(navController : NavController) {
         drawerState = drawerState,
         drawerContent = {
             DrawerContent(
-                onItemClick = {
+                onItemClick = { route ->
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
                     // You can navigate here if needed
+                    navController.navigate(route)
                 }
             )
         }
@@ -145,11 +151,11 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
 }
 
 @Composable
-fun DrawerContent(onItemClick: () -> Unit) {
+fun DrawerContent(onItemClick: (String) -> Unit) {
     Column(
         modifier = Modifier
             .background(Color.White)
-            .fillMaxWidth(0.7f)
+            .fillMaxWidth(0.75f)
             .fillMaxHeight()
     ) {
         Spacer(modifier = Modifier.height(30.dp))
@@ -157,7 +163,6 @@ fun DrawerContent(onItemClick: () -> Unit) {
         Text(
             text = stringResource(id = R.string.app_name),
             modifier = Modifier
-                .clickable { onItemClick() }
                 .padding(start = 16.dp),
             color = Color.Black,
             style = MaterialTheme.typography.titleLarge
@@ -168,38 +173,69 @@ fun DrawerContent(onItemClick: () -> Unit) {
             thickness = DividerDefaults.Thickness,
             color = DividerDefaults.color
         )
-        Spacer(modifier = Modifier.height(10.dp))
+        //Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
-        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet)
-        SideNavItem(text = "Donors List", imageVector = Icons.Default.ListAlt)
-        SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt)
-        SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule)
+        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
+        SideNavItem(text = "Donors List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
+        SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("people_donations_page")}
+        SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}
+        SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
+        SubNavItem(text = "Facebook") {}
+        SubNavItem(text = "Instagram") {}
+        SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
+        SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
+        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
     }
 }
 
 @Composable
-fun SideNavItem(text: String, imageVector: ImageVector) {
+fun SideNavItem(text: String, imageVector: ImageVector, clickable : ()-> Unit) {
     Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(30.dp)
+                .height(45.dp)
                 .background(Color.White)
-                .padding(start = 10.dp),
+                .padding(start = 10.dp)
+                .clickable { clickable.invoke() },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
                 imageVector = imageVector,
                 contentDescription = "Nothing",
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(28.dp)
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = text,
-                modifier = Modifier
-                    .clickable { },
                 style = MaterialTheme.typography.titleSmall,
-                color = Color.Black
+                color = Color.Black,
+                fontSize = 18.sp
+            )
+        }
+        HorizontalDivider()
+    }
+}
+
+@Composable
+fun SubNavItem(text: String, clickable : ()-> Unit) {
+    Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp)
+                .background(Color.White)
+                .padding(start = 10.dp)
+                .clickable { clickable.invoke() },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.width(55.dp))
+//            Icon(imageVector = Icons.Default.List, contentDescription = )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.titleSmall,
+                color = Color.Black,
+                fontSize = 18.sp
             )
         }
         HorizontalDivider()
@@ -209,5 +245,5 @@ fun SideNavItem(text: String, imageVector: ImageVector) {
 @Preview
 @Composable
 private fun Preview() {
-    SideNavItem(text = "Hello", imageVector = Icons.Default.Visibility)
+    // SideNavItem(text = "Hello", imageVector = Icons.Default.Visibility)
 }

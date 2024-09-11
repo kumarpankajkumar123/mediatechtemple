@@ -17,7 +17,7 @@ import app.mtt.aggrabandhu.ui.theme.AggrabandhuTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // enableEdgeToEdge()
         setContent {
             NavigationComponent()
         }

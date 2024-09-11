@@ -11,6 +11,7 @@ color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable png_logo
+drawable textured_bg
 font falling_sky_black
 font falling_sky_bold
 font falling_sky_extra_bold

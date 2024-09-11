@@ -676,9 +676,10 @@ int drawable notification_template_icon_low_bg 0x7f07006e
 int drawable notification_tile_bg 0x7f07006f
 int drawable notify_panel_notification_icon_bg 0x7f070070
 int drawable png_logo 0x7f070071
-int drawable toast_frame 0x7f070072
-int drawable tooltip_frame_dark 0x7f070073
-int drawable tooltip_frame_light 0x7f070074
+int drawable textured_bg 0x7f070072
+int drawable toast_frame 0x7f070073
+int drawable tooltip_frame_dark 0x7f070074
+int drawable tooltip_frame_light 0x7f070075
 int font falling_sky_black 0x7f080000
 int font falling_sky_bold 0x7f080001
 int font falling_sky_extra_bold 0x7f080002
