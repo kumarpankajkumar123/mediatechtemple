@@ -2,6 +2,8 @@ package app.mtt.aggrabandhu.dashboard
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,7 +17,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Facebook
 import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PeopleAlt
@@ -23,7 +24,6 @@ import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
-import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.DividerDefaults
@@ -39,6 +39,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,6 +54,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -66,7 +70,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(navController : NavController) {
+fun DashboardScreen(navController : NavController ?= null) {
 
     // Create a state for managing the drawer's open/close state
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -84,7 +88,7 @@ fun MainScreen(navController : NavController) {
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
                     // You can navigate here if needed
-                    navController.navigate(route)
+                    navController?.navigate(route)
                 }
             )
         }
@@ -92,19 +96,40 @@ fun MainScreen(navController : NavController) {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             topBar = {
-                TopAppBar(
-                    title = { Text("Dashboard") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch { drawerState.open() }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = "Open Drawer"
-                            )
-                        }
-                    }
-                )
+                Row {
+                    TopAppBar(
+                        title = {
+                            // Username and Circular Image on the right
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = "Suresh",
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier.padding(end = 2.dp)
+                                )
+                                CircularImage(
+                                    size = 70.dp,
+                                    painter = painterResource(id = R.drawable.png_logo)
+                                )
+                            }
+                        },
+                        navigationIcon = {
+                            IconButton(onClick = {
+                                scope.launch { drawerState.open() }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Filled.Menu,
+                                    contentDescription = "Open Drawer"
+                                )
+                            }
+                        },
+                        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+                    )
+                }
             },
             bottomBar = {
                 NavigationBar {
@@ -245,5 +270,6 @@ fun SubNavItem(text: String, clickable : ()-> Unit) {
 @Preview
 @Composable
 private fun Preview() {
+    DashboardScreen(navController = null)
     // SideNavItem(text = "Hello", imageVector = Icons.Default.Visibility)
 }
