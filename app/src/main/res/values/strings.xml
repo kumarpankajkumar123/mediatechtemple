@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Aggrabandhu</string>
     <string name="login_to_continue">Login to continue</string>
-    <string name="signup_to_continue">Fill in your details to begin</string>
+    <string name="signup_to_continue">Please fill in your details to begin</string>
 </resources>

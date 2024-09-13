@@ -112,7 +112,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                     modifier = Modifier.padding(end = 2.dp)
                                 )
                                 CircularImage(
-                                    size = 70.dp,
+                                    size = 50.dp,
                                     painter = painterResource(id = R.drawable.png_logo)
                                 )
                             }

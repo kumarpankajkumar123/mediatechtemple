@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Call
@@ -48,6 +50,7 @@ fun SignupScreen(navController: NavController) {
     var phone: String? = ""
     var password: String? = ""
     var confirmPassword: String? = ""
+
     Box(
         modifier = Modifier
             .background(Color.White)
@@ -63,11 +66,12 @@ fun SignupScreen(navController: NavController) {
         )
 
         Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+                .padding(10.dp),
+//            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -164,13 +168,13 @@ fun SignupScreen(navController: NavController) {
                 }
             }
 
-            Box(modifier = Modifier.fillMaxSize(0.9f), contentAlignment = Alignment.BottomCenter) {
-                CustomButton(
-                    text = "Already have an account? Login now",
-                    colorResource(id = R.color.sky_blue)
-                ) {
-                    navController.popBackStack()
-                }
+            Spacer(modifier = Modifier.height(15.dp))
+
+            CustomButton(
+                text = "Already have an account? Login now",
+                colorResource(id = R.color.sky_blue)
+            ) {
+                navController.popBackStack()
             }
 
         }
