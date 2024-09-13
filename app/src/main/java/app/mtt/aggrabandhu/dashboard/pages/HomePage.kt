@@ -107,7 +107,6 @@ fun HomeCard () {
             )
         }
     }
-
 }
 
 @Preview

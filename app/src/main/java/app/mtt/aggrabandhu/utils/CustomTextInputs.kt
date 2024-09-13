@@ -79,6 +79,7 @@ fun TextFieldWithIcons(
     )
 }
 
+/* --------------------------- Password Field -------------------------- */
 @Composable
 fun PasswordTextFieldWithIcons(
     label: String,

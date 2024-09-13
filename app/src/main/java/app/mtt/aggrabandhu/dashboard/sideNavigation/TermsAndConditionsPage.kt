@@ -56,7 +56,7 @@ fun TermsAndConditionsPage(navController: NavController ?= null) {
             text = "Terms and Conditions Page",
             fontSize = 40.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.White
+            color = Color.Black
         )
     }
 }

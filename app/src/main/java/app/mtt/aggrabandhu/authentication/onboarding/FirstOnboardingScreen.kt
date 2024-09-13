@@ -71,7 +71,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(10.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
 
@@ -80,7 +80,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             // below is the composable for image.
             CircularImage(size = 250.dp, painter = painterResource(id = R.drawable.png_logo))
 
-            Spacer(modifier = Modifier.height(500.dp))
+            Spacer(modifier = Modifier.height(400.dp))
 
             // Heading Login
             Text(
@@ -133,7 +133,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
     FirstOnboardingScreen(navController = null)

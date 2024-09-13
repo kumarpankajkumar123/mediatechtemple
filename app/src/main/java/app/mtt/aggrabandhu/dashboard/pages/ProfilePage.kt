@@ -9,9 +9,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.PhoneAndroid
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -43,14 +47,15 @@ fun ProfilePage() {
     }
     Column(
         modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .background(Color.White)
             .padding(vertical = 55.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularImage(size = 250.dp, painter = painterResource(id = R.drawable.png_logo))
+        CircularImage(size = 220.dp, painter = painterResource(id = R.drawable.png_logo))
         ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
-        ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+        ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = "9199103223")
         ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
         ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
         ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
