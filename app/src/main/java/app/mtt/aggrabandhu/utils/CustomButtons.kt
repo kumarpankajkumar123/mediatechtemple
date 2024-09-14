@@ -1,24 +1,60 @@
 package app.mtt.aggrabandhu.utils
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import app.mtt.aggrabandhu.R
+import coil.compose.rememberAsyncImagePainter
 
 
 @Composable
@@ -51,5 +87,162 @@ fun CustomButton(
                 .padding(5.dp, 8.dp)
                 .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun CustomButton2(
+    text: String,
+    background : Color,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Surface(shape = RoundedCornerShape(CornerSize(size = 10.dp)),
+        modifier = modifier
+            .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+            .background(background)
+            .padding(8.dp)
+            .clickable {
+                onClick.invoke()
+            }
+    ) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            fontSize = 18.sp,
+            style = TextStyle(
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier
+                .background(background)
+                .padding(5.dp, 8.dp)
+                .fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+fun CustomCheckbox(
+    text: String,
+    onClick: (Boolean) -> Unit
+) {
+    Row(
+        modifier = Modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        val isChecked = remember { mutableStateOf(false) }
+
+        Checkbox(
+            checked = isChecked.value,
+            onCheckedChange = {
+                isChecked.value = it
+                onClick(it)
+            },
+            enabled = true,
+            colors = CheckboxDefaults.colors(Color.Black)
+        )
+        Text(
+            text = text,
+            fontWeight = FontWeight.SemiBold,
+        )
+    }
+}
+
+@Composable
+fun SelectImageCardWithButton(
+    docType : String,
+    modifier: Modifier = Modifier,
+    onClick: (Uri) -> Unit
+) {
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { uri ->
+            uri?.let {
+                imageUri = it
+                onClick.invoke(imageUri!!)
+            }
+        }
+    )
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            painter = if (imageUri != null) {
+                rememberAsyncImagePainter(model = imageUri)
+            } else rememberVectorPainter(
+                image = Icons.Default.Image
+            ) ,
+            contentDescription = "",
+            modifier = Modifier
+                .size(140.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Select $docType Image")
+            CustomButton(
+                text = "Select Image",
+                background = Color.Black
+            ) {
+                galleryLauncher.launch("image/*")
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomAlertDialog(
+    onDismiss: () -> Unit
+) {
+
+    Dialog(onDismissRequest = { onDismiss() }, properties = DialogProperties(
+        dismissOnBackPress = false,dismissOnClickOutside = false
+    )
+    ) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            //shape = MaterialTheme.shapes.medium,
+            shape = RoundedCornerShape(10.dp),
+            // modifier = modifier.size(280.dp, 240.dp)
+            shadowElevation = 8.dp,
+        ) {
+            Column(
+                Modifier
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth()
+                    .background(Color.White),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Rules and Regulations",
+                    modifier = Modifier.padding(8.dp), fontSize = 20.sp
+                )
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    modifier = Modifier.padding(8.dp)
+                )
+                OutlinedButton(
+                    onClick = { onDismiss() },
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(text = "Accept")
+                }
+            }
+        }
     }
 }

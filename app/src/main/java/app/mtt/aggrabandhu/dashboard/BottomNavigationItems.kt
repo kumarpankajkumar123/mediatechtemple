@@ -27,7 +27,7 @@ val items = listOf(
         unselectedIcon = Icons.Outlined.Home
     ),
     BottomNavigationItems(
-        title = "Donations",
+        title = "Live Donations",
         selectedIcon = Icons.Filled.Notifications,
         unselectedIcon = Icons.Outlined.Notifications,
         badgeAmount = 7

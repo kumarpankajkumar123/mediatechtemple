@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.mtt.aggrabandhu.authentication.LoginScreen
 import app.mtt.aggrabandhu.authentication.onboarding.FirstOnboardingScreen
+import app.mtt.aggrabandhu.authentication.onboarding.SecondOnboardingScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.sideNavigation.DonorsPage
@@ -35,6 +36,9 @@ fun NavigationComponent() {
         }
         composable("first_on_screen") {
             FirstOnboardingScreen(navController = navController)
+        }
+        composable("second_on_screen") {
+            SecondOnboardingScreen(navController = navController)
         }
         composable("dashboard_screen") {
             DashboardScreen(navController = navController)
