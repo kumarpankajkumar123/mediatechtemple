@@ -1,7 +1,7 @@
 package app.mtt.aggrabandhu.dashboard.sideNavigation
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.CurrencyRupee
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -20,14 +22,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CircularImage
+
+data class DonorsData(
+    val name: String,
+    val address : String,
+    val img : Int ?= null,
+    val imageVector: ImageVector ?= Icons.Default.PersonPin
+    )
 
 @Preview
 @Composable
@@ -46,9 +56,11 @@ fun DonorsPage(navController: NavController ?= null) {
             verticalAlignment = Alignment.CenterVertically
         ){
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier
+                    .clickable { navController?.popBackStack() }
+                    .size(28.dp)
             )
             Text(
                 text = "All Donors",
@@ -58,14 +70,18 @@ fun DonorsPage(navController: NavController ?= null) {
                 color = Color.Black
             )
         }
-        repeat(6){
-            DonorsCard()
-        }
+        LazyColumn(content = {
+            items(getDonorsList()) {
+                DonorsCard(donorsData = it)
+            }
+        })
     }
 }
 
 @Composable
-private fun DonorsCard () {
+private fun DonorsCard (
+    donorsData: DonorsData
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,38 +96,40 @@ private fun DonorsCard () {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CircularImage(size = 60.dp, painter = painterResource(id = R.drawable.png_logo))
+                CircularImage(
+                    size = 60.dp,
+                    painter = if (donorsData.img != null) {
+                        painterResource(id = donorsData.img)
+                    } else rememberVectorPainter(
+                        image = donorsData.imageVector!!
+                    )
+                )
                 Column(modifier = Modifier.padding(start = 2.dp)) {
                     Text(
-                        text = "The Person",
+                        text = donorsData.name,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black,
                     )
                     Text(
-                        text = "Gotra",
+                        text = donorsData.address,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black,
                     )
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End
-                ) {
-                    Icon(imageVector = Icons.Default.CurrencyRupee, contentDescription = "Rupee")
-                    Text(
-                        text = "200",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Magenta,
-                    )
-                }
             }
         }
     }
+}
 
+fun getDonorsList() : MutableList<DonorsData> {
+    val list = mutableListOf<DonorsData>()
+
+    list.add(DonorsData("New Peron", "Jaipur, Rajasthan"))
+    list.add(DonorsData("Old Peron", "Kota, Rajasthan"))
+    list.add(DonorsData("Mark", "New, Rajasthan"))
+    list.add(DonorsData("Henry", "From, Rajasthan"))
+
+    return list
 }

@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -26,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,32 +39,42 @@ import app.mtt.aggrabandhu.utils.CircularImage
 
 @Composable
 fun ProfilePage() {
-    Box {
-        Image(
-            painter = painterResource(id = R.drawable.textured_bg),
-            contentDescription = "",
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.3f)
-        )
-    }
-    Column(
+    Box(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
             .background(Color.White)
-            .padding(vertical = 55.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
     ) {
-        CircularImage(size = 220.dp, painter = painterResource(id = R.drawable.png_logo))
-        ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
-        ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = "9199103223")
-        ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-        ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-        ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
-        ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-        ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+        // Background image
+        Image(
+            painter = painterResource(id = R.drawable.textured_bg), // Replace with your image resource
+            contentDescription = null,
+            contentScale = ContentScale.Crop, // Adjust content scaling as needed
+            modifier = Modifier.fillMaxSize(), // Ensure the image fills the entire screen
+            alpha = 0.3f
+        )
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(vertical = 60.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CircularImage(size = 220.dp, painter = painterResource(id = R.drawable.png_logo))
+            ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = "9199103223")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+            ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
+
+            Spacer(modifier = Modifier.height(30.dp))
+
         }
+    }
 }
 
 @Composable

@@ -76,4 +76,6 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }

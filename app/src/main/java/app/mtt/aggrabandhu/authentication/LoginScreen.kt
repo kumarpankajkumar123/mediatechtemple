@@ -66,7 +66,7 @@ fun LoginScreen (navController: NavController?= null) {
                 .padding(10.dp),
         ) {
 
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // below is the composable for image.
             CircularImage(
@@ -89,7 +89,7 @@ fun LoginScreen (navController: NavController?= null) {
                 )
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
             Text(
                 text = stringResource(id = R.string.login_to_continue),
                 modifier = Modifier
@@ -147,19 +147,16 @@ fun LoginScreen (navController: NavController?= null) {
                 )
             )
 
-//        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.BottomCenter) {
             CustomButton(text = "New User? Signup now", colorResource(id = R.color.sky_blue)) {
 //                navController?.navigate("signup_screen")
                 navController?.navigate("first_on_screen")
             }
-//        }
-
         }
 
     }
 }
 
-@Preview
+@Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
     LoginScreen()
