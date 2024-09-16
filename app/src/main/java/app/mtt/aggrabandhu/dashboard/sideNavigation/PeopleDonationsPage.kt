@@ -11,8 +11,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CurrencyRupee
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,11 +33,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import app.mtt.aggrabandhu.dashboard.items
 import app.mtt.aggrabandhu.utils.CircularImage
+import app.mtt.aggrabandhu.utils.CustomButton
+
+data class DonationsData (
+    val name : String,
+    val amount : String,
+    val date : String,
+    val memberID : String,
+    val address : String,
+    val profileImage : Int ?= null
+)
 
 @Preview
 @Composable
 fun PeopleDonationsPage(navController: NavController ?= null) {
+
+    val mList = arrayListOf(
+        (DonationsData("Ramu","2000","19/39/90", "1234","Jaipur, Rajasthan")),
+        (DonationsData("Shyam","2000","19/39/90", "1234","Jaipur, Rajasthan")),
+        (DonationsData("Suresh","2000","19/39/90", "1234","Jaipur, Rajasthan"))
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,22 +77,25 @@ fun PeopleDonationsPage(navController: NavController ?= null) {
                     .size(28.dp)
             )
             Text(
-                text = "People Received Donations",
+                text = "People Receiving Donations",
                 fontSize = 22.sp,
                 modifier = Modifier.padding(start = 10.dp),
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black
             )
         }
+
+        LazyColumn(content = {
+            items(mList){
+                DonationsDistributed(donationsData = it)
+            }
+        })
     }
-
-
-
 }
 
 @Composable
-private fun DonorsCard (
-    donorsData: DonorsData
+private fun DonationsDistributed (
+    donationsData: DonationsData
 ) {
     Card(
         modifier = Modifier
@@ -79,45 +105,91 @@ private fun DonorsCard (
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
         ) {
-            CircularImage(
-                size = 60.dp,
-                painter = if (donorsData.img != null) {
-                    painterResource(id = donorsData.img)
-                } else rememberVectorPainter(
-                    image = donorsData.imageVector!!
-                )
-            )
-            Column(modifier = Modifier.padding(start = 2.dp)) {
-                Text(
-                    text = donorsData.name,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
-                )
-                Text(
-                    text = donorsData.address,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
-                )
-            }
-
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
-                contentAlignment = Alignment.CenterEnd
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "Member ID : 1080",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+                CircularImage(
+                    size = 54.dp,
+                    painter = if (donationsData.profileImage != null) {
+                        painterResource(id = donationsData.profileImage)
+                    } else rememberVectorPainter(
+                        Icons.Default.Person
+                    )
                 )
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.55f)
+                        .padding(start = 5.dp)
+                ) {
+                    Text(
+                        text = donationsData.name,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = "Member ID : ${donationsData.memberID}",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = donationsData.address,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+
+                    Column {
+                        Row(modifier = Modifier) {
+                            Icon(
+                                imageVector = Icons.Default.CurrencyRupee,
+                                contentDescription = "Rupee",
+                                modifier = Modifier.size(20.dp)
+                            )
+                            Text(
+                                text = donationsData.amount,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                            )
+                        }
+                        Text(
+                            text = donationsData.date,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Light,
+                            color = Color.Black,
+                        )
+                    }
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 10.dp, horizontal = 10.dp)
+            ) {
+                CustomButton(
+                    text = "View Contributors",
+                    background = Color.Black
+                ) {
+
+                }
             }
         }
     }

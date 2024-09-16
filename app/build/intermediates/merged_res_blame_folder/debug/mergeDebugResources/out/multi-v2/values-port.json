@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "app.mtt.aggrabandhu.app-mergeDebugResources-59:/values-port/values-port.xml",
+            "outputFile": "app.mtt.aggrabandhu.app-mergeDebugResources-61:/values-port/values-port.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\64912e80ad5b6a332a572e8a8b768ae8\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
+                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\a6d80f32b0cad145fa5949562de5a29f\\transformed\\appcompat-1.6.1\\res\\values-port\\values-port.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
