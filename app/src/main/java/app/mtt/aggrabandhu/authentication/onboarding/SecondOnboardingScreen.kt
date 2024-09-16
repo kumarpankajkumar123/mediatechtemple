@@ -1,54 +1,36 @@
 package app.mtt.aggrabandhu.authentication.onboarding
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BusinessCenter
-import androidx.compose.material.icons.filled.EmojiPeople
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.PeopleOutline
 import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material.icons.filled.PinDrop
-import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.utils.CustomAlertDialog
-import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.CustomButton2
 import app.mtt.aggrabandhu.utils.CustomCheckbox
 import app.mtt.aggrabandhu.utils.DropDownField
@@ -242,19 +224,25 @@ fun RulesAndRegulationsCheck(
         modifier = Modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
+        val isOpened = remember { mutableStateOf(false) }
         val isChecked = remember { mutableStateOf(false) }
 
-        if (isChecked.value) {
-            CustomAlertDialog(onDismiss = { /*TODO*/ })
+        if (isOpened.value) {
+            CustomAlertDialog(onAccept = {
+                isOpened.value = false
+                isChecked.value = true
+            })
         }
 
         Checkbox (
             checked = isChecked.value,
             onCheckedChange = {
                 if (it) {
-                    isChecked.value = it
-                    onClick(it)
+                    isOpened.value = it
+                } else {
+                    isChecked.value = false
                 }
+                onClick.invoke(it)
             },
             enabled = true,
             colors = CheckboxDefaults.colors(Color.Black)

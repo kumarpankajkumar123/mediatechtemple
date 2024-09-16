@@ -14,7 +14,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArtTrack
+import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.FamilyRestroom
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.PhoneAndroid
@@ -52,7 +56,6 @@ fun ProfilePage() {
             modifier = Modifier.fillMaxSize(), // Ensure the image fills the entire screen
             alpha = 0.3f
         )
-
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -60,19 +63,24 @@ fun ProfilePage() {
                 .padding(vertical = 60.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircularImage(size = 220.dp, painter = painterResource(id = R.drawable.png_logo))
+            CircularImage(size = 180.dp, painter = painterResource(id = R.drawable.ic_launcher_background))
+            Spacer(modifier = Modifier.height(10.dp))
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.Person, heading = "Mother's Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gotra", text = "Gotra")
             ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = "9199103223")
             ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-            ProfileInfoCard(Icons.Default.Person, heading = "Name", text = "The Person")
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = "13/13/3223")
-
+            ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marital Status", text = "Unmarried")
+            ProfileInfoCard(Icons.Default.BusinessCenter, heading = "Profession", text = "Business")
+            ProfileInfoCard(Icons.Default.LocationOn, heading = "Address", text = "Jaipur, Rajasthan")
+            Text(
+                text = "Nominee Details",
+                modifier = Modifier.padding(vertical = 6.dp)
+            )
+            ProfileInfoCard(Icons.Default.Person, heading = "Nominee 1 Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.Person, heading = "Nominee 2 Name", text = "The Person")
             Spacer(modifier = Modifier.height(30.dp))
-
         }
     }
 }

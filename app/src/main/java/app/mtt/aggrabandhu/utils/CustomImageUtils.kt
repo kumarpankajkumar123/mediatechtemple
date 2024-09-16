@@ -30,7 +30,7 @@ fun CircularImage (
         modifier = Modifier
             .size(size)
             .clip(CircleShape)
-            .padding(6.dp)
+//            .padding(6.dp)
             .border(2.dp, Color.Black, CircleShape),
         alignment = Alignment.Center,
         contentScale = ContentScale.Crop,
