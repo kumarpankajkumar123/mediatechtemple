@@ -2,6 +2,7 @@ package app.mtt.aggrabandhu.dashboard.sideNavigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -90,34 +91,45 @@ private fun DonorsCard (
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Column(modifier = Modifier
-            .padding(10.dp)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                CircularImage(
-                    size = 60.dp,
-                    painter = if (donorsData.img != null) {
-                        painterResource(id = donorsData.img)
-                    } else rememberVectorPainter(
-                        image = donorsData.imageVector!!
-                    )
+            CircularImage(
+                size = 60.dp,
+                painter = if (donorsData.img != null) {
+                    painterResource(id = donorsData.img)
+                } else rememberVectorPainter(
+                    image = donorsData.imageVector!!
                 )
-                Column(modifier = Modifier.padding(start = 2.dp)) {
-                    Text(
-                        text = donorsData.name,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
-                    )
-                    Text(
-                        text = donorsData.address,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
-                    )
-                }
+            )
+            Column(modifier = Modifier.padding(start = 2.dp)) {
+                Text(
+                    text = donorsData.name,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black,
+                )
+                Text(
+                    text = donorsData.address,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black,
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Text(
+                    text = "Member ID : 1080",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black,
+                )
             }
         }
     }

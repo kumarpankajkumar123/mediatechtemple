@@ -1,9 +1,10 @@
 package app.mtt.aggrabandhu.dashboard
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,7 +41,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,13 +52,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.dashboard.pages.DonationsPage
@@ -67,6 +69,7 @@ import app.mtt.aggrabandhu.dashboard.pages.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
 import app.mtt.aggrabandhu.utils.CircularImage
 import kotlinx.coroutines.launch
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -153,7 +156,10 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 }
                             },
                             label = {
-                                Text(text = navItem.title)
+                                Text(
+                                    text = navItem.title,
+                                    textAlign = TextAlign.Center
+                                )
                             }
                         )
                     }
@@ -171,7 +177,13 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
         0-> HomePage()
         1-> DonationsPage()
         2-> RulesRegulationsPage()
-        3-> ProfilePage()
+        3-> {
+            val url = "https://api.whatsapp.com/send?phone=+91 7597435543"
+            val i = Intent(Intent.ACTION_VIEW)
+            i.setData(Uri.parse(url))
+            LocalContext.current.startActivity(i)
+        }
+        4-> ProfilePage()
     }
 }
 

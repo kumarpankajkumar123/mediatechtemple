@@ -118,7 +118,21 @@ fun SecondOnboardingScreen(
 
         }
 
-        // Spacer(modifier = Modifier.height(10.dp))
+        TextFieldWithIcons(
+            label = "Adhar Card Number",
+            placeholder = "Adhar card Nummber",
+            maxLength = 12,
+            keyboardType = KeyboardType.Number,
+            leadingIcon = Icons.Default.Newspaper
+        ) {
+            
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+
+        SelectImageCardWithButton(docType = "Aadhar Card") {
+
+        }
+
         /* ------------- Select Document Type ------------ */
         DropDownField(
             selectedValue = selectedDoc.value,
@@ -131,6 +145,19 @@ fun SecondOnboardingScreen(
         )
 
         if (selectedDoc.value != "") {
+            TextFieldWithIcons(
+                label = "Enter ${selectedDoc.value} Number",
+                placeholder = "${selectedDoc.value} Number",
+                maxLength = if (selectedDoc.value == "DL") {
+                    16
+                } else {
+                    10
+                },
+                keyboardType = KeyboardType.Password,
+                leadingIcon = Icons.Default.Newspaper
+            ) {
+
+            }
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(selectedDoc.value){
 
