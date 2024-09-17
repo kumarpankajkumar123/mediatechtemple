@@ -92,18 +92,22 @@ private fun DonorsCard (
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             CircularImage(
-                size = 60.dp,
+                size = 54.dp,
                 painter = if (donorsData.img != null) {
                     painterResource(id = donorsData.img)
                 } else rememberVectorPainter(
                     image = donorsData.imageVector!!
                 )
             )
-            Column(modifier = Modifier.padding(start = 2.dp)) {
+            Column(modifier = Modifier
+                .fillMaxWidth(.55f)
+                .padding(start = 5.dp)) {
                 Text(
                     text = donorsData.name,
                     fontSize = 18.sp,

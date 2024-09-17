@@ -11,7 +11,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,10 +27,10 @@ import androidx.compose.material.icons.filled.FamilyRestroom
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,31 +51,42 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.DatePickerField
 import app.mtt.aggrabandhu.utils.DropDownField
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
+import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun FirstOnboardingScreen(navController: NavController?=null) {
+
+    val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
+
+    /* --------------------- Get Profession Data -------------------*/
+    val professions = onboarding1Viewmodel.profession.collectAsState()
+    val selectedProfession = remember { mutableStateOf("") }
+    /* ----------------------- ------------- -----------------------*/
+
+    /* --------------------- Get Gotra Data -------------------*/
+    val gotra = onboarding1Viewmodel.gotra.collectAsState()
+    val selectedGotra = remember { mutableStateOf("") }
+    /* ----------------------- ------------- -----------------------*/
+
+    /* --------------------- Get MarriageStatus Data -------------------*/
+    val maritalStatusList = arrayListOf("Married","Unmarried")
+    val selectedMaritalStatus = remember { mutableStateOf("") }
+    /* ----------------------- ------------- -----------------------*/
+
     val context = LocalContext.current
     var father: String? = ""
     var mother: String? = ""
+    var dob: String? = ""
 
     val name = "Suresh"
-
-    val optionsList = arrayListOf(
-        "SD","BD","A","AD"
-    )
-    val maritalStatusList = arrayListOf(
-        "Married","Unmarried"
-    )
-
-    val selectedGotra = remember { mutableStateOf("") }
-    val selectedMaritalStatus = remember { mutableStateOf("") }
 
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -197,7 +207,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             /* ------------- Select Gotra ------------ */
             DropDownField(
                 selectedValue = selectedGotra.value,
-                options = optionsList,
+                options = gotra.value.map { it.name },
                 label = "Gotra",
                 Icons.Default.ArtTrack,
                 onValueChangedEvent = {
@@ -225,12 +235,12 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
 
             /* ------------- Select Profession ------------ */
             DropDownField(
-                selectedValue = selectedMaritalStatus.value,
-                options = maritalStatusList,
+                selectedValue = selectedProfession.value,
+                options = professions.value.map { it.name },
                 label = "Profession",
                 Icons.Default.BusinessCenter,
                 onValueChangedEvent = {
-                    selectedMaritalStatus.value = it
+                    selectedProfession.value = it
                 }
             )
 

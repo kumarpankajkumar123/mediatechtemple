@@ -17,7 +17,7 @@ class NetworkModule {
     @Provides
     fun providesRetrofit() : Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://internal.aggrabandhuss.org/api/")
+            .baseUrl("https://agerbandhu-production.up.railway.app/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -10,4 +10,7 @@ interface AllApi {
     @GET("profession")
     suspend fun getProfession() : Response<List<ProfessionData>>
 
+    @GET("gotra")
+    suspend fun getGotra() : Response<List<ProfessionData>>
+
 }
