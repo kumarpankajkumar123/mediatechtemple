@@ -57,6 +57,7 @@ import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.DatePickerField
 import app.mtt.aggrabandhu.utils.DropDownField
+import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
@@ -86,8 +87,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     var mother: String? = ""
     var dob: String? = ""
 
-    val name = "Suresh"
-
+    val name : String = onboarding1Viewmodel.getName
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
     }
@@ -126,6 +126,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
 
             // below is the composable for image.
 //            CircularImage(size = 180.dp, painter = painterResource(id = R.drawable.png_logo))
+
+            if (professions.value.isEmpty()) {
+                LoadingAlertDialog()
+            }
 
             Image(
                 modifier = Modifier

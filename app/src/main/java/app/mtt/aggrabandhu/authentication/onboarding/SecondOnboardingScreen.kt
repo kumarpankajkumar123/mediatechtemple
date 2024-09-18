@@ -210,7 +210,7 @@ fun SecondOnboardingScreen(
             text = "Next",
             background = Color.Black
         ) {
-
+            navController?.navigate("dashboard_screen")
         }
     }
 }

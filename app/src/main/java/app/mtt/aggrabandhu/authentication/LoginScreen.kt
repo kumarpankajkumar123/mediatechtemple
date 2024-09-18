@@ -149,10 +149,9 @@ fun LoginScreen (navController: NavController?= null) {
 
             CustomButton(text = "New User? Signup now", colorResource(id = R.color.sky_blue)) {
 //                navController?.navigate("signup_screen")
-                navController?.navigate("first_on_screen")
+                navController?.navigate("first_on_screen/{Suresh}")
             }
         }
-
     }
 }
 

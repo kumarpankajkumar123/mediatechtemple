@@ -1,9 +1,11 @@
 package app.mtt.aggrabandhu
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import app.mtt.aggrabandhu.authentication.LoginScreen
 import app.mtt.aggrabandhu.authentication.onboarding.FirstOnboardingScreen
 import app.mtt.aggrabandhu.authentication.onboarding.SecondOnboardingScreen
@@ -17,12 +19,6 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.RulesRegulationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 
-/*sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: String) {
-    object Home : BottomNavItem("home", Icons.Default.Home, "Home")
-    object Search : BottomNavItem("search", Icons.Default.Search, "Search")
-    object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
-}*/
-
 @Composable
 fun NavigationComponent() {
     val navController = rememberNavController()
@@ -34,7 +30,11 @@ fun NavigationComponent() {
         composable("signup_screen") {
             SignupScreen(navController = navController)
         }
-        composable("first_on_screen") {
+        composable("first_on_screen/{name}", arguments =
+        listOf(navArgument("name") {
+            type = NavType.StringType
+        }
+        )) {
             FirstOnboardingScreen(navController = navController)
         }
         composable("second_on_screen") {

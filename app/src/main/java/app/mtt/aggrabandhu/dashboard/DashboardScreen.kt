@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.dashboard
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -69,7 +70,6 @@ import app.mtt.aggrabandhu.dashboard.pages.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
 import app.mtt.aggrabandhu.utils.CircularImage
 import kotlinx.coroutines.launch
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -178,10 +178,8 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
         1-> DonationsPage()
         2-> RulesRegulationsPage()
         3-> {
-            val url = "https://api.whatsapp.com/send?phone=+91 7597435543"
-            val i = Intent(Intent.ACTION_VIEW)
-            i.setData(Uri.parse(url))
-            LocalContext.current.startActivity(i)
+            openSupport(LocalContext.current)
+            ProfilePage()
         }
         4-> ProfilePage()
     }
@@ -215,7 +213,7 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
         SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
         SideNavItem(text = "Donors List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
         SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("people_donations_page")}
-        SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}
+        SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){}  //onItemClick.invoke("support_page")
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(text = "Facebook") {}
         SubNavItem(text = "Instagram") {}
@@ -284,4 +282,11 @@ fun SubNavItem(text: String, clickable : ()-> Unit) {
 private fun Preview() {
     DashboardScreen(navController = null)
     // SideNavItem(text = "Hello", imageVector = Icons.Default.Visibility)
+}
+
+private fun openSupport(context:Context){
+    val url = "https://api.whatsapp.com/send?phone=+917597435543"
+    val i = Intent(Intent.ACTION_VIEW)
+    i.setData(Uri.parse(url))
+    context.startActivity(i)
 }

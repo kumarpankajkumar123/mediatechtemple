@@ -164,7 +164,7 @@ fun SignupScreen(navController: NavController) {
                     Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
                 } else {
                     Toasty.success(context, "$phone - $password", Toast.LENGTH_SHORT).show()
-                    navController.navigate("dashboard_screen")
+                    navController.navigate("first_on_screen/Suresh")
                 }
             }
 
