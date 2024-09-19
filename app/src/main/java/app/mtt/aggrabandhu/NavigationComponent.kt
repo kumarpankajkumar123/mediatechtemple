@@ -13,7 +13,7 @@ import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.sideNavigation.DonorsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
-import app.mtt.aggrabandhu.dashboard.sideNavigation.PeopleDonationsPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.PrivacyPolicyPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.RulesRegulationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
@@ -51,8 +51,8 @@ fun NavigationComponent() {
         composable("donors_page") {
             DonorsPage(navController = navController)
         }
-        composable("people_donations_page") {
-            PeopleDonationsPage(navController = navController)
+        composable("received_donations_page") {
+            ReceivedDonationsPage(navController = navController)
         }
         composable("support_page") {
             SupportPage(navController = navController)

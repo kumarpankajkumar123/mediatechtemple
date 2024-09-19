@@ -61,10 +61,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
-import app.mtt.aggrabandhu.dashboard.pages.DonationsPage
+import app.mtt.aggrabandhu.dashboard.pages.liveDonation.DonationsPage
 import app.mtt.aggrabandhu.dashboard.pages.HomePage
 import app.mtt.aggrabandhu.dashboard.pages.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
@@ -212,7 +211,7 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
         // Example items in the drawer
         SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
         SideNavItem(text = "Donors List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
-        SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("people_donations_page")}
+        SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){}  //onItemClick.invoke("support_page")
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(text = "Facebook") {}

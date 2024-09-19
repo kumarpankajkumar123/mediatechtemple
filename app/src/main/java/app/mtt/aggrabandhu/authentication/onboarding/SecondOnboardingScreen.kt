@@ -44,7 +44,7 @@ fun SecondOnboardingScreen(
 ) {
 
     val docsList = arrayListOf(
-        "PAN","DL"
+        "PAN card","Driving License", "Voter ID"
     )
     val selectedDoc = remember { mutableStateOf("") }
     val isSuffering = remember { mutableStateOf(false) }
