@@ -3,6 +3,7 @@ package app.mtt.aggrabandhu.repository
 import android.util.Log
 import app.mtt.aggrabandhu.api.AllApi
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
+import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +24,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val receivedDonationData : StateFlow<List<ReceivedDonationData>>
         get() = _receivedDonations
 
+    private val _liveDonation = MutableStateFlow<List<LiveDonationData>>(emptyList())
+    val liveDonation : StateFlow<List<LiveDonationData>>
+        get() = _liveDonation
+
     suspend fun getProfession() {
         val response = allApi.getProfession()
         if (response.isSuccessful && response.body() != null) {
@@ -41,8 +46,13 @@ class Repository @Inject constructor(private val allApi: AllApi){
         val response = allApi.receivedDonations()
         if (response.isSuccessful && response.body() != null){
             _receivedDonations.emit(response.body()!!.data)
-            Log.d("DonationData", response.body()!!.toString())
-            Log.d("DonationData", response.body()!!.data.toString())
+        }
+    }
+
+    suspend fun getLiveDonationsData(){
+        val response = allApi.liveDonations()
+        if (response.isSuccessful && response.body() != null){
+            _liveDonation.emit(response.body()!!.data)
         }
     }
 

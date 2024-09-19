@@ -111,10 +111,10 @@ fun DashboardScreen(navController : NavController ?= null) {
                                     text = "Suresh",
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
-                                    modifier = Modifier.padding(end = 2.dp)
+                                    modifier = Modifier.padding(end = 6.dp)
                                 )
                                 CircularImage(
-                                    size = 50.dp,
+                                    size = 40.dp,
                                     painter = painterResource(id = R.drawable.png_logo)
                                 )
                             }
@@ -128,8 +128,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                     contentDescription = "Open Drawer"
                                 )
                             }
-                        },
-                        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+                        }
                     )
                 }
             },
@@ -165,16 +164,16 @@ fun DashboardScreen(navController : NavController ?= null) {
                 }
             }
         ) { innerPadding ->
-            ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
+            ContentScreen(navController!!, modifier = Modifier.padding(innerPadding), selectedIndex)
         }
     }
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
+fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, selectedIndex : Int) {
     when(selectedIndex){
         0-> HomePage()
-        1-> DonationsPage()
+        1-> DonationsPage(navController)
         2-> RulesRegulationsPage()
         3-> {
             openSupport(LocalContext.current)

@@ -32,8 +32,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import app.mtt.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
 import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
+import app.mtt.aggrabandhu.utils.CustomButton3
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.viewmodel.ReceivedDonationsViewModel
 
@@ -165,7 +167,7 @@ private fun DonationsDistributed (
                             )
                         }
                         Text(
-                            text = receivedDonationData.donation_date,
+                            text = convertDateFormat(receivedDonationData.donation_date)!!,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
                             color = Color.Black,
@@ -179,7 +181,7 @@ private fun DonationsDistributed (
                     .fillMaxWidth()
                     .padding(vertical = 10.dp, horizontal = 10.dp)
             ) {
-                CustomButton(
+                CustomButton3(
                     text = "View Contributors",
                     background = Color.Black
                 ) {

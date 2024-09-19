@@ -11,6 +11,7 @@ import app.mtt.aggrabandhu.authentication.onboarding.FirstOnboardingScreen
 import app.mtt.aggrabandhu.authentication.onboarding.SecondOnboardingScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
+import app.mtt.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.DonorsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
@@ -23,15 +24,18 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 fun NavigationComponent() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "login_screen") {
+    NavHost(
+        navController = navController,
+        startDestination = "login_screen"
+    ) {
         composable("login_screen") {
             LoginScreen(navController = navController)
         }
         composable("signup_screen") {
             SignupScreen(navController = navController)
         }
-        composable("first_on_screen/{name}", arguments =
-        listOf(navArgument("name") {
+        composable("first_on_screen/{name}",
+            arguments = listOf(navArgument("name") {
             type = NavType.StringType
         }
         )) {
@@ -42,6 +46,9 @@ fun NavigationComponent() {
         }
         composable("dashboard_screen") {
             DashboardScreen(navController = navController)
+        }
+        composable("make_donation_screen") {
+            MakeDonationPage(navController = navController)
         }
 
         /* ---------- Side Navigation Page ---------------- */

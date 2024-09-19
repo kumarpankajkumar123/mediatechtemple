@@ -47,7 +47,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import coil.compose.rememberAsyncImagePainter
 
-
 @Composable
 fun CustomButton(
     text: String,
@@ -102,6 +101,39 @@ fun CustomButton2(
             textAlign = TextAlign.Center,
             maxLines = 1,
             fontSize = 18.sp,
+            style = TextStyle(
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier
+                .background(background)
+                .padding(5.dp, 8.dp)
+                .fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+fun CustomButton3(
+    text: String,
+    background : Color,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Surface(shape = RoundedCornerShape(CornerSize(size = 10.dp)),
+        modifier = modifier
+            .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+            .background(background)
+            .padding(4.dp)
+            .clickable {
+                onClick.invoke()
+            }
+    ) {
+        Text(
+            text = text,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            fontSize = 16.sp,
             style = TextStyle(
                 color = Color.White,
                 fontWeight = FontWeight.SemiBold

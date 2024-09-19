@@ -1,6 +1,7 @@
 package app.mtt.aggrabandhu.dashboard.sideNavigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -38,9 +40,11 @@ fun PrivacyPolicyPage(navController: NavController ?= null) {
             verticalAlignment = Alignment.CenterVertically
         ){
             Icon(
-                imageVector = Icons.Default.ArrowBack,
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                modifier = Modifier.size(28.dp)
+                modifier = Modifier
+                    .clickable { navController?.popBackStack() }
+                    .size(28.dp)
             )
             Text(
                 text = "Privacy Policy",

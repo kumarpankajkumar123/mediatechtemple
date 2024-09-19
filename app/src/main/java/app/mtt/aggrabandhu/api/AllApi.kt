@@ -4,11 +4,11 @@ import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
-
 
 interface AllApi {
 
@@ -23,7 +23,7 @@ interface AllApi {
     suspend fun validateDocuments(
         number : Int,
         type_id : String,
-        file : Multipart
+        file : MultipartBody
     ) : Response<DocValidationResponse>
 
     @GET("donationreceive")
