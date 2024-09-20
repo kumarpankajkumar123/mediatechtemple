@@ -18,6 +18,7 @@ font falling_sky_extra_bold
 font falling_sky_light
 font falling_sky_regular
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 string app_name
 string login_to_continue

@@ -41,7 +41,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -65,7 +64,7 @@ import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.DonationsPage
 import app.mtt.aggrabandhu.dashboard.pages.HomePage
-import app.mtt.aggrabandhu.dashboard.pages.ProfilePage
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
 import app.mtt.aggrabandhu.utils.CircularImage
 import kotlinx.coroutines.launch

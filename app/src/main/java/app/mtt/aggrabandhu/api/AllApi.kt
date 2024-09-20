@@ -10,6 +10,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface AllApi {
 
@@ -26,6 +27,12 @@ interface AllApi {
         type_id : String,
         file : MultipartBody
     ) : Response<DocValidationResponse>
+
+    @GET("donation/detail")
+    suspend fun getProfileInfo(
+        @Query("key") key : String,
+        @Query("value") value : Int
+    ) : Response<LiveDonationsData>
 
     @GET("donationreceive")
     suspend fun liveDonations() : Response<LiveDonationsData>

@@ -68,4 +68,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
+    suspend fun getProfileDetails(){
+        val response = allApi.getProfileInfo("member_id",3)
+        if (response.isSuccessful && response.body() != null){
+
+        }
+    }
+
 }
