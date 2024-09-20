@@ -33,6 +33,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsData
+import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.getDonorsList
 import app.mtt.aggrabandhu.utils.CircularImage
 
 data class MyDonationsData(

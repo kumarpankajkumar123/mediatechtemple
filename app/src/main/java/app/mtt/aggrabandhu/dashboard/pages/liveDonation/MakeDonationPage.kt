@@ -190,6 +190,7 @@ fun TransactionMedium(
                     context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
                 val clip = ClipData.newPlainText("label", bankDetails.accountNumber.toString())
                 clipboard?.setPrimaryClip(clip)
+                Toasty.success(context, "Account No. Copied").show()
             },
         shadowElevation = 4.dp,
     ) {

@@ -12,7 +12,7 @@ import app.mtt.aggrabandhu.authentication.onboarding.SecondOnboardingScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
-import app.mtt.aggrabandhu.dashboard.sideNavigation.DonorsPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.PrivacyPolicyPage

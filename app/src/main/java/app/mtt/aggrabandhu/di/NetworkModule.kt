@@ -9,6 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+const val baseUrl = "https://agerbandhu-production.up.railway.app"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {

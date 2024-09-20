@@ -3,6 +3,7 @@ package app.mtt.aggrabandhu.api
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
+import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -31,5 +32,8 @@ interface AllApi {
 
     @GET("donation")
     suspend fun receivedDonations() : Response<ReceivedDonationsData>
+
+    @GET("member")
+    suspend fun getAllMembers() : Response<AllMembersData>
 
 }
