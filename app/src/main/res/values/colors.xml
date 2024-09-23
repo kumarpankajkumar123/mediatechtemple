@@ -9,5 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="sky_blue">#2196F3</color>
+    <color name="orange">#fb6e28</color>
+    <color name="green">#0b6f40</color>
 
 </resources>

@@ -7,9 +7,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -19,6 +25,7 @@ import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,22 +40,28 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
 import es.dmoral.toasty.Toasty
+import kotlin.math.sign
 
 @Composable
 fun SignupScreen(navController: NavController) {
-
     val context = LocalContext.current
-    var referenceID: String? = ""
-    var name: String? = ""
-    var phone: String? = ""
-    var password: String? = ""
+
+    val signUpViewmodel : SignUpViewmodel = hiltViewModel()
+
+    var referenceID = signUpViewmodel.referenceIdFieldState.collectAsState()
+    var name = signUpViewmodel.fullNameFieldState.collectAsState()
+    var phone = signUpViewmodel.phoneTextState.collectAsState()
+    var password = signUpViewmodel.passwordTextState.collectAsState()
     var confirmPassword: String? = ""
 
     Box(
@@ -114,9 +127,10 @@ fun SignupScreen(navController: NavController) {
                 "Enter your Reference ID",
                 12,
                 KeyboardType.Text,
-                Icons.Filled.AccountBox
+                Icons.Filled.AccountBox,
+                value = referenceID.value
             ) {
-                referenceID = it
+                signUpViewmodel.onReferenceTextChanged(it)
             }
             /* ------------------- Name ----------------------- */
             TextFieldWithIcons(
@@ -124,9 +138,10 @@ fun SignupScreen(navController: NavController) {
                 "Enter your Full name",
                 20,
                 KeyboardType.Text,
-                Icons.Filled.Person
+                Icons.Filled.Person,
+                value = name.value
             ) {
-                name = it
+                signUpViewmodel.onNameTextChanged(it)
             }
             /* ------------------- Phone number ----------------------- */
             TextFieldWithIcons(
@@ -134,37 +149,47 @@ fun SignupScreen(navController: NavController) {
                 "Enter your Phone Number",
                 10,
                 KeyboardType.Phone,
-                Icons.Filled.Call
+                Icons.Filled.Call,
+                value = phone.value
             ) {
-                phone = it
+                signUpViewmodel.onPhoneTextChanged(it)
             }
             /* ------------------- Password ----------------------- */
-            PasswordTextFieldWithIcons("Password", "Create Password") {
-                password = it
+            PasswordTextFieldWithIcons("Password", "Create Password", value = password.value) {
+                signUpViewmodel.onPasswordTextChanged(it)
             }
             /* ------------------- Confirm Password ----------------------- */
             PasswordTextFieldWithIcons("Confirm Password", "Re-Enter Password") {
                 confirmPassword = it
             }
-            if (!password.equals(confirmPassword)) {
-                Text(
-                    text = "Password isn't matching",
-                    color = Color.Red,
-                    fontSize = 12.sp
-                )
-            }
+//            if (!password.equals(confirmPassword)) {
+//                Text(
+//                    text = "Password isn't matching",
+//                    color = Color.Red,
+//                    fontSize = 12.sp
+//                )
+//            }
 
             Spacer(modifier = Modifier.height(10.dp))
 
             /* ---------- Sign up Button -------------- */
-            CustomButton("Sign up", colorResource(id = R.color.black)) {
-                if (phone?.length!! < 3) {
+            CustomButton("Sign up", colorResource(id = R.color.green)) {
+                if (referenceID.value.length < 8) {
+                    Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
+                } else if (name.value.length < 6) {
+                    Toasty.error(context, "Please enter Full Name", Toast.LENGTH_SHORT).show()
+                } else if (phone.value.length < 10) {
                     Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-                } else if (password?.length!! < 5) {
+                } else if (password.value.length < 5) {
                     Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
+                } else if (confirmPassword?.length!! < 5) {
+                    Toasty.error(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toasty.success(context, "$phone - $password", Toast.LENGTH_SHORT).show()
-                    navController.navigate("first_on_screen/Suresh")
+                    if (confirmPassword.equals(password.value)) {
+                        navController.navigate("first_on_screen/${referenceID.value}/${name.value}/${phone.value}/${password.value}")
+                    } else {
+                        Toasty.error(context, "Password should be same").show()
+                    }
                 }
             }
 
@@ -172,7 +197,7 @@ fun SignupScreen(navController: NavController) {
 
             CustomButton(
                 text = "Already have an account? Login now",
-                colorResource(id = R.color.sky_blue)
+                colorResource(id = R.color.orange)
             ) {
                 navController.popBackStack()
             }

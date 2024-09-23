@@ -1,5 +1,7 @@
 package app.mtt.aggrabandhu.authentication.onboarding
 
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,22 +22,31 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CustomAlertDialog
 import app.mtt.aggrabandhu.utils.CustomButton2
 import app.mtt.aggrabandhu.utils.CustomCheckbox
 import app.mtt.aggrabandhu.utils.DropDownField
 import app.mtt.aggrabandhu.utils.SelectImageCardWithButton
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
+import app.mtt.aggrabandhu.utils.prepareFilePart
+import app.mtt.aggrabandhu.viewmodel.Onboarding2Viewmodel
+import es.dmoral.toasty.Toasty
 
 @Preview(showSystemUi = true)
 @Composable
@@ -43,11 +54,36 @@ fun SecondOnboardingScreen(
     navController: NavController ?= null
 ) {
 
+    val context = LocalContext.current
+
+    val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
+    val validationData = onboarding2Viewmodel.validateID.collectAsState()
+
+    val referenceID = onboarding2Viewmodel.referenceID
+    val getName = onboarding2Viewmodel.getName
+    val phone = onboarding2Viewmodel.phone
+    val password = onboarding2Viewmodel.password
+    val profileUri = Uri.parse((onboarding2Viewmodel.profileUri))
+    val father = onboarding2Viewmodel.father
+    val mother = onboarding2Viewmodel.mother
+    val gotra = onboarding2Viewmodel.gotra
+    val maritalStatus = onboarding2Viewmodel.maritalStatus
+    val dob = onboarding2Viewmodel.dob
+    val profession = onboarding2Viewmodel.profession
+
+    Toasty.success(context,phone).show()
+
+    var adharNumber : String? = null
+
     val docsList = arrayListOf(
-        "PAN card","Driving License", "Voter ID"
+        "Pan card","Driving License", "Voter ID"
     )
     val selectedDoc = remember { mutableStateOf("") }
     val isSuffering = remember { mutableStateOf(false) }
+
+//    if (profileUri.){
+        Toasty.success(context,"dob").show()
+//    }
 
     Column(
         modifier = Modifier
@@ -57,7 +93,7 @@ fun SecondOnboardingScreen(
             .background(Color.White)
     ) {
 
-        /*   - ------------ Pin Code ---------------- */
+        /*   ------------- Pin Code ---------------- */
         TextFieldWithIcons(
             label = "Pin Code",
             placeholder = "Area Pin Code",
@@ -107,12 +143,18 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Number,
             leadingIcon = Icons.Default.Newspaper
         ) {
-            
+            adharNumber = it
         }
         Spacer(modifier = Modifier.height(10.dp))
 
-        SelectImageCardWithButton(docType = "Aadhar Card") {
-
+        SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
+            val file = prepareFilePart(uri,"file",context)
+            onboarding2Viewmodel.validateDoc(
+                adharNumber!!,
+                "aadhar card",
+                file
+            )
+            Toast.makeText(context,"${validationData.value.valid} ${validationData.value.matched}", Toast.LENGTH_SHORT).show()
         }
 
         /* ------------- Select Document Type ------------ */
@@ -208,7 +250,7 @@ fun SecondOnboardingScreen(
 
         CustomButton2(
             text = "Next",
-            background = Color.Black
+            background = colorResource(id = R.color.orange)
         ) {
             navController?.navigate("dashboard_screen")
         }

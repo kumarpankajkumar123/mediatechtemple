@@ -123,7 +123,7 @@ fun LoginScreen (navController: NavController?= null) {
             Spacer(modifier = Modifier.height(10.dp))
 
             /* ---------- Login Button -------------- */
-            CustomButton("Login", colorResource(id = R.color.black)) {
+            CustomButton("Login", colorResource(id = R.color.orange)) {
                 if (phone?.length!! < 10) {
                     Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
                 } else if (password?.isEmpty()!!) {
@@ -147,9 +147,9 @@ fun LoginScreen (navController: NavController?= null) {
                 )
             )
 
-            CustomButton(text = "New User? Signup now", colorResource(id = R.color.sky_blue)) {
+            CustomButton(text = "New User? Signup now", colorResource(id = R.color.green)) {
 //                navController?.navigate("signup_screen")
-                navController?.navigate("first_on_screen/{Suresh}")
+                navController?.navigate("signup_screen")
             }
         }
     }

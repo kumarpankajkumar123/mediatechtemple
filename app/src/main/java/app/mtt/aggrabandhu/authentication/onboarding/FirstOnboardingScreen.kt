@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.authentication.onboarding
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -42,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -58,44 +60,46 @@ import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.DatePickerField
 import app.mtt.aggrabandhu.utils.DropDownField
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
+import es.dmoral.toasty.Toasty
 
 @Composable
 fun FirstOnboardingScreen(navController: NavController?=null) {
 
-    val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
+    val context = LocalContext.current
 
-    /* --------------------- Get Profession Data -------------------*/
-    val professions = onboarding1Viewmodel.profession.collectAsState()
-    val selectedProfession = remember { mutableStateOf("") }
-    /* ----------------------- ------------- -----------------------*/
+    val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
 
     /* --------------------- Get Gotra Data -------------------*/
     val gotra = onboarding1Viewmodel.gotra.collectAsState()
-    val selectedGotra = remember { mutableStateOf("") }
+    /* ----------------------- ------------- -----------------------*/
+    /* --------------------- Get Gotra Data -------------------*/
+    val profession = onboarding1Viewmodel.profession.collectAsState()
     /* ----------------------- ------------- -----------------------*/
 
-    /* --------------------- Get MarriageStatus Data -------------------*/
-    val maritalStatusList = arrayListOf("Married","Unmarried")
-    val selectedMaritalStatus = remember { mutableStateOf("") }
-    /* ----------------------- ------------- -----------------------*/
+    val imageUri = onboarding1Viewmodel.imageUri.collectAsState()
+    val father = onboarding1Viewmodel.fatherNameFieldState.collectAsState()
+    val mother = onboarding1Viewmodel.motherNameFieldState.collectAsState()
+    val dob = onboarding1Viewmodel.dobTextFieldState.collectAsState()
+    val selectedGotra = onboarding1Viewmodel.selectedGotra.collectAsState()
+    val selectedMaritalStatus = onboarding1Viewmodel.selectedMaritalStatus.collectAsState()
+    val selectedProfession = onboarding1Viewmodel.professionState.collectAsState()
 
-    val context = LocalContext.current
-    var father: String? = ""
-    var mother: String? = ""
-    var dob: String? = ""
-
+    val referenceID : String = onboarding1Viewmodel.referenceID
     val name : String = onboarding1Viewmodel.getName
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
+    val phone : String = onboarding1Viewmodel.phone
+    val password : String = onboarding1Viewmodel.password
+
+//    Toasty.success(context,"$referenceID, $name, $phone, $password").show()
+
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                imageUri = it
+                onboarding1Viewmodel.onImageUriChanged(uri)
             }
         }
     )
@@ -127,7 +131,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             // below is the composable for image.
 //            CircularImage(size = 180.dp, painter = painterResource(id = R.drawable.png_logo))
 
-            if (professions.value.isEmpty()) {
+            if (profession.value.isEmpty()) {
                 LoadingAlertDialog()
             }
 
@@ -137,8 +141,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     .clip(CircleShape)
                     .size(180.dp)
                     .border(BorderStroke(2.dp, Color.Black), CircleShape),
-                painter = if (imageUri != null) {
-                    rememberAsyncImagePainter(model = imageUri!!)
+                painter = if (imageUri.value != null) {
+                    rememberAsyncImagePainter(model = imageUri.value)
                 } else {
                     rememberVectorPainter(image = Icons.Default.PersonPin)
                 },
@@ -153,6 +157,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     .clickable { galleryLauncher.launch("image/*") },
                 imageVector = Icons.Default.PhotoCamera,
                 contentDescription = "",
+                tint = colorResource(id = R.color.orange)
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -190,9 +195,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 "Enter your Father's Name",
                 12,
                 KeyboardType.Text,
-                Icons.Filled.Person
+                Icons.Filled.Person,
+                father.value
             ) {
-                father = it
+                onboarding1Viewmodel.onFatherNameTextChanged(it)
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
@@ -202,9 +208,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 "Enter your Mother's name",
                 20,
                 KeyboardType.Text,
-                Icons.Filled.Person
+                Icons.Filled.Person,
+                mother.value
             ) {
-                mother = it
+                onboarding1Viewmodel.onMotherNameTextChanged(it)
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
@@ -215,43 +222,50 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 label = "Gotra",
                 Icons.Default.ArtTrack,
                 onValueChangedEvent = {
-                    selectedGotra.value = it
+                    onboarding1Viewmodel.onSelectedGotraTextChanged(it)
                 }
             )
             /* ------------- Select Gotra ------------ */
             DropDownField(
                 selectedValue = selectedMaritalStatus.value,
-                options = maritalStatusList,
+                options = onboarding1Viewmodel.maritalStatusList,
                 label = "Marital Status",
                 Icons.Default.FamilyRestroom,
                 onValueChangedEvent = {
-                    selectedMaritalStatus.value = it
+                    onboarding1Viewmodel.selectedMaritalStatusChanged(it)
                 }
             )
 
             /* ------------- Select Date ------------ */
             DatePickerField(
                 label = "Date of Birth",
+                value = dob.value,
                 onClick = { date ->
-
+                    onboarding1Viewmodel.onDobTextChanged(date)
                 }
             )
 
             /* ------------- Select Profession ------------ */
             DropDownField(
                 selectedValue = selectedProfession.value,
-                options = professions.value.map { it.name },
+                options = profession.value.map { it.name },
                 label = "Profession",
                 Icons.Default.BusinessCenter,
                 onValueChangedEvent = {
-                    selectedProfession.value = it
+                    onboarding1Viewmodel.onProfessionChanged(it)
                 }
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            CustomButton(text = "Next", background = Color.Black) {
-                navController?.navigate("second_on_screen")
+            CustomButton(text = "Next", background = colorResource(id = R.color.orange)) {
+                val enCodedUri = (Uri.encode(imageUri.toString()))
+                SharedPrefManager(context).saveImageUri(enCodedUri)
+                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/$father/$mother/${selectedGotra.value}/${selectedMaritalStatus.value}/$dob/${selectedProfession.value}/$enCodedUri")
+//                navController?.navigate(
+//                    "second_on_screen/${Uri.encode(referenceID)}/${Uri.encode(name)}/${Uri.encode(phone)}/${Uri.encode(password)}/${Uri.encode(father)}/${Uri.encode(mother)}/${Uri.encode(selectedGotra.value)}/${Uri.encode(selectedMaritalStatus.value)}/${Uri.encode(dob)}/${Uri.encode(selectedProfession.value)}"
+//                )
+
             }
 
         }

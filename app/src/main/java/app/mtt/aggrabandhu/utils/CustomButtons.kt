@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import app.mtt.aggrabandhu.R
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
@@ -217,7 +219,7 @@ fun SelectImageCardWithButton(
             Text(text = "Select $docType Image")
             CustomButton(
                 text = "Select Image",
-                background = Color.Black
+                background = colorResource(id = R.color.orange)
             ) {
                 galleryLauncher.launch("image/*")
             }
@@ -236,7 +238,7 @@ fun CustomAlertDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(150.dp,400.dp)
+                .heightIn(150.dp, 400.dp)
                 .padding(8.dp),
             //shape = MaterialTheme.shapes.medium,
             shape = RoundedCornerShape(10.dp),

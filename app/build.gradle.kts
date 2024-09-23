@@ -105,6 +105,9 @@ dependencies {
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.8.0")
     implementation("androidx.hilt:hilt-navigation:1.2.0")
+
+    implementation ("com.google.accompanist:accompanist-insets:0.31.2-alpha")
+
 }
 
 // Allow references to generated code

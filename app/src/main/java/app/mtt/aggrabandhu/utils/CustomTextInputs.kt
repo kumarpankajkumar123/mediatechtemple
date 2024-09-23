@@ -2,12 +2,7 @@ package app.mtt.aggrabandhu.utils
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -24,12 +19,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -37,26 +30,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
-import app.mtt.aggrabandhu.R
-import kotlinx.coroutines.flow.single
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun TextFieldWithIcons(
@@ -65,10 +50,11 @@ fun TextFieldWithIcons(
     maxLength : Int,
     keyboardType: KeyboardType,
     leadingIcon: ImageVector,
+    value : String?= "",
     modifier: Modifier = Modifier,
     onValueChanged : (String) -> Unit
 ) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+    var text by remember { mutableStateOf(TextFieldValue(value!!)) }
     val focusManager = LocalFocusManager.current
 
     return OutlinedTextField(
@@ -80,7 +66,10 @@ fun TextFieldWithIcons(
                 Icon(
                     imageVector = Icons.Filled.Clear,
                     contentDescription = null,
-                    modifier = Modifier.clickable { text = TextFieldValue("") },
+                    modifier = Modifier.clickable {
+                        text = TextFieldValue("")
+                        onValueChanged.invoke("")
+                    },
                     tint = Color.Black
                 )
             }
@@ -112,9 +101,10 @@ fun TextFieldWithIcons(
 fun PasswordTextFieldWithIcons(
     label: String,
     placeholder: String,
+    value : String ?= "",
     onValueChanged : (String) -> Unit
 ) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+    var text by remember { mutableStateOf(TextFieldValue(value!!)) }
     var passwordVisible by remember { mutableStateOf(false) }
 
     return OutlinedTextField(
@@ -210,10 +200,11 @@ fun DropDownField(
 @Composable
 fun DatePickerField(
     label: String,
+    value : String ?= "",
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val date = remember { mutableStateOf("") }
+    val date = remember { mutableStateOf(value) }
     val isOpen = remember { mutableStateOf(false) }
 
         OutlinedTextField(
@@ -224,7 +215,7 @@ fun DatePickerField(
                     isOpen.value = true
                 }
                 .focusable(false),
-            value = date.value,
+            value = date.value!!,
             onValueChange = {},
             label = { Text(text = label) },
             leadingIcon = {
@@ -250,7 +241,7 @@ fun DatePickerField(
                         .ofEpochMilli(it)
                         .atZone(ZoneId.of("UTC"))
                         .toLocalDate().toString()
-                    onClick.invoke(date.value)
+                    onClick.invoke(date.value!!)
                 }
             },
             onCancel = {

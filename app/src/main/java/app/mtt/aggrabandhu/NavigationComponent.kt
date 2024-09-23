@@ -34,16 +34,63 @@ fun NavigationComponent() {
         composable("signup_screen") {
             SignupScreen(navController = navController)
         }
-        composable("first_on_screen/{name}",
-            arguments = listOf(navArgument("name") {
-            type = NavType.StringType
-        }
-        )) {
+        composable("first_on_screen/{referenceID}/{name}/{phone}/{password}",
+            arguments = listOf(
+                navArgument("referenceID") {
+                    type = NavType.StringType
+                },
+                navArgument("name") {
+                    type = NavType.StringType
+                },
+                navArgument("phone") {
+                    type = NavType.StringType
+                },
+                navArgument("password") {
+                    type = NavType.StringType
+                }
+            )) {
             FirstOnboardingScreen(navController = navController)
         }
-        composable("second_on_screen") {
+        composable(
+            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{dob}/{profession}/{profileUri}",
+            arguments = listOf(
+                navArgument("referenceID") {
+                    type = NavType.StringType
+                },
+                navArgument("name") {
+                    type = NavType.StringType
+                },
+                navArgument("phone") {
+                    type = NavType.StringType
+                },
+                navArgument("password") {
+                    type = NavType.StringType
+                },
+                navArgument("father") {
+                    type = NavType.StringType
+                },
+                navArgument("mother") {
+                    type = NavType.StringType
+                },
+                navArgument("gotra") {
+                    type = NavType.StringType
+                },
+                navArgument("maritalStatus") {
+                    type = NavType.StringType
+                },
+                navArgument("dob") {
+                    type = NavType.StringType
+                },
+                navArgument("profession") {
+                    type = NavType.StringType
+                },
+                navArgument("profileUri") {
+                    type = NavType.StringType
+                }
+        )) {
             SecondOnboardingScreen(navController = navController)
         }
+
         composable("dashboard_screen") {
             DashboardScreen(navController = navController)
         }
