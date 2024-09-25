@@ -1,11 +1,11 @@
 package app.mtt.aggrabandhu.viewmodel
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
-import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +20,10 @@ class Onboarding2Viewmodel @Inject constructor(
 
     val validateID : StateFlow<DocValidationResponse>
         get() = repository.validateID
+
+    var profileFile : MultipartBody.Part ?= null
+    var file : MultipartBody.Part ?= null
+    var file2 : MultipartBody.Part ?= null
 
     val referenceID : String
         get() = savedStateHandle.get<String>("referenceID")!!
@@ -44,6 +48,20 @@ class Onboarding2Viewmodel @Inject constructor(
     val profession : String
         get() = savedStateHandle.get<String>("profession")!!
 
+    var pincode : String? = ""
+    var city : String? = ""
+    var state : String? = ""
+    var address : String? = ""
+    var adharNumber : String? = ""
+    var adharUri : Uri?= null
+
+    var idNumber : String? = ""
+    var panUri : Uri?= null
+    var nominee : String? = ""
+    var relation : String? = ""
+    var nominee2 : String? = ""
+    var relation2 : String? = ""
+
     fun validateDoc(
         idNumber : String,
         idType : String,
@@ -51,6 +69,39 @@ class Onboarding2Viewmodel @Inject constructor(
     ){
         viewModelScope.launch {
             repository.validateDocument(idNumber,idType,multiPartBody)
+        }
+    }
+
+    fun signUpUnmarriedWithoutFile3Profile (idType: String) {
+        viewModelScope.launch {
+            Log.d("onViewModel2", "$gotra $dob $password $profession $city $state $pincode $idType-$idNumber ")
+
+            repository.signUpUnmarriedWithoutFile3Profile(
+                referenceID,
+                gotra,
+                getName,
+                father,
+                mother,
+                dob,
+                password,
+                maritalStatus,
+                phone,
+                profession,
+                address!!,
+                city!!,
+                state!!,
+                pincode!!,
+                adharNumber!!,
+                idType,
+                idNumber!!,
+                nominee!!,
+                relation!!,
+                nominee2!!,
+                relation2!!,
+                file!!,
+                file2!!,
+                profileFile!!
+            )
         }
     }
 

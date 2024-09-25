@@ -91,6 +91,66 @@ class Repository @Inject constructor(private val allApi: AllApi){
         Log.d("ValidationResponse", "${response.code()} ${response.message()}")
     }
 
+    suspend fun signUpUnmarriedWithoutFile3Profile(
+        referenceID : String,
+        gotra : String,
+        name : String,
+        fatherName : String,
+        motherName : String,
+        dob : String,
+        password : String,
+        maritalStatus : String,
+        mobileNumber : String,
+        address : String,
+        district : String,
+        state : String,
+        pincode : String,
+        profession : String,
+        adharNumber : String,
+        idType : String,
+        idNumber : String,
+        nominee : String,
+        relationShip : String,
+        nominee2 : String,
+        relationShip2 : String,
+        adharFile : MultipartBody.Part,
+        panFile : MultipartBody.Part,
+        profile : MultipartBody.Part,
+    ) {
+        Log.d("SignUP", "Sending")
+        val response = allApi.signUpUnmarriedWithoutFile3Profile(
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), referenceID),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gotra),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), profession),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), adharNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idType),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2),
+            adharFile,
+            panFile,
+            profile
+        )
+        if (response.isSuccessful && response.body() != null) {
+            Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")
+        } else {
+            Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
+        }
+    }
+
     suspend fun getProfileDetails(memberID : Int){
         val response = allApi.getProfileInfo("member_id",memberID)
         if (response.isSuccessful && response.body() != null){

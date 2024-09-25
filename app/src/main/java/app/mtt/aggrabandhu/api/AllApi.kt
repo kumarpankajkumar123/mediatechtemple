@@ -2,6 +2,7 @@ package app.mtt.aggrabandhu.api
 
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
+import app.mtt.aggrabandhu.authentication.onboarding.ResponseData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
@@ -75,6 +76,67 @@ interface AllApi {
         @Part profile : MultipartBody.Part, // Pan/ID
         @Part diseaseFile : MultipartBody.Part, // Pan/ID
     ) : Response<AllMembersData>
+
+    @Multipart
+    @POST("member")
+    suspend fun signUpWithoutProfile(
+        @Part("reference_id") reference_id : RequestBody,
+        @Part("gotra") gotra : RequestBody,
+        @Part("name") name : RequestBody,
+        @Part("father_name") father_name : RequestBody,
+        @Part("mother_name") mother_name : RequestBody,
+        @Part("dob") dob : RequestBody,
+        @Part("password") password : RequestBody,
+        @Part("marital_status") marital_status : RequestBody,
+        @Part("spouse_name") spouse_name : RequestBody,
+        @Part("mobile_no") mobile_no : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("district") district : RequestBody,
+        @Part("state") state : RequestBody,
+        @Part("pincode") pincode : RequestBody,
+        @Part("profession") profession : RequestBody,
+        @Part("aadhar_no") aadhar_no : RequestBody,
+        @Part("id_type") id_type : RequestBody,
+        @Part("id_no") id_no : RequestBody,
+        @Part("nominee") nominee : RequestBody,
+        @Part("relationship") relationship : RequestBody,
+        @Part("nominee2") nominee2 : RequestBody,
+        @Part("relationship2") relationship2 : RequestBody,
+        @Part("disease") disease : RequestBody, // True/False
+        @Part("rulesAccepted") rulesAccepted : RequestBody, // True/False
+        @Part file : MultipartBody.Part, // Aadhar
+        @Part file2 : MultipartBody.Part, // Pan/ID
+        @Part diseaseFile : MultipartBody.Part, // Pan/ID
+    ) : Response<AllMembersData>
+
+    @Multipart
+    @POST("member")
+    suspend fun signUpUnmarriedWithoutFile3Profile(
+        @Part("reference_id") reference_id : RequestBody,
+        @Part("gotra") gotra : RequestBody,
+        @Part("name") name : RequestBody,
+        @Part("father_name") father_name : RequestBody,
+        @Part("mother_name") mother_name : RequestBody,
+        @Part("dob") dob : RequestBody,
+        @Part("password") password : RequestBody,
+        @Part("marital_status") marital_status : RequestBody,
+        @Part("mobile_no") mobile_no : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("district") district : RequestBody,
+        @Part("state") state : RequestBody,
+        @Part("pincode") pincode : RequestBody,
+        @Part("profession") profession : RequestBody,
+        @Part("aadhar_no") aadhar_no : RequestBody,
+        @Part("id_type") id_type : RequestBody,
+        @Part("id_no") id_no : RequestBody,
+        @Part("nominee") nominee : RequestBody,
+        @Part("relationship") relationship : RequestBody,
+        @Part("nominee2") nominee2 : RequestBody,
+        @Part("relationship2") relationship2 : RequestBody,
+        @Part file : MultipartBody.Part, // Aadhar
+        @Part file2 : MultipartBody.Part, // Pan/ID
+        @Part profile : MultipartBody.Part, // Profile
+    ) : Response<ResponseData>
 
     @GET("member")
     suspend fun getAllMembers() : Response<AllMembersData>

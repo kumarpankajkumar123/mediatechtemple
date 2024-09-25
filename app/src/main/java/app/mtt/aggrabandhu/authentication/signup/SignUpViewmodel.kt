@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.authentication.signup
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.repository.Repository
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +41,21 @@ class SignUpViewmodel @Inject constructor(
     private val _password = MutableStateFlow("")
     val passwordTextState: StateFlow<String> = _password
 
+    fun initSharedPrefs(context: Context){
+        val sharedPrefManager = SharedPrefManager(context)
+        if (_referenceIdState.value.isEmpty()) {
+            _referenceIdState.value = sharedPrefManager.getReferenceID()!!
+        }
+        if (_fullNameState.value.isEmpty()) {
+            _fullNameState.value = sharedPrefManager.getFullName()!!
+        }
+        if (_phoneTextState.value.isEmpty()) {
+            _phoneTextState.value = sharedPrefManager.getPhone()!!
+        }
+        if (_password.value.isEmpty()) {
+            _password.value = sharedPrefManager.getPassword()!!
+        }
+    }
 
     // Function to update the text state
     fun onReferenceTextChanged(newText: String) {
@@ -53,4 +70,5 @@ class SignUpViewmodel @Inject constructor(
     fun onPasswordTextChanged(newText: String) {
         _password.value = newText
     }
+
 }

@@ -53,37 +53,18 @@ import es.dmoral.toasty.Toasty
 fun SecondOnboardingScreen(
     navController: NavController ?= null
 ) {
-
     val context = LocalContext.current
 
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
     val validationData = onboarding2Viewmodel.validateID.collectAsState()
 
-    val referenceID = onboarding2Viewmodel.referenceID
-    val getName = onboarding2Viewmodel.getName
-    val phone = onboarding2Viewmodel.phone
-    val password = onboarding2Viewmodel.password
-    val profileUri = Uri.parse((onboarding2Viewmodel.profileUri))
-    val father = onboarding2Viewmodel.father
-    val mother = onboarding2Viewmodel.mother
-    val gotra = onboarding2Viewmodel.gotra
-    val maritalStatus = onboarding2Viewmodel.maritalStatus
-    val dob = onboarding2Viewmodel.dob
-    val profession = onboarding2Viewmodel.profession
-
-    Toasty.success(context,phone).show()
-
-    var adharNumber : String? = null
+    val profileUri : Uri = Uri.parse(SharedPrefManager(context).getProfileImageUri())
 
     val docsList = arrayListOf(
-        "Pan card","Driving License", "Voter ID"
+        "PAN Card","Driving License", "Voter ID"
     )
     val selectedDoc = remember { mutableStateOf("") }
     val isSuffering = remember { mutableStateOf(false) }
-
-//    if (profileUri.){
-        Toasty.success(context,"dob").show()
-//    }
 
     Column(
         modifier = Modifier
@@ -101,7 +82,7 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Number,
             leadingIcon = Icons.Default.PinDrop,
         ) { text ->
-
+            onboarding2Viewmodel.pincode = text
         }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ City ---------------- */
@@ -112,7 +93,7 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationCity,
         ) { text ->
-
+            onboarding2Viewmodel.city = text
         }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ State ---------------- */
@@ -123,7 +104,7 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationOn,
         ) { text ->
-
+            onboarding2Viewmodel.state = text
         }
         /* ------------- Address ---------------- */
         TextFieldWithIcons(
@@ -133,28 +114,29 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationOn,
         ) { text ->
-
+            onboarding2Viewmodel.address = text
         }
 
         TextFieldWithIcons(
-            label = "Adhar Card Number",
-            placeholder = "Adhar card Nummber",
+            label = "Aadhar Card Number",
+            placeholder = "Aadhar card Number",
             maxLength = 12,
             keyboardType = KeyboardType.Number,
             leadingIcon = Icons.Default.Newspaper
         ) {
-            adharNumber = it
+            onboarding2Viewmodel.adharNumber = it
         }
         Spacer(modifier = Modifier.height(10.dp))
 
         SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
-            val file = prepareFilePart(uri,"file",context)
-            onboarding2Viewmodel.validateDoc(
-                adharNumber!!,
-                "aadhar card",
-                file
-            )
-            Toast.makeText(context,"${validationData.value.valid} ${validationData.value.matched}", Toast.LENGTH_SHORT).show()
+            onboarding2Viewmodel.adharUri = uri
+            onboarding2Viewmodel.file = prepareFilePart(uri,"file",context)
+//            onboarding2Viewmodel.validateDoc(
+//                onboarding2Viewmodel.adharNumber!!,
+//                "aadhar card",
+//                onboarding2Viewmodel.file!!
+//            )
+//            Toast.makeText(context,"${validationData.value.valid} ${validationData.value.matched}", Toast.LENGTH_SHORT).show()
         }
 
         /* ------------- Select Document Type ------------ */
@@ -180,11 +162,12 @@ fun SecondOnboardingScreen(
                 keyboardType = KeyboardType.Password,
                 leadingIcon = Icons.Default.Newspaper
             ) {
-
+                onboarding2Viewmodel.idNumber = it
             }
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(selectedDoc.value){
-
+                onboarding2Viewmodel.panUri = it
+                onboarding2Viewmodel.file2 = prepareFilePart(it,"file2", context)
             }
         }
 
@@ -193,20 +176,20 @@ fun SecondOnboardingScreen(
             label = "Nominee",
             placeholder = "Nominee 1 Name",
             maxLength = 26,
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
         ) { text ->
-
+            onboarding2Viewmodel.nominee = text
         }
         /*   ------------- Relation 1 ---------------- */
         TextFieldWithIcons(
             label = "Relation",
             placeholder = "Relation with Nominee 1",
             maxLength = 26,
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
         ) { text ->
-
+            onboarding2Viewmodel.relation = text
         }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ Nominee 2 ---------------- */
@@ -214,10 +197,10 @@ fun SecondOnboardingScreen(
             label = "Nominee 2",
             placeholder = "Nominee 2 Name",
             maxLength = 26,
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
         ) { text ->
-
+            onboarding2Viewmodel.nominee2 = text
         }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ Relation ---------------- */
@@ -225,10 +208,10 @@ fun SecondOnboardingScreen(
             label = "Relation",
             placeholder = "Relation with Nominee 2",
             maxLength = 26,
-            keyboardType = KeyboardType.Number,
+            keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
         ) { text ->
-
+            onboarding2Viewmodel.relation2 = text
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -252,7 +235,9 @@ fun SecondOnboardingScreen(
             text = "Next",
             background = colorResource(id = R.color.orange)
         ) {
-            navController?.navigate("dashboard_screen")
+            onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
+            onboarding2Viewmodel.signUpUnmarriedWithoutFile3Profile(selectedDoc.value)
+//            navController?.navigate("dashboard_screen")
         }
     }
 }

@@ -1,6 +1,5 @@
 package app.mtt.aggrabandhu.authentication.onboarding
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -32,10 +31,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,7 +59,6 @@ import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
-import es.dmoral.toasty.Toasty
 
 @Composable
 fun FirstOnboardingScreen(navController: NavController?=null) {
@@ -72,11 +66,13 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val context = LocalContext.current
 
     val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
+    onboarding1Viewmodel.initSharedPrefs(context)
 
     /* --------------------- Get Gotra Data -------------------*/
     val gotra = onboarding1Viewmodel.gotra.collectAsState()
     /* ----------------------- ------------- -----------------------*/
-    /* --------------------- Get Gotra Data -------------------*/
+
+    /* --------------------- Get Profession Data -------------------*/
     val profession = onboarding1Viewmodel.profession.collectAsState()
     /* ----------------------- ------------- -----------------------*/
 
@@ -259,13 +255,21 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             Spacer(modifier = Modifier.height(10.dp))
 
             CustomButton(text = "Next", background = colorResource(id = R.color.orange)) {
+                val enCodedUri1 = imageUri.value.toString()
                 val enCodedUri = (Uri.encode(imageUri.toString()))
-                SharedPrefManager(context).saveImageUri(enCodedUri)
+                val sp = SharedPrefManager(context)
+                sp.saveProfileImageUri(enCodedUri1)
+                sp.saveFatherName(father.value)
+                sp.saveMotherName(mother.value)
+                sp.saveGotra(selectedGotra.value)
+                sp.saveMarital(selectedMaritalStatus.value)
+                sp.saveDOB(dob.value)
+                sp.saveProfession(selectedProfession.value)
+
                 navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/$father/$mother/${selectedGotra.value}/${selectedMaritalStatus.value}/$dob/${selectedProfession.value}/$enCodedUri")
 //                navController?.navigate(
 //                    "second_on_screen/${Uri.encode(referenceID)}/${Uri.encode(name)}/${Uri.encode(phone)}/${Uri.encode(password)}/${Uri.encode(father)}/${Uri.encode(mother)}/${Uri.encode(selectedGotra.value)}/${Uri.encode(selectedMaritalStatus.value)}/${Uri.encode(dob)}/${Uri.encode(selectedProfession.value)}"
 //                )
-
             }
 
         }

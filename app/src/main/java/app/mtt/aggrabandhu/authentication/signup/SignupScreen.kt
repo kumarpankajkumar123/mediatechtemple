@@ -46,6 +46,7 @@ import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsWithImePadding
@@ -57,6 +58,8 @@ fun SignupScreen(navController: NavController) {
     val context = LocalContext.current
 
     val signUpViewmodel : SignUpViewmodel = hiltViewModel()
+
+    signUpViewmodel.initSharedPrefs(context)
 
     var referenceID = signUpViewmodel.referenceIdFieldState.collectAsState()
     var name = signUpViewmodel.fullNameFieldState.collectAsState()
@@ -185,11 +188,16 @@ fun SignupScreen(navController: NavController) {
                 } else if (confirmPassword?.length!! < 5) {
                     Toasty.error(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
                 } else {
-                    if (confirmPassword.equals(password.value)) {
+//                    if (confirmPassword.equals(password.value)) {
+                        val sharedPref = SharedPrefManager(context)
+                        sharedPref.saveReferenceID(referenceID.value)
+                        sharedPref.saveFullName(name.value)
+                        sharedPref.savePhone(phone.value)
+                        sharedPref.savePassword(password.value)
                         navController.navigate("first_on_screen/${referenceID.value}/${name.value}/${phone.value}/${password.value}")
-                    } else {
-                        Toasty.error(context, "Password should be same").show()
-                    }
+//                    } else {
+//                        Toasty.error(context, "Password should be same").show()
+//                    }
                 }
             }
 

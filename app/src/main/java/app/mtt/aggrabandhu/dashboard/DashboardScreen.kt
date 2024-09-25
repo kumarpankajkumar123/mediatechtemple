@@ -208,8 +208,8 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
         //Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
         SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
-        SideNavItem(text = "Donors List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
-        SideNavItem(text = "People Receiving Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
+        SideNavItem(text = "Members List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
+        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){}  //onItemClick.invoke("support_page")
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(text = "Facebook") {}

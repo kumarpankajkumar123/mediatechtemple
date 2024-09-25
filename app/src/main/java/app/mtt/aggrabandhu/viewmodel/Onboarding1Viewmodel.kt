@@ -1,6 +1,8 @@
 package app.mtt.aggrabandhu.viewmodel
 
+import android.content.Context
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.repository.Repository
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -75,6 +78,29 @@ class Onboarding1Viewmodel @Inject constructor(
     val selectedMaritalStatus: StateFlow<String> = _selectedMaritalStatus
     /* ----------------------- ------------- -----------------------*/
 
+    fun initSharedPrefs(context: Context) {
+        val sharedPref = SharedPrefManager(context)
+        if (_imageUri.value == null) {
+            val uri = sharedPref.getProfileImageUri()!!
+            Log.d("URI", "Retrieved URI : $uri")
+            _imageUri.value = Uri.parse(uri)
+        }
+        if (_fatherNameState.value.isEmpty()) {
+            _fatherNameState.value = sharedPref.getFatherName()!!
+        }
+        if (_motherNameState.value.isEmpty()) {
+            _motherNameState.value = sharedPref.getMotherName()!!
+        }
+        if (_selectedGotra.value.isEmpty()) {
+            _selectedGotra.value = sharedPref.getGotra()!!
+        }
+        if (_dobTextState.value.isEmpty()) {
+            _dobTextState.value = sharedPref.getDOB()!!
+        }
+        if (_professionTextState.value.isEmpty()) {
+            _professionTextState.value = sharedPref.getProfession()!!
+        }
+    }
 
     // Function to update the text state
     fun onImageUriChanged(newUri : Uri) {
