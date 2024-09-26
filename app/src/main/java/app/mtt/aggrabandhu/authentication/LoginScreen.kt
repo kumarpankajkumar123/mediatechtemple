@@ -124,14 +124,14 @@ fun LoginScreen (navController: NavController?= null) {
 
             /* ---------- Login Button -------------- */
             CustomButton("Login", colorResource(id = R.color.orange)) {
-                if (phone?.length!! < 10) {
-                    Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-                } else if (password?.isEmpty()!!) {
-                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
-                } else {
+//                if (phone?.length!! < 10) {
+//                    Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
+//                } else if (password?.isEmpty()!!) {
+//                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
+//                } else {
                     Toasty.success(context, "$phone - $password", Toast.LENGTH_SHORT).show()
                     navController?.navigate("dashboard_screen")
-                }
+//                }
             }
 
             Text(

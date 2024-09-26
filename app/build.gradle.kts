@@ -108,6 +108,8 @@ dependencies {
 
     implementation ("com.google.accompanist:accompanist-insets:0.31.2-alpha")
 
+    // Google Maps
+    implementation("com.google.maps.android:maps-compose:4.3.3")
 }
 
 // Allow references to generated code

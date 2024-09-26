@@ -12,6 +12,8 @@ color teal_700
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable png_fb
+drawable png_ig
 drawable png_logo
 drawable textured_bg
 font falling_sky_black

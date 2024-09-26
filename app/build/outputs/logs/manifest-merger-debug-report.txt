@@ -1,11 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-32:12
-INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-32:12
-INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-32:12
-INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-32:12
+ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-35:12
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\67d41251146a6bc733b909a3a505dc04\transformed\coil-compose-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.maps.android:maps-compose:4.3.3] C:\Users\MTT PC\.gradle\caches\transforms-4\747fc7e005686f08d474afca0acf3572\transformed\maps-compose-4.3.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\409d38b951b952fd70b79d80112dcaeb\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.8.0] C:\Users\MTT PC\.gradle\caches\transforms-4\b0b5f45604b0e4a20bc81ac08bb3bb41\transformed\navigation-common-2.8.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-runtime:2.8.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4db834dfce76d4308f34bb2ec9ceff73\transformed\navigation-runtime-2.8.0\AndroidManifest.xml:17:1-22:12
@@ -18,6 +19,11 @@ MERGED from [com.google.dagger:hilt-android:2.49] C:\Users\MTT PC\.gradle\caches
 MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:18:1-23:12
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:17:1-44:12
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:16:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\cfda957000171798f284149715515bcb\transformed\play-services-tasks-18.0.1\AndroidManifest.xml:2:1-6:12
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:16:1-26:12
 MERGED from [com.github.GrenderG:Toasty:1.5.2] C:\Users\MTT PC\.gradle\caches\transforms-4\52583689856714c787f24d660f970284\transformed\Toasty-1.5.2\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\MTT PC\.gradle\caches\transforms-4\dea0c8b350a1d5be5137fd58a97e1486\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\MTT PC\.gradle\caches\transforms-4\a6d80f32b0cad145fa5949562de5a29f\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -64,8 +70,8 @@ MERGED from [androidx.activity:activity-ktx:1.9.2] C:\Users\MTT PC\.gradle\cache
 MERGED from [androidx.activity:activity:1.9.2] C:\Users\MTT PC\.gradle\caches\transforms-4\41a66f8ef9645225772733b4be7b2039\transformed\activity-1.9.2\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03] C:\Users\MTT PC\.gradle\caches\transforms-4\44eb59498e8054af434919d3302416a9\transformed\dynamicanimation-ktx-1.0.0-alpha03\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.1.0-alpha03] C:\Users\MTT PC\.gradle\caches\transforms-4\bca2e7607101574a6c7cd4aea13a9593\transformed\dynamicanimation-1.1.0-alpha03\AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\e542531f565da58069b7e320b4fa850b\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\MTT PC\.gradle\caches\transforms-4\345e74228e37f6150025a7461ccb9abb\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\MTT PC\.gradle\caches\transforms-4\5da23eb3431fb7b4d16b3f1e59620801\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\f97d2748245707995b0fbd59ea05210b\transformed\drawerlayout-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -79,6 +85,7 @@ MERGED from [androidx.compose.runtime:runtime-android:1.7.0] C:\Users\MTT PC\.gr
 MERGED from [androidx.annotation:annotation-experimental:1.4.1] C:\Users\MTT PC\.gradle\caches\transforms-4\6deb427488e1149a910d7aa91c6eedd8\transformed\annotation-experimental-1.4.1\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\MTT PC\.gradle\caches\transforms-4\a41d97bbb9d93925d8e73c048861384b\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\63e9ff9286e9dccbbbf86ee362a20357\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\MTT PC\.gradle\caches\transforms-4\49fec5c1642899b03c60db20a8ce5273\transformed\viewbinding-7.4.2\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\MTT PC\.gradle\caches\transforms-4\ac767a3ebc50709b6dd26a15d98b3137\transformed\profileinstaller-1.3.1\AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\MTT PC\.gradle\caches\transforms-4\2ad06b68e3ca7b50f4ec0a642b7ca2f8\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\e0fe320ee029b2dfc88797e5e18719bb\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -98,11 +105,21 @@ MERGED from [com.google.dagger:dagger-lint-aar:2.49] C:\Users\MTT PC\.gradle\cac
 		ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:11-69
 uses-permission#android.permission.INTERNET
 ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:5:5-66
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:24:5-67
 	android:name
 		ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:7:5-30:19
-INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:7:5-30:19
+ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:7:5-34:19
+INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:7:5-34:19
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:19:5-23:19
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\cfda957000171798f284149715515bcb\transformed\play-services-tasks-18.0.1\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\cfda957000171798f284149715515bcb\transformed\play-services-tasks-18.0.1\AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:20:5-24:19
 MERGED from [androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\MTT PC\.gradle\caches\transforms-4\426bfd6a62fab2c033681c1634d3484f\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\MTT PC\.gradle\caches\transforms-4\426bfd6a62fab2c033681c1634d3484f\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:22:5-26:19
 MERGED from [androidx.emoji2:emoji2:1.3.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4335a107a9ee3d4ca31eb0236084d3c9\transformed\emoji2-1.3.0\AndroidManifest.xml:23:5-33:19
@@ -165,6 +182,12 @@ category#android.intent.category.LAUNCHER
 ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:27:17-77
 	android:name
 		ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:27:27-74
+meta-data#com.google.android.geo.API_KEY
+ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:31:9-32:44
+	android:value
+		ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:32:13-42
+	android:name
+		ADDED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:31:20-65
 uses-sdk
 INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml
@@ -173,6 +196,8 @@ MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\trans
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\67d41251146a6bc733b909a3a505dc04\transformed\coil-compose-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:21:5-23:42
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:21:5-23:42
+MERGED from [com.google.maps.android:maps-compose:4.3.3] C:\Users\MTT PC\.gradle\caches\transforms-4\747fc7e005686f08d474afca0acf3572\transformed\maps-compose-4.3.3\AndroidManifest.xml:20:5-44
+MERGED from [com.google.maps.android:maps-compose:4.3.3] C:\Users\MTT PC\.gradle\caches\transforms-4\747fc7e005686f08d474afca0acf3572\transformed\maps-compose-4.3.3\AndroidManifest.xml:20:5-44
 MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\409d38b951b952fd70b79d80112dcaeb\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\409d38b951b952fd70b79d80112dcaeb\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.navigation:navigation-common:2.8.0] C:\Users\MTT PC\.gradle\caches\transforms-4\b0b5f45604b0e4a20bc81ac08bb3bb41\transformed\navigation-common-2.8.0\AndroidManifest.xml:20:5-44
@@ -197,6 +222,16 @@ MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\
 MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:21:5-44
+MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:21:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\cfda957000171798f284149715515bcb\transformed\play-services-tasks-18.0.1\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-tasks:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\cfda957000171798f284149715515bcb\transformed\play-services-tasks-18.0.1\AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:18:5-43
 MERGED from [com.github.GrenderG:Toasty:1.5.2] C:\Users\MTT PC\.gradle\caches\transforms-4\52583689856714c787f24d660f970284\transformed\Toasty-1.5.2\AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.GrenderG:Toasty:1.5.2] C:\Users\MTT PC\.gradle\caches\transforms-4\52583689856714c787f24d660f970284\transformed\Toasty-1.5.2\AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\MTT PC\.gradle\caches\transforms-4\dea0c8b350a1d5be5137fd58a97e1486\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
@@ -289,10 +324,10 @@ MERGED from [androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03] C:\Us
 MERGED from [androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03] C:\Users\MTT PC\.gradle\caches\transforms-4\44eb59498e8054af434919d3302416a9\transformed\dynamicanimation-ktx-1.0.0-alpha03\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.1.0-alpha03] C:\Users\MTT PC\.gradle\caches\transforms-4\bca2e7607101574a6c7cd4aea13a9593\transformed\dynamicanimation-1.1.0-alpha03\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.dynamicanimation:dynamicanimation:1.1.0-alpha03] C:\Users\MTT PC\.gradle\caches\transforms-4\bca2e7607101574a6c7cd4aea13a9593\transformed\dynamicanimation-1.1.0-alpha03\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\e542531f565da58069b7e320b4fa850b\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\e542531f565da58069b7e320b4fa850b\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.autofill:autofill:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\c66656004a946f29998a8e336aea92c2\transformed\autofill-1.0.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\MTT PC\.gradle\caches\transforms-4\345e74228e37f6150025a7461ccb9abb\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\MTT PC\.gradle\caches\transforms-4\345e74228e37f6150025a7461ccb9abb\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\MTT PC\.gradle\caches\transforms-4\5da23eb3431fb7b4d16b3f1e59620801\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
@@ -319,6 +354,8 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\MT
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\MTT PC\.gradle\caches\transforms-4\a41d97bbb9d93925d8e73c048861384b\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\63e9ff9286e9dccbbbf86ee362a20357\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\63e9ff9286e9dccbbbf86ee362a20357\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\MTT PC\.gradle\caches\transforms-4\49fec5c1642899b03c60db20a8ce5273\transformed\viewbinding-7.4.2\AndroidManifest.xml:5:5-44
+MERGED from [androidx.databinding:viewbinding:7.4.2] C:\Users\MTT PC\.gradle\caches\transforms-4\49fec5c1642899b03c60db20a8ce5273\transformed\viewbinding-7.4.2\AndroidManifest.xml:5:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\MTT PC\.gradle\caches\transforms-4\ac767a3ebc50709b6dd26a15d98b3137\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\MTT PC\.gradle\caches\transforms-4\ac767a3ebc50709b6dd26a15d98b3137\transformed\profileinstaller-1.3.1\AndroidManifest.xml:21:5-44
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\MTT PC\.gradle\caches\transforms-4\2ad06b68e3ca7b50f4ec0a642b7ca2f8\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
@@ -339,6 +376,42 @@ MERGED from [com.google.dagger:dagger-lint-aar:2.49] C:\Users\MTT PC\.gradle\cac
 		ADDED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:23:9-39
 	android:minSdkVersion
 		INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:23:5-79
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:23:22-76
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:28:9-32
+queries
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:30:5-34:15
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:33:18-61
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:39:9-41:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:40:13-50
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:18.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\cdee0212aeaac27fbe5acd38c184712a\transformed\play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
 activity#androidx.activity.ComponentActivity
 ADDED from [androidx.compose.ui:ui-test-manifest:1.7.0] C:\Users\MTT PC\.gradle\caches\transforms-4\426bfd6a62fab2c033681c1634d3484f\transformed\ui-test-manifest-1.7.0\AndroidManifest.xml:23:9-25:39
 	android:exported

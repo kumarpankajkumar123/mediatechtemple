@@ -3,6 +3,7 @@ package app.mtt.aggrabandhu.dashboard
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +53,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -113,7 +115,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                     modifier = Modifier.padding(end = 6.dp)
                                 )
                                 CircularImage(
-                                    size = 40.dp,
+                                    size = 30.dp,
                                     painter = painterResource(id = R.drawable.png_logo)
                                 )
                             }
@@ -175,7 +177,7 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
         1-> DonationsPage(navController)
         2-> RulesRegulationsPage()
         3-> {
-            openSupport(LocalContext.current)
+            openSupport(LocalContext.current, "7830305040")
             ProfilePage()
         }
         4-> ProfilePage()
@@ -191,8 +193,8 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
             .fillMaxHeight()
     ) {
         Spacer(modifier = Modifier.height(30.dp))
-        CircularImage(size = 160.dp, painter = painterResource(id = R.drawable.png_logo))
-        Text(
+        CircularImage(size = 140.dp, painter = painterResource (id = R.drawable.png_logo) )
+        Text (
             text = stringResource(id = R.string.app_name),
             modifier = Modifier
                 .padding(start = 16.dp),
@@ -205,15 +207,15 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
             thickness = DividerDefaults.Thickness,
             color = DividerDefaults.color
         )
-        //Spacer(modifier = Modifier.height(10.dp))
+        // Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
         SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
         SideNavItem(text = "Members List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
         SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
-        SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){}  //onItemClick.invoke("support_page")
+        SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}  //
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
-        SubNavItem(text = "Facebook") {}
-        SubNavItem(text = "Instagram") {}
+        SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") {}
+        SubNavItem(imageVector = R.drawable.png_ig, text = "Instagram") {}
         SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
         SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
         SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
@@ -250,7 +252,10 @@ fun SideNavItem(text: String, imageVector: ImageVector, clickable : ()-> Unit) {
 }
 
 @Composable
-fun SubNavItem(text: String, clickable : ()-> Unit) {
+fun SubNavItem(
+    imageVector: Int,
+    text: String,
+    clickable : ()-> Unit) {
     Column {
         Row(
             modifier = Modifier
@@ -261,8 +266,13 @@ fun SubNavItem(text: String, clickable : ()-> Unit) {
                 .clickable { clickable.invoke() },
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.width(55.dp))
-//            Icon(imageVector = Icons.Default.List, contentDescription = )
+            Spacer(modifier = Modifier.width(40.dp))
+            Image(
+                painter = painterResource(id = imageVector),
+                contentDescription = "Nothing",
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleSmall,
@@ -281,8 +291,8 @@ private fun Preview() {
     // SideNavItem(text = "Hello", imageVector = Icons.Default.Visibility)
 }
 
-private fun openSupport(context:Context){
-    val url = "https://api.whatsapp.com/send?phone=+917597435543"
+fun openSupport(context:Context, number : String){
+    val url = "https://api.whatsapp.com/send?phone=+91$number"
     val i = Intent(Intent.ACTION_VIEW)
     i.setData(Uri.parse(url))
     context.startActivity(i)
