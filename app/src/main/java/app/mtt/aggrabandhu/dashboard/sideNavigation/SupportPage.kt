@@ -45,7 +45,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Preview
 @Composable
-fun SupportPage(navController: NavController?=null) {
+fun SupportPage(navController: NavController?=null, fromDashboard : Boolean?=false) {
     val context = LocalContext.current
 
     Column(
@@ -53,25 +53,27 @@ fun SupportPage(navController: NavController?=null) {
             .fillMaxSize()
             .background(Color.White),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, top = 10.dp)
-                .height(50.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                modifier = Modifier.size(28.dp)
-            )
-            Text(
-                text = "Support",
-                fontSize = 22.sp,
-                modifier = Modifier.padding(start = 10.dp),
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black
-            )
+        if(fromDashboard == false) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(28.dp).clickable { navController?.popBackStack() }
+                )
+                Text(
+                    text = "Support",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
         }
         Text(
             text = "Enquiry -",

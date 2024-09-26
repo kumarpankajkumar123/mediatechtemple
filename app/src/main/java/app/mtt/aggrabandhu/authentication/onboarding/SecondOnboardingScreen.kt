@@ -131,11 +131,11 @@ fun SecondOnboardingScreen(
         SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
             onboarding2Viewmodel.adharUri = uri
             onboarding2Viewmodel.file = prepareFilePart(uri,"file",context)
-//            onboarding2Viewmodel.validateDoc(
-//                onboarding2Viewmodel.adharNumber!!,
-//                "aadhar card",
-//                onboarding2Viewmodel.file!!
-//            )
+            onboarding2Viewmodel.validateDoc(
+                onboarding2Viewmodel.adharNumber!!,
+                "aadhar card",
+                onboarding2Viewmodel.file!!
+            )
 //            Toast.makeText(context,"${validationData.value.valid} ${validationData.value.matched}", Toast.LENGTH_SHORT).show()
         }
 

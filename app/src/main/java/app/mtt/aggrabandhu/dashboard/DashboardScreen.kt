@@ -53,8 +53,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,6 +66,7 @@ import app.mtt.aggrabandhu.dashboard.pages.liveDonation.DonationsPage
 import app.mtt.aggrabandhu.dashboard.pages.HomePage
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
 import app.mtt.aggrabandhu.utils.CircularImage
 import kotlinx.coroutines.launch
 
@@ -172,15 +171,14 @@ fun DashboardScreen(navController : NavController ?= null) {
 
 @Composable
 fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, selectedIndex : Int) {
-    when(selectedIndex){
-        0-> HomePage()
-        1-> DonationsPage(navController)
-        2-> RulesRegulationsPage()
-        3-> {
-            openSupport(LocalContext.current, "7830305040")
-            ProfilePage()
+    Column( modifier = modifier ) {
+        when(selectedIndex){
+            0-> HomePage()
+            1-> DonationsPage(navController)
+            2-> RulesRegulationsPage()
+            3-> SupportPage(fromDashboard = true)
+            4-> ProfilePage()
         }
-        4-> ProfilePage()
     }
 }
 

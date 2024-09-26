@@ -74,7 +74,7 @@ class Onboarding2Viewmodel @Inject constructor(
 
     fun signUpUnmarriedWithoutFile3Profile (idType: String) {
         viewModelScope.launch {
-            Log.d("onViewModel2", "$gotra $dob $password $profession $city $state $pincode $idType-$idNumber ")
+            Log.d("onViewModel2", "Gotra : $gotra DOB : ${dob} pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
 
             repository.signUpUnmarriedWithoutFile3Profile(
                 referenceID,

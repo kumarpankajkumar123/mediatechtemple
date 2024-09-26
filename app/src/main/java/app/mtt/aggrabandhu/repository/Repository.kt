@@ -5,6 +5,7 @@ import app.mtt.aggrabandhu.api.AllApi
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,10 +84,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 idType.toRequestBody("multipart/form-data".toMediaTypeOrNull())
             )
         if (response.isSuccessful && response.body() != null){
-            _validateID.emit(response.body()!!)
-            Log.d("ValidationResponse", response.body()!!.valid.toString())
+//            _validateID.emit(response.body()!!)
+            Log.d("ValidationResponse", "${response.code().toString()} ${response.body()!!.valid}")
         } else {
-            Log.d("ValidationError", response.code().toString())
+            Log.d("ValidationError", "${response.code().toString()} ${response.message().toString()}")
         }
         Log.d("ValidationResponse", "${response.code()} ${response.message()}")
     }
@@ -151,11 +152,19 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
-    suspend fun getProfileDetails(memberID : Int){
-        val response = allApi.getProfileInfo("member_id",memberID)
-        if (response.isSuccessful && response.body() != null){
+    private val _profileData = MutableStateFlow<ProfileData>(
+        ProfileData("","","","",false,"","","","","","",0,"","","","","","","","","","","","",false,"","","","","")
+    )
+    val profileData : StateFlow<ProfileData>
+        get() = _profileData
 
+    suspend fun getProfileDetails(memberID : Int){
+        val response = allApi.getProfileInfo("id",memberID)
+        if (response.isSuccessful && response.body() != null){
+            _profileData.emit(response.body()!![0])
+            Log.d("Profile" ,"${response.body().toString()} ${response.code().toString()}")
         }
+        Log.d("Profile" ,"${response.body().toString()} ${response.code()} ")
     }
 
 }

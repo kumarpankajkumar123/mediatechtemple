@@ -4,6 +4,7 @@ import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
 import app.mtt.aggrabandhu.authentication.onboarding.ResponseData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
 import okhttp3.MultipartBody
@@ -31,8 +32,14 @@ interface AllApi {
         @Part("type_id") type_id : RequestBody,
     ) : Response<DocValidationResponse>
 
-    @GET("donation/detail")
+    @GET("member/detail")
     suspend fun getProfileInfo(
+        @Query("key") key : String,
+        @Query("value") value : Int
+    ) : Response<List<ProfileData>>
+
+    @GET("donation/detail")
+    suspend fun getDonationInfo(
         @Query("key") key : String,
         @Query("value") value : Int
     ) : Response<LiveDonationsData>
