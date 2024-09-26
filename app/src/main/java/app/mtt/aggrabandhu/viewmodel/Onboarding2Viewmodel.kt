@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -18,7 +19,7 @@ class Onboarding2Viewmodel @Inject constructor(
     private val repository: Repository,
     private val savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    val validateID : StateFlow<DocValidationResponse>
+    val validateID : StateFlow<Int>
         get() = repository.validateID
 
     var profileFile : MultipartBody.Part ?= null
@@ -61,6 +62,9 @@ class Onboarding2Viewmodel @Inject constructor(
     var relation : String? = ""
     var nominee2 : String? = ""
     var relation2 : String? = ""
+    var isRuleAccepted = false
+    var isAadharVerified = false
+    var isOtherDocVerified = false
 
     fun validateDoc(
         idNumber : String,
@@ -72,9 +76,9 @@ class Onboarding2Viewmodel @Inject constructor(
         }
     }
 
-    fun signUpUnmarriedWithoutFile3Profile (idType: String) {
+    fun signUpUnmarriedWithoutFile3Profile (idType: String, rulesAccepted : String) {
         viewModelScope.launch {
-            Log.d("onViewModel2", "Gotra : $gotra DOB : ${dob} pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
+            Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
 
             repository.signUpUnmarriedWithoutFile3Profile(
                 referenceID,
@@ -86,11 +90,11 @@ class Onboarding2Viewmodel @Inject constructor(
                 password,
                 maritalStatus,
                 phone,
-                profession,
                 address!!,
                 city!!,
                 state!!,
                 pincode!!,
+                profession,
                 adharNumber!!,
                 idType,
                 idNumber!!,
@@ -100,7 +104,8 @@ class Onboarding2Viewmodel @Inject constructor(
                 relation2!!,
                 file!!,
                 file2!!,
-                profileFile!!
+                profileFile!!,
+                rulesAccepted
             )
         }
     }

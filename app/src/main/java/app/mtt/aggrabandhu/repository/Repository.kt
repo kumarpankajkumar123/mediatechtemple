@@ -2,8 +2,7 @@ package app.mtt.aggrabandhu.repository
 
 import android.util.Log
 import app.mtt.aggrabandhu.api.AllApi
-import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
-import app.mtt.aggrabandhu.authentication.onboarding.ProfessionData
+import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
@@ -38,8 +37,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val allMembers : StateFlow<List<AllMemberData>>
         get() = _allMembers
 
-    private val _validateID = MutableStateFlow<DocValidationResponse>(DocValidationResponse(false, false))
-    val validateID : StateFlow<DocValidationResponse>
+//    private val _validateID = MutableStateFlow<DocValidationResponse>(DocValidationResponse(false, false, ""))
+//    val validateID : StateFlow<DocValidationResponse>
+//        get() = _validateID
+    private val _validateID = MutableStateFlow<Int>(0)
+    val validateID : StateFlow<Int>
         get() = _validateID
 
     suspend fun getProfession() {
@@ -70,7 +72,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
-    suspend fun getAllMembers(){
+    suspend fun getAllMembers() {
         val response = allApi.getAllMembers()
         if (response.isSuccessful && response.body() != null){
             _allMembers.emit(response.body()!!.data)
@@ -78,21 +80,29 @@ class Repository @Inject constructor(private val allApi: AllApi){
     }
 
     suspend fun validateDocument(idNumber : String, idType : String, multiPartBody : MultipartBody.Part){
-        val response = allApi.validateDocuments(
+        try {
+            val response = allApi.validateDocuments(
                 multiPartBody,
                 idNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                 idType.toRequestBody("multipart/form-data".toMediaTypeOrNull())
             )
-        if (response.isSuccessful && response.body() != null){
-//            _validateID.emit(response.body()!!)
-            Log.d("ValidationResponse", "${response.code().toString()} ${response.body()!!.valid}")
-        } else {
-            Log.d("ValidationError", "${response.code().toString()} ${response.message().toString()}")
+            if (response.isSuccessful && response.body() != null) {
+                _validateID.emit(response.code())
+                Log.d(
+                    "ValidationResponse",
+                    "${response.code()} ${response.message()} ${response.body()!!.valid} "
+                )
+            } else {
+                _validateID.emit(response.code())
+                Log.d("ValidationError", "${response.code()} ${response.message()}")
+            }
+        } catch (e : Exception) {
+            e.printStackTrace()
+            _validateID.emit(400)
         }
-        Log.d("ValidationResponse", "${response.code()} ${response.message()}")
     }
 
-    suspend fun signUpUnmarriedWithoutFile3Profile(
+    suspend fun signUpUnmarriedWithoutFile3Profile (
         referenceID : String,
         gotra : String,
         name : String,
@@ -117,15 +127,33 @@ class Repository @Inject constructor(private val allApi: AllApi){
         adharFile : MultipartBody.Part,
         panFile : MultipartBody.Part,
         profile : MultipartBody.Part,
+        rulesAccepted : String,
     ) {
         Log.d("SignUP", "Sending")
-        val response = allApi.signUpUnmarriedWithoutFile3Profile(
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), referenceID),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gotra),
+        Log.d("onViewModel2",
+            "Gotra : $gotra, " +
+                    "DOB : $dob, " +
+                    "father : $fatherName, " +
+                    "mother : $motherName, " +
+                    "pass : $password, " +
+                    "Profession : $profession, " +
+                    "Marital : $maritalStatus, " +
+                    "City :$district, " +
+                    "State : $state,  " +
+                    "Pin : $pincode, " +
+                    "Rules : $rulesAccepted, " +
+                    "referenceID : $referenceID, " +
+                    "idType : $idType-$idNumber, "
+        )
+        Log.d("Files", "$adharFile, \n$panFile, \n$profile")
+
+        val response = allApi.signUpWithoutDisease(
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gotra),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "example@gmail.com"),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
@@ -137,13 +165,15 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), adharNumber),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idType),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idNumber),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2),
             adharFile,
             panFile,
-            profile
+            profile,
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), referenceID),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), rulesAccepted)
         )
         if (response.isSuccessful && response.body() != null) {
             Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")

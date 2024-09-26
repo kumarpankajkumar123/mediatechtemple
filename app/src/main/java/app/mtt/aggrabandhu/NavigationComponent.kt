@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import app.mtt.aggrabandhu.authentication.LoginScreen
-import app.mtt.aggrabandhu.authentication.onboarding.FirstOnboardingScreen
-import app.mtt.aggrabandhu.authentication.onboarding.SecondOnboardingScreen
+import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.FirstOnboardingScreen
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SecondOnboardingScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
