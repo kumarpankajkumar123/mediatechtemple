@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import app.mtt.aggrabandhu.ui.theme.AggrabandhuTheme
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +16,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
         setContent {
-            NavigationComponent()
+
+            val sp = SharedPrefManager(this)
+            val uId = sp.getLoginStatus()
+
+            val loginStatus = if(uId?.isEmpty()!!) false else true
+            NavigationComponent(loginStatus)
         }
     }
 }

@@ -61,7 +61,7 @@ fun DonationsPage(navController: NavController) {
             .background(Color.White),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = "All Live Donations",
             fontSize = 22.sp,

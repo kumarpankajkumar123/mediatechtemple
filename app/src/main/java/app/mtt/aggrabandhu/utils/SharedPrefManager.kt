@@ -117,4 +117,13 @@ class SharedPrefManager(private val context : Context) {
         return sharedPreferences.getString("profession", "")
     }
 
+    /*  ------------------------------------------------------------------*/
+    fun saveLoginStatus(userid : String){
+        editor.putString("login",userid)
+        editor.apply()
+    }
+    fun getLoginStatus(): String? {
+        return sharedPreferences.getString("login", "")
+    }
+
 }

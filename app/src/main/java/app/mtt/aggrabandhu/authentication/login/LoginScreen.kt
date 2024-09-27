@@ -47,6 +47,7 @@ import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
@@ -58,7 +59,9 @@ fun LoginScreen (navController: NavController?= null) {
     val loginViewmodel : LoginViewmodel = hiltViewModel()
 
     val loginResponseCode by loginViewmodel.loginResponseCode.collectAsState()
+    val loginResponse by loginViewmodel.loginResponse.collectAsState()
 
+    val sp = SharedPrefManager(context)
     val showProgress = remember { mutableStateOf(false) }
 
     if (loginResponseCode != 0) {
@@ -67,7 +70,8 @@ fun LoginScreen (navController: NavController?= null) {
             if (!loginViewmodel.isLogin) {
                 Toasty.success(context, "Login", Toast.LENGTH_SHORT).show()
                 loginViewmodel.isLogin = true
-                Log.d("Login", "Login")
+                Log.d("Login", "Login ${loginResponse.userid}")
+                sp.saveLoginStatus(loginResponse.userid.toString())
                 navController?.navigate("dashboard_screen")
             }
         } else {

@@ -31,7 +31,7 @@ fun HomePage(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(vertical = 55.dp),
+            .padding(vertical = 10.dp),
     ) {
         Text(
             text = "Notifications",

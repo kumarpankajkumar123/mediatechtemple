@@ -1,5 +1,7 @@
 package app.mtt.aggrabandhu.dashboard.sideNavigation
 
+import android.view.ViewGroup
+import android.webkit.WebView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 
 @Composable
@@ -54,5 +57,19 @@ fun PrivacyPolicyPage(navController: NavController ?= null) {
                 color = Color.Black
             )
         }
+
+        val pp = "https://www.termsfeed.com/live/029acdd1-d2fa-4a66-aeb2-0dd2cf784b03"
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = {
+            WebView(it).apply {
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT
+                )
+            }
+        }, update = {
+            it.loadUrl(pp)
+        })
     }
 }

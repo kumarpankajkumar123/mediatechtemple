@@ -21,12 +21,12 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 
 @Composable
-fun NavigationComponent() {
+fun NavigationComponent(loginStatus : Boolean) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = "login_screen"
+        startDestination = if (loginStatus) "dashboard_screen" else "login_screen"
     ) {
         composable("login_screen") {
             LoginScreen(navController = navController)

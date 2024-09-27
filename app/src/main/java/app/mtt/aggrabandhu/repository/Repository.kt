@@ -332,7 +332,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         Log.d("Profile" ,"${response.body().toString()} ${response.code()} ")
     }
 
-    private val _rules = MutableStateFlow<String>("wait")
+    private val _rules = MutableStateFlow("wait")
     val rules : StateFlow<String>
         get() = _rules
 

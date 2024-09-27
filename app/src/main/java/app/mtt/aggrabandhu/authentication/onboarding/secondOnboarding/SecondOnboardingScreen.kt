@@ -68,6 +68,8 @@ fun SecondOnboardingScreen(
     val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
     val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
 
+    val sp = SharedPrefManager(context)
+
     val docsList = arrayListOf(
         "PAN Card","Driving License", "Voter ID"
     )
@@ -98,6 +100,8 @@ fun SecondOnboardingScreen(
                 200 -> {
                     showProgressDialog.value = false
                     onboarding2Viewmodel.isSignUp = true
+                    sp.saveLoginStatus(signupResponse.value.memberAdd?.id.toString())
+                    Log.d("userID", signupResponse.value.memberAdd?.id.toString())
                     Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
                     navController?.navigate("dashboard_screen")
                 }
