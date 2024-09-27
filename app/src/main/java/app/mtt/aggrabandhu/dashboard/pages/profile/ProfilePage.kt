@@ -1,7 +1,10 @@
 package app.mtt.aggrabandhu.dashboard.pages.profile
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,13 +48,20 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.di.baseUrl
 import app.mtt.aggrabandhu.utils.CircularImage
+import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun ProfilePage() {
 
+    val context = LocalContext.current
+
     val profileViewModel : ProfileViewModel = hiltViewModel()
     val profileData = profileViewModel.profileData.collectAsState()
+
+    if (profileData.value.name.isEmpty()) {
+        LoadingAlertDialog()
+    }
 
     val profileUrl = "$baseUrl${profileData.value.profileUrl}"
     val referenceID = profileData.value.reference_id
@@ -92,7 +103,7 @@ fun ProfilePage() {
                 painter = rememberAsyncImagePainter(profileUrl),
             )
             Spacer(modifier = Modifier.height(10.dp))
-            ReferralInfoCard(referenceID)
+            ReferralInfoCard(referenceID, context)
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = name)
             ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = fatherName)
             ProfileInfoCard(Icons.Default.Person, heading = "Mother's Name", text = motherName)
@@ -164,12 +175,15 @@ fun ProfileInfoCard(
 
 @Preview
 @Composable
-fun ReferralInfoCard (referralCode : String?="123ABC123") {
+fun ReferralInfoCard (referralCode : String?="123ABC123", context: Context ?= null) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 5.dp)
-            .background(Color.White),
+            .background(Color.White)
+            .clickable {
+                shareText(context!!, referralCode!!)
+            },
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -232,6 +246,16 @@ fun ReferralInfoCard (referralCode : String?="123ABC123") {
             }
         }
     }
+}
+
+fun shareText(context: Context, textToShare: String) {
+    val sendIntent: Intent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, textToShare)
+        type = "text/plain"
+    }
+    val shareIntent = Intent.createChooser(sendIntent, "Share your Reference ID")
+    context.startActivity(shareIntent)
 }
 
 @Preview

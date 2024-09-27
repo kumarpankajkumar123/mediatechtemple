@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import app.mtt.aggrabandhu.authentication.LoginScreen
+import app.mtt.aggrabandhu.authentication.login.LoginScreen
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.FirstOnboardingScreen
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SecondOnboardingScreen
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
@@ -52,7 +52,7 @@ fun NavigationComponent() {
             FirstOnboardingScreen(navController = navController)
         }
         composable(
-            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{dob}/{profession}/{profileUri}",
+            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}/{profileUri}",
             arguments = listOf(
                 navArgument("referenceID") {
                     type = NavType.StringType
@@ -76,6 +76,9 @@ fun NavigationComponent() {
                     type = NavType.StringType
                 },
                 navArgument("maritalStatus") {
+                    type = NavType.StringType
+                },
+                navArgument("spouse") {
                     type = NavType.StringType
                 },
                 navArgument("dob") {

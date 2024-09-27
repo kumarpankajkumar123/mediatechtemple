@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.api
 
+import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.authentication.onboarding.ResponseData
@@ -52,41 +53,15 @@ interface AllApi {
     suspend fun receivedDonations() : Response<ReceivedDonationsData>
 
     @Multipart
-    @POST("member")
-    suspend fun signUp(
-        @Part("reference_id") reference_id : RequestBody,
-        @Part("gotra") gotra : RequestBody,
-        @Part("name") name : RequestBody,
-        @Part("father_name") father_name : RequestBody,
-        @Part("mother_name") mother_name : RequestBody,
-        @Part("dob") dob : RequestBody,
+    @POST("member/login")
+    suspend fun login(
+        @Part("mobile_no") number : RequestBody,
         @Part("password") password : RequestBody,
-        @Part("marital_status") marital_status : RequestBody,
-        @Part("spouse_name") spouse_name : RequestBody,
-        @Part("mobile_no") mobile_no : RequestBody,
-        @Part("address") address : RequestBody,
-        @Part("district") district : RequestBody,
-        @Part("state") state : RequestBody,
-        @Part("pincode") pincode : RequestBody,
-        @Part("profession") profession : RequestBody,
-        @Part("aadhar_no") aadhar_no : RequestBody,
-        @Part("id_type") id_type : RequestBody,
-        @Part("id_no") id_no : RequestBody,
-        @Part("nominee") nominee : RequestBody,
-        @Part("relationship") relationship : RequestBody,
-        @Part("nominee2") nominee2 : RequestBody,
-        @Part("relationship2") relationship2 : RequestBody,
-        @Part("disease") disease : RequestBody, // True/False
-        @Part("rulesAccepted") rulesAccepted : RequestBody, // True/False
-        @Part file : MultipartBody.Part, // Aadhar
-        @Part file2 : MultipartBody.Part, // Pan/ID
-        @Part profile : MultipartBody.Part, // Pan/ID
-        @Part diseaseFile : MultipartBody.Part, // Pan/ID
-    ) : Response<SignupResponse>
+    ) : Response<LoginResponse>
 
     @Multipart
     @POST("member")
-    suspend fun signUpWithoutDisease(
+    suspend fun signUp(
         @Part("name") name : RequestBody,
         @Part("gotra") gotra : RequestBody,
         @Part("father_name") father_name : RequestBody,
@@ -95,6 +70,7 @@ interface AllApi {
         @Part("email") email : RequestBody,
         @Part("password") password : RequestBody,
         @Part("marital_status") marital_status : RequestBody,
+        @Part("spouse_name") spouse_name : RequestBody,
         @Part("mobile_no") mobile_no : RequestBody,
         @Part("address") address : RequestBody,
         @Part("district") district : RequestBody,
@@ -112,6 +88,41 @@ interface AllApi {
         @Part("relationship") relationship : RequestBody,
         @Part("relationship2") relationship2 : RequestBody,
         @Part("reference_id") reference_id : RequestBody,
+        @Part("disease") disease : RequestBody, // True/False
+        @Part("rulesAccepted") rulesAccepted : RequestBody,
+        @Part diseaseFile : MultipartBody.Part, // Pan/ID
+    ) : Response<SignupResponse>
+
+    @Multipart
+    @POST("member")
+    suspend fun signUp(
+        @Part("name") name : RequestBody,
+        @Part("gotra") gotra : RequestBody,
+        @Part("father_name") father_name : RequestBody,
+        @Part("mother_name") mother_name : RequestBody,
+        @Part("dob") dob : RequestBody,
+        @Part("email") email : RequestBody,
+        @Part("password") password : RequestBody,
+        @Part("marital_status") marital_status : RequestBody,
+        @Part("spouse_name") spouse_name : RequestBody,
+        @Part("mobile_no") mobile_no : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("district") district : RequestBody,
+        @Part("state") state : RequestBody,
+        @Part("pincode") pincode : RequestBody,
+        @Part("profession") profession : RequestBody,
+        @Part("aadhar_no") aadhar_no : RequestBody,
+        @Part("id_type") id_type : RequestBody,
+        @Part("id_no") id_no : RequestBody,
+        @Part file : MultipartBody.Part, // Aadhar
+        @Part file2 : MultipartBody.Part, // Pan/ID
+        @Part profile : MultipartBody.Part, // Profile
+        @Part("nominee") nominee : RequestBody,
+        @Part("nominee2") nominee2 : RequestBody,
+        @Part("relationship") relationship : RequestBody,
+        @Part("relationship2") relationship2 : RequestBody,
+        @Part("reference_id") reference_id : RequestBody,
+        @Part("disease") disease : RequestBody, // True/False
         @Part("rulesAccepted") rulesAccepted : RequestBody,
     ) : Response<SignupResponse>
 

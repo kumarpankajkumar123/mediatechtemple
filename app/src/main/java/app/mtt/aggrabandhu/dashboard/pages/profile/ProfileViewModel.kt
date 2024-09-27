@@ -16,7 +16,7 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
 
     init {
         viewModelScope.launch {
-            repository.getProfileDetails(121)
+            repository.getProfileDetails(136)
         }
     }
 

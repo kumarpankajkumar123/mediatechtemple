@@ -2,11 +2,14 @@ package app.mtt.aggrabandhu.repository
 
 import android.util.Log
 import app.mtt.aggrabandhu.api.AllApi
+import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
+import app.mtt.aggrabandhu.utils.getRandomString
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -37,9 +40,20 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val allMembers : StateFlow<List<AllMemberData>>
         get() = _allMembers
 
-//    private val _validateID = MutableStateFlow<DocValidationResponse>(DocValidationResponse(false, false, ""))
-//    val validateID : StateFlow<DocValidationResponse>
-//        get() = _validateID
+    private val _loginResponse = MutableStateFlow<LoginResponse>(LoginResponse( "", 0))
+    val loginResponse : StateFlow<LoginResponse>
+        get() = _loginResponse
+    private var _loginResponseCode = 0
+    val loginResponseCode : Int
+        get() = _loginResponseCode
+
+    private val _signUpResponse = MutableStateFlow<SignupResponse>(SignupResponse())
+    val signUpResponse : StateFlow<SignupResponse>
+        get() = _signUpResponse
+    private val _signUpResponseCode = MutableStateFlow<Int>( 0 )
+    val signUpResponseCode : StateFlow<Int>
+        get() = _signUpResponseCode
+
     private val _validateID = MutableStateFlow<Int>(0)
     val validateID : StateFlow<Int>
         get() = _validateID
@@ -102,7 +116,33 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
-    suspend fun signUpUnmarriedWithoutFile3Profile (
+    suspend fun login (mobileNumber: String, password: String) : Int {
+        try {
+            _loginResponseCode = 1
+            val response = allApi.login(
+                mobileNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+                password.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            )
+            if (response.isSuccessful && response.body() != null) {
+                _loginResponse.emit(response.body()!!)
+                _loginResponseCode = (response.code())
+                Log.d(
+                    "LoginResponse",
+                    "${response.code()} ${response.message()} ${response.body()!!.userid} "
+                )
+            } else {
+                _loginResponseCode = (401)
+                Log.d("LoginError", "${response.code()} ${response.message()}")
+            }
+            return loginResponseCode
+        } catch (e : Exception) {
+            e.printStackTrace()
+            _loginResponseCode = (401)
+            return loginResponseCode
+        }
+    }
+
+    suspend fun signUp (
         referenceID : String,
         gotra : String,
         name : String,
@@ -111,6 +151,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         dob : String,
         password : String,
         maritalStatus : String,
+        spouseName : String,
         mobileNumber : String,
         address : String,
         district : String,
@@ -127,9 +168,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
         adharFile : MultipartBody.Part,
         panFile : MultipartBody.Part,
         profile : MultipartBody.Part,
+        disease : String,
         rulesAccepted : String,
     ) {
-        Log.d("SignUP", "Sending")
+        Log.d("SignUP", "Sending Without")
         Log.d("onViewModel2",
             "Gotra : $gotra, " +
                     "DOB : $dob, " +
@@ -138,6 +180,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
                     "pass : $password, " +
                     "Profession : $profession, " +
                     "Marital : $maritalStatus, " +
+                    "spouse : $spouseName, " +
                     "City :$district, " +
                     "State : $state,  " +
                     "Pin : $pincode, " +
@@ -147,7 +190,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         )
         Log.d("Files", "$adharFile, \n$panFile, \n$profile")
 
-        val response = allApi.signUpWithoutDisease(
+        val response = allApi.signUp(
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gotra),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
@@ -156,6 +199,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "example@gmail.com"),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
@@ -173,12 +217,105 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), referenceID),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), disease),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), rulesAccepted)
         )
         if (response.isSuccessful && response.body() != null) {
             Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")
+            _signUpResponse.emit(response.body()!!)
+            _signUpResponseCode.emit(response.code())
         } else {
             Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
+            _signUpResponseCode.emit(response.code())
+        }
+    }
+
+    suspend fun signUp (
+        referenceID : String,
+        gotra : String,
+        name : String,
+        fatherName : String,
+        motherName : String,
+        dob : String,
+        password : String,
+        maritalStatus : String,
+        spouseName : String,
+        mobileNumber : String,
+        address : String,
+        district : String,
+        state : String,
+        pincode : String,
+        profession : String,
+        adharNumber : String,
+        idType : String,
+        idNumber : String,
+        nominee : String,
+        relationShip : String,
+        nominee2 : String,
+        relationShip2 : String,
+        adharFile : MultipartBody.Part,
+        panFile : MultipartBody.Part,
+        profile : MultipartBody.Part,
+        diseaseFile : MultipartBody.Part,
+        disease : String,
+        rulesAccepted : String,
+    ) {
+        Log.d("SignUP", "Sending Everything")
+        Log.d("onViewModel2",
+            "Gotra : $gotra, " +
+                    "DOB : $dob, " +
+                    "father : $fatherName, " +
+                    "mother : $motherName, " +
+                    "pass : $password, " +
+                    "Profession : $profession, " +
+                    "Marital : $maritalStatus, " +
+                    "City :$district, " +
+                    "State : $state,  " +
+                    "Pin : $pincode, " +
+                    "Rules : $rulesAccepted, " +
+                    "referenceID : $referenceID, " +
+                    "idType : $idType-$idNumber, "
+        )
+        Log.d("Files", "$adharFile, \n$panFile, \n$profile \n$disease $diseaseFile")
+
+        val response = allApi.signUp(
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gotra),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "${getRandomString(4)}@gmail.com"),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), profession),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), adharNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idType),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), idNumber),
+            adharFile,
+            panFile,
+            profile,
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), referenceID),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), disease),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), rulesAccepted),
+            diseaseFile
+        )
+        if (response.isSuccessful && response.body() != null) {
+            Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")
+            _signUpResponse.emit(response.body()!!)
+            _signUpResponseCode.emit(response.code())
+        } else {
+            Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
+            _signUpResponseCode.emit(response.code())
         }
     }
 

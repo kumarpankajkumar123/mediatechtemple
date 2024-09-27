@@ -48,10 +48,7 @@ import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.utils.prepareFilePart
 import app.mtt.aggrabandhu.viewmodel.Onboarding2Viewmodel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import es.dmoral.toasty.Toasty
 
 @Preview(showSystemUi = true)
 @Composable
@@ -63,21 +60,48 @@ fun SecondOnboardingScreen(
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
     val validation = onboarding2Viewmodel.validateID.collectAsState()
 
+    val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
+    val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
+
+    val docsList = arrayListOf(
+        "PAN Card","Driving License", "Voter ID"
+    )
+    val selectedDoc = remember { mutableStateOf("") }
+    val isSuffering = remember { mutableStateOf(false) }
+
     val showProgressDialog = remember { mutableStateOf(false) }
 
     if (validation.value != 0) {
         if (validation.value == 200) {
             showProgressDialog.value = false
-            onboarding2Viewmodel.isAadharVerified = true
+            onboarding2Viewmodel.isDocVerified = true
             Toast.makeText(context, "Verified", Toast.LENGTH_SHORT).show()
         } else if (validation.value == 400) {
             showProgressDialog.value = false
-            onboarding2Viewmodel.isAadharVerified = false
-            Toast.makeText(context, "Not Verified", Toast.LENGTH_SHORT).show()
+            onboarding2Viewmodel.isDocVerified = false
+            Toasty.error(context, "Not Verified", Toast.LENGTH_SHORT).show()
         } else {
             showProgressDialog.value = false
-            onboarding2Viewmodel.isAadharVerified = false
-            Toast.makeText(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+            onboarding2Viewmodel.isDocVerified = false
+            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    if (signupResponseCode.value != 0) {
+        when (signupResponseCode.value) {
+            200 -> {
+                showProgressDialog.value = false
+                Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
+                navController?.navigate("dashboard_screen")
+            }
+            406 -> {
+                showProgressDialog.value = false
+                Toasty.error(context, "Reference ID is wrong", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                showProgressDialog.value = false
+                Toasty.error(context, "Retry - Something went wrong", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -86,12 +110,6 @@ fun SecondOnboardingScreen(
     }
 
     val profileUri : Uri = Uri.parse(SharedPrefManager(context).getProfileImageUri())
-
-    val docsList = arrayListOf(
-        "PAN Card","Driving License", "Voter ID"
-    )
-    val selectedDoc = remember { mutableStateOf("") }
-    val isSuffering = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -195,6 +213,19 @@ fun SecondOnboardingScreen(
             SelectImageCardWithButton(selectedDoc.value){
                 onboarding2Viewmodel.panUri = it
                 onboarding2Viewmodel.file2 = prepareFilePart(it,"file2", context)
+
+                showProgressDialog.value = true
+                onboarding2Viewmodel.docFile = prepareFilePart(it,"file", context)
+
+                onboarding2Viewmodel.validateDoc(
+                    onboarding2Viewmodel.idNumber!!,
+                    if (selectedDoc.value == "PAN Card") {
+                        "Pan card"
+                    } else {
+                        selectedDoc.value
+                    },
+                    onboarding2Viewmodel.docFile!!
+                )
             }
         }
 
@@ -245,11 +276,12 @@ fun SecondOnboardingScreen(
 
         CustomCheckbox(text = "Suffering From any disease?"){ isChecked ->
             isSuffering.value = isChecked
+            onboarding2Viewmodel.isDisease = isChecked
         }
         if (isSuffering.value){
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(docType = "Doctor certificate"){
-
+                onboarding2Viewmodel.diseaseFile = prepareFilePart(it, "diseaseFile", context)
             }
         }
         RulesAndRegulationsCheck(text = "Accept Rules and regulations"){
@@ -265,8 +297,21 @@ fun SecondOnboardingScreen(
             background = colorResource(id = R.color.orange)
         ) {
             onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
-            onboarding2Viewmodel.signUpUnmarriedWithoutFile3Profile(selectedDoc.value, "${onboarding2Viewmodel.isRuleAccepted}")
-//            navController?.navigate("dashboard_screen")
+            if (onboarding2Viewmodel.isDisease) {
+                if (onboarding2Viewmodel.diseaseFile != null) {
+                    onboarding2Viewmodel.signUpWith(
+                        selectedDoc.value,
+                        "${onboarding2Viewmodel.isRuleAccepted}"
+                    )
+                } else {
+                    Toasty.error(context, "Please Select Doctor Certificate", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                onboarding2Viewmodel.signUp(
+                    selectedDoc.value,
+                    "${onboarding2Viewmodel.isRuleAccepted}"
+                )
+            }
         }
     }
 }

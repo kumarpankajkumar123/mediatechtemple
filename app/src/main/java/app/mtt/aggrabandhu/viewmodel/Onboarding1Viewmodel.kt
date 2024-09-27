@@ -69,6 +69,8 @@ class Onboarding1Viewmodel @Inject constructor(
     val maritalStatusList = arrayListOf("Married", "Single", "Divorced", "Widowed")
     private val _selectedMaritalStatus = MutableStateFlow("")
     val selectedMaritalStatus: StateFlow<String> = _selectedMaritalStatus
+
+    var spouseName : String? =""
     /* ----------------------- ------------- -----------------------*/
 
     fun initSharedPrefs(context: Context) {

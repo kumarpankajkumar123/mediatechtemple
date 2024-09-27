@@ -1,9 +1,9 @@
 package app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding
 
 data class SignupResponse(
-    val memberAdd: MemberAdd,
-    val message: String,
-    val role: Role
+    val memberAdd: MemberAdd ?=null,
+    val message: String ?= "",
+    val role: Role ?= null
 )
 
 data class Role(

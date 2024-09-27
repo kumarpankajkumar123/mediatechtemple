@@ -5,10 +5,9 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -22,15 +21,23 @@ class Onboarding2Viewmodel @Inject constructor(
     val validateID : StateFlow<Int>
         get() = repository.validateID
 
+    val signupResponse : StateFlow<SignupResponse>
+        get() = repository.signUpResponse
+    val signupResponseCode : StateFlow<Int>
+        get() = repository.signUpResponseCode
+
+    var docFile : MultipartBody.Part ?= null
+
     var profileFile : MultipartBody.Part ?= null
     var file : MultipartBody.Part ?= null
     var file2 : MultipartBody.Part ?= null
+    var diseaseFile : MultipartBody.Part ?= null
 
-    val referenceID : String
+    private val referenceID : String
         get() = savedStateHandle.get<String>("referenceID")!!
-    val getName : String
+    private val getName : String
         get() = savedStateHandle.get<String>("name")!!
-    val phone : String
+    private val phone : String
         get() = savedStateHandle.get<String>("phone")!!
     val password : String
         get() = savedStateHandle.get<String>("password")!!
@@ -42,12 +49,14 @@ class Onboarding2Viewmodel @Inject constructor(
         get() = savedStateHandle.get<String>("mother")!!
     val gotra : String
         get() = savedStateHandle.get<String>("gotra")!!
-    val maritalStatus : String
+    private val maritalStatus : String
         get() = savedStateHandle.get<String>("maritalStatus")!!
-    val dob : String
+    private val dob : String
         get() = savedStateHandle.get<String>("dob")!!
     val profession : String
         get() = savedStateHandle.get<String>("profession")!!
+    private val spouseName : String
+        get() = savedStateHandle.get<String>("spouse")!!
 
     var pincode : String? = ""
     var city : String? = ""
@@ -62,9 +71,9 @@ class Onboarding2Viewmodel @Inject constructor(
     var relation : String? = ""
     var nominee2 : String? = ""
     var relation2 : String? = ""
+    var isDisease = false
     var isRuleAccepted = false
-    var isAadharVerified = false
-    var isOtherDocVerified = false
+    var isDocVerified = false
 
     fun validateDoc(
         idNumber : String,
@@ -76,11 +85,11 @@ class Onboarding2Viewmodel @Inject constructor(
         }
     }
 
-    fun signUpUnmarriedWithoutFile3Profile (idType: String, rulesAccepted : String) {
+    fun signUp (idType: String, rulesAccepted : String) {
         viewModelScope.launch {
             Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
 
-            repository.signUpUnmarriedWithoutFile3Profile(
+            repository.signUp(
                 referenceID,
                 gotra,
                 getName,
@@ -89,6 +98,7 @@ class Onboarding2Viewmodel @Inject constructor(
                 dob,
                 password,
                 maritalStatus,
+                spouseName,
                 phone,
                 address!!,
                 city!!,
@@ -105,7 +115,45 @@ class Onboarding2Viewmodel @Inject constructor(
                 file!!,
                 file2!!,
                 profileFile!!,
+                "$isDisease",
                 rulesAccepted
+            )
+        }
+    }
+
+    fun signUpWith (idType: String, rulesAccepted : String) {
+        viewModelScope.launch {
+            Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
+
+            repository.signUp(
+                referenceID,
+                gotra,
+                getName,
+                father,
+                mother,
+                dob,
+                password,
+                maritalStatus,
+                spouseName,
+                phone,
+                address!!,
+                city!!,
+                state!!,
+                pincode!!,
+                profession,
+                adharNumber!!,
+                idType,
+                idNumber!!,
+                nominee!!,
+                relation!!,
+                nominee2!!,
+                relation2!!,
+                file!!,
+                file2!!,
+                profileFile!!,
+                diseaseFile!!,
+                "$isDisease",
+                rulesAccepted,
             )
         }
     }

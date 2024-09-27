@@ -231,7 +231,21 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     onboarding1Viewmodel.selectedMaritalStatusChanged(it)
                 }
             )
+            if(selectedMaritalStatus.value == "Married"){
+                // Spacer(modifier = Modifier.height(10.dp))
+                /* ------------------- Name ----------------------- */
+                TextFieldWithIcons(
+                    "Spouse Name",
+                    "Enter your Spouse name",
+                    20,
+                    KeyboardType.Text,
+                    Icons.Filled.Person,
+                    mother.value
+                ) {
+                    onboarding1Viewmodel.spouseName = (it)
+                }
 
+            }
             /* ------------- Select Date ------------ */
             DatePickerField(
                 label = "Date of Birth",
@@ -266,7 +280,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 sp.saveDOB(dob.value)
                 sp.saveProfession(selectedProfession.value)
 
-                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${dob.value}/${selectedProfession.value}/$enCodedUri")
+                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${onboarding1Viewmodel.spouseName}/${dob.value}/${selectedProfession.value}/$enCodedUri")
 //                navController?.navigate(
 //                    "second_on_screen/${Uri.encode(referenceID)}/${Uri.encode(name)}/${Uri.encode(phone)}/${Uri.encode(password)}/${Uri.encode(father)}/${Uri.encode(mother)}/${Uri.encode(selectedGotra.value)}/${Uri.encode(selectedMaritalStatus.value)}/${Uri.encode(dob)}/${Uri.encode(selectedProfession.value)}"
 //                )
