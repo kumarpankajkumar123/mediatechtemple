@@ -21,12 +21,24 @@ class Onboarding2Viewmodel @Inject constructor(
     val validateID : StateFlow<Int>
         get() = repository.validateID
 
+    val rules : StateFlow<String>
+        get() = repository.rules
+
+    init {
+        viewModelScope.launch {
+            repository.getRules()
+        }
+    }
+
     val signupResponse : StateFlow<SignupResponse>
         get() = repository.signUpResponse
     val signupResponseCode : StateFlow<Int>
         get() = repository.signUpResponseCode
 
+    var isSignUp = false
+
     var docFile : MultipartBody.Part ?= null
+
 
     var profileFile : MultipartBody.Part ?= null
     var file : MultipartBody.Part ?= null

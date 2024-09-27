@@ -70,7 +70,10 @@ class Onboarding1Viewmodel @Inject constructor(
     private val _selectedMaritalStatus = MutableStateFlow("")
     val selectedMaritalStatus: StateFlow<String> = _selectedMaritalStatus
 
-    var spouseName : String? =""
+    // MutableLiveData to hold the current text state
+    private val _spouseName = MutableStateFlow("")
+    val spouseNameText: StateFlow<String> = _spouseName
+
     /* ----------------------- ------------- -----------------------*/
 
     fun initSharedPrefs(context: Context) {
@@ -91,6 +94,9 @@ class Onboarding1Viewmodel @Inject constructor(
         }
         if (_selectedMaritalStatus.value.isEmpty()) {
             _selectedMaritalStatus.value = sharedPref.getMarital()!!
+        }
+        if (_spouseName.value.isEmpty()) {
+            _spouseName.value = sharedPref.getSpouseName()!!
         }
         if (_dobTextState.value.isEmpty()) {
             _dobTextState.value = sharedPref.getDOB()!!
@@ -120,6 +126,10 @@ class Onboarding1Viewmodel @Inject constructor(
     // Function to update the text state
     fun selectedMaritalStatusChanged(newText: String) {
         _selectedMaritalStatus.value = newText
+    }
+    // Function to update the text state
+    fun spouseNameChanged(newText: String) {
+        _spouseName.value = newText
     }
     // Function to update the text state
     fun onDobTextChanged(newText: String) {

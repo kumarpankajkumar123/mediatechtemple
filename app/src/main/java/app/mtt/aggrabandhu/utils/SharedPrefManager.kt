@@ -91,6 +91,15 @@ class SharedPrefManager(private val context : Context) {
     }
 
     /*  ------------------------------------------------------------------*/
+    fun saveSpouseName(referenceID : String){
+        editor.putString("spouseName",referenceID)
+        editor.apply()
+    }
+    fun getSpouseName(): String? {
+        return sharedPreferences.getString("spouseName", "")
+    }
+
+    /*  ------------------------------------------------------------------*/
     fun saveDOB(referenceID : String){
         editor.putString("DOB",referenceID)
         editor.apply()

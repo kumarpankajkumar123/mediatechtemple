@@ -59,6 +59,11 @@ fun SecondOnboardingScreen(
 
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
     val validation = onboarding2Viewmodel.validateID.collectAsState()
+    val rules = onboarding2Viewmodel.rules.collectAsState()
+
+    if (rules.value == "wait") {
+        LoadingAlertDialog()
+    }
 
     val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
     val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
@@ -88,19 +93,24 @@ fun SecondOnboardingScreen(
     }
 
     if (signupResponseCode.value != 0) {
-        when (signupResponseCode.value) {
-            200 -> {
-                showProgressDialog.value = false
-                Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
-                navController?.navigate("dashboard_screen")
-            }
-            406 -> {
-                showProgressDialog.value = false
-                Toasty.error(context, "Reference ID is wrong", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                showProgressDialog.value = false
-                Toasty.error(context, "Retry - Something went wrong", Toast.LENGTH_SHORT).show()
+        if (!onboarding2Viewmodel.isSignUp) {
+            when (signupResponseCode.value) {
+                200 -> {
+                    showProgressDialog.value = false
+                    onboarding2Viewmodel.isSignUp = true
+                    Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
+                    navController?.navigate("dashboard_screen")
+                }
+                406 -> {
+                    showProgressDialog.value = false
+                    onboarding2Viewmodel.isSignUp = false
+                    Toasty.error(context, "Reference ID is wrong", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    showProgressDialog.value = false
+                    onboarding2Viewmodel.isSignUp = false
+                    Toasty.error(context, "Retry - Something went wrong", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -283,6 +293,8 @@ fun SecondOnboardingScreen(
             SelectImageCardWithButton(docType = "Doctor certificate"){
                 onboarding2Viewmodel.diseaseFile = prepareFilePart(it, "diseaseFile", context)
             }
+        } else {
+            onboarding2Viewmodel.diseaseFile = null
         }
         RulesAndRegulationsCheck(text = "Accept Rules and regulations"){
             Log.d("Rules", "$it")
@@ -296,21 +308,31 @@ fun SecondOnboardingScreen(
             text = "Next",
             background = colorResource(id = R.color.orange)
         ) {
-            onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
-            if (onboarding2Viewmodel.isDisease) {
-                if (onboarding2Viewmodel.diseaseFile != null) {
-                    onboarding2Viewmodel.signUpWith(
+            if (onboarding2Viewmodel.isRuleAccepted) {
+                onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
+                if (onboarding2Viewmodel.isDisease) {
+                    if (onboarding2Viewmodel.diseaseFile != null) {
+                        showProgressDialog.value = true
+                        onboarding2Viewmodel.signUpWith(
+                            selectedDoc.value,
+                            "${onboarding2Viewmodel.isRuleAccepted}"
+                        )
+                    } else {
+                        Toasty.error(
+                            context,
+                            "Please Select Doctor Certificate",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    showProgressDialog.value = true
+                    onboarding2Viewmodel.signUp(
                         selectedDoc.value,
                         "${onboarding2Viewmodel.isRuleAccepted}"
                     )
-                } else {
-                    Toasty.error(context, "Please Select Doctor Certificate", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                onboarding2Viewmodel.signUp(
-                    selectedDoc.value,
-                    "${onboarding2Viewmodel.isRuleAccepted}"
-                )
+                Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
             }
         }
     }

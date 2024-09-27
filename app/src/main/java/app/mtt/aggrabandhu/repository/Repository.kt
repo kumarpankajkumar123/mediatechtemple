@@ -44,8 +44,6 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val loginResponse : StateFlow<LoginResponse>
         get() = _loginResponse
     private var _loginResponseCode = 0
-    val loginResponseCode : Int
-        get() = _loginResponseCode
 
     private val _signUpResponse = MutableStateFlow<SignupResponse>(SignupResponse())
     val signUpResponse : StateFlow<SignupResponse>
@@ -134,11 +132,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 _loginResponseCode = (401)
                 Log.d("LoginError", "${response.code()} ${response.message()}")
             }
-            return loginResponseCode
+            return _loginResponseCode
         } catch (e : Exception) {
             e.printStackTrace()
             _loginResponseCode = (401)
-            return loginResponseCode
+            return _loginResponseCode
         }
     }
 
@@ -196,7 +194,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "example@gmail.com"),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "${getRandomString(4)}@gmail.com"),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
@@ -225,7 +223,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             _signUpResponse.emit(response.body()!!)
             _signUpResponseCode.emit(response.code())
         } else {
-            Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
+            Log.d("CreateMember", "${response.code()} ${response.message()}")
             _signUpResponseCode.emit(response.code())
         }
     }
@@ -332,6 +330,21 @@ class Repository @Inject constructor(private val allApi: AllApi){
             Log.d("Profile" ,"${response.body().toString()} ${response.code().toString()}")
         }
         Log.d("Profile" ,"${response.body().toString()} ${response.code()} ")
+    }
+
+    private val _rules = MutableStateFlow<String>("wait")
+    val rules : StateFlow<String>
+        get() = _rules
+
+    suspend fun getRules(){
+        val response = allApi.getRules()
+        if (response.isSuccessful && response.body() != null){
+            _rules.emit(response.body()!![0].rule)
+            Log.d("Rules" ,"${response.body().toString()} ${response.code().toString()}")
+        } else {
+            _rules.emit("Error")
+            Log.d("Rules", "${response.body().toString()} ${response.code()} ")
+        }
     }
 
 }

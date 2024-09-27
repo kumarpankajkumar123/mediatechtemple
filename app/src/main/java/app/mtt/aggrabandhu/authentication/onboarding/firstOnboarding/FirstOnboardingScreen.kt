@@ -1,6 +1,8 @@
 package app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding
 
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -24,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArtTrack
 import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.FamilyRestroom
+import androidx.compose.material.icons.filled.PermContactCalendar
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.PhotoCamera
@@ -59,6 +62,10 @@ import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
+import es.dmoral.toasty.Toasty
+import java.time.LocalDate
+import java.time.Period
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun FirstOnboardingScreen(navController: NavController?=null) {
@@ -82,6 +89,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val dob = onboarding1Viewmodel.dobTextFieldState.collectAsState()
     val selectedGotra = onboarding1Viewmodel.selectedGotra.collectAsState()
     val selectedMaritalStatus = onboarding1Viewmodel.selectedMaritalStatus.collectAsState()
+    val spouseName = onboarding1Viewmodel.spouseNameText.collectAsState()
     val selectedProfession = onboarding1Viewmodel.professionState.collectAsState()
 
     val referenceID : String = onboarding1Viewmodel.referenceID
@@ -240,11 +248,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     20,
                     KeyboardType.Text,
                     Icons.Filled.Person,
-                    mother.value
+                    spouseName.value
                 ) {
-                    onboarding1Viewmodel.spouseName = (it)
+                    onboarding1Viewmodel.spouseNameChanged(it)
                 }
-
             }
             /* ------------- Select Date ------------ */
             DatePickerField(
@@ -252,8 +259,23 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 value = dob.value,
                 onClick = { date ->
                     onboarding1Viewmodel.onDobTextChanged(date)
+                    Log.d("Age", calculateAge(date).toString())
+                    Toasty.success(context, calculateAge(date).toString(), Toast.LENGTH_SHORT).show()
                 }
             )
+            /* ------------- Selected Date ------------ */
+            if (calculateAge(dob.value) != 0) {
+                Log.d("AgeField", dob.value)
+                DropDownField(
+                    selectedValue = calculateAge(dob.value).toString(),
+                    options = emptyList(),
+                    label = "Current Age",
+                    Icons.Default.PermContactCalendar,
+                    onValueChangedEvent = {
+
+                    }
+                )
+            }
 
             /* ------------- Select Profession ------------ */
             DropDownField(
@@ -277,17 +299,26 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 sp.saveMotherName(mother.value)
                 sp.saveGotra(selectedGotra.value)
                 sp.saveMarital(selectedMaritalStatus.value)
+                sp.saveSpouseName(spouseName.value)
                 sp.saveDOB(dob.value)
                 sp.saveProfession(selectedProfession.value)
 
-                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${onboarding1Viewmodel.spouseName}/${dob.value}/${selectedProfession.value}/$enCodedUri")
-//                navController?.navigate(
-//                    "second_on_screen/${Uri.encode(referenceID)}/${Uri.encode(name)}/${Uri.encode(phone)}/${Uri.encode(password)}/${Uri.encode(father)}/${Uri.encode(mother)}/${Uri.encode(selectedGotra.value)}/${Uri.encode(selectedMaritalStatus.value)}/${Uri.encode(dob)}/${Uri.encode(selectedProfession.value)}"
-//                )
+                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${spouseName.value}/${dob.value}/${selectedProfession.value}/$enCodedUri")
             }
 
         }
     }
+}
+fun calculateAge(dob: String, dateFormat: String = "yyyy-MM-dd"): Int {
+    // Parse the string into a LocalDate using the provided date format
+    val formatter = DateTimeFormatter.ofPattern(dateFormat)
+    val parsedDob = LocalDate.parse(dob, formatter)
+
+    // Get the current date
+    val today = LocalDate.now()
+
+    // Calculate the period between the date of birth and today
+    return Period.between(parsedDob, today).years
 }
 
 @Preview(showSystemUi = true)
