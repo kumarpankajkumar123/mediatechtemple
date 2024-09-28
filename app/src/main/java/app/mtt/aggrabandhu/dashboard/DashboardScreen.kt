@@ -17,10 +17,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ListAlt
+import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PeopleAlt
 import androidx.compose.material.icons.filled.Policy
@@ -40,21 +45,27 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,11 +79,15 @@ import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
 import app.mtt.aggrabandhu.utils.CircularImage
+import app.mtt.aggrabandhu.utils.LogoutDialog
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController : NavController ?= null) {
+
+    val logoutDialog = remember { mutableStateOf(false) }
 
     // Create a state for managing the drawer's open/close state
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -80,6 +95,18 @@ fun DashboardScreen(navController : NavController ?= null) {
 
     var selectedIndex by remember {
         mutableIntStateOf(0)
+    }
+
+    LogoutDialog(
+        showDialog = logoutDialog.value,
+        onConfirm = {
+            navController?.navigate("login_screen") {
+                popUpTo("login_screen"){
+                    inclusive = true
+                }
+            }
+        }) {
+        logoutDialog.value = false
     }
 
     ModalNavigationDrawer(
@@ -90,7 +117,11 @@ fun DashboardScreen(navController : NavController ?= null) {
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
                     // You can navigate here if needed
-                    navController?.navigate(route)
+                    if (route == "login_screen") {
+                        logoutDialog.value = true
+                    } else {
+                        navController?.navigate(route)
+                    }
                 }
             )
         }
@@ -184,18 +215,22 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
 
 @Composable
 fun DrawerContent(onItemClick: (String) -> Unit) {
+    val context = LocalContext.current
+    val sp = SharedPrefManager(context)
+
     Column(
         modifier = Modifier
-            .background(Color.White)
             .fillMaxWidth(0.75f)
             .fillMaxHeight()
+            .verticalScroll(rememberScrollState())
+            .background(Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         CircularImage(size = 140.dp, painter = painterResource (id = R.drawable.png_logo) )
         Text (
             text = stringResource(id = R.string.app_name),
-            modifier = Modifier
-                .padding(start = 16.dp),
+            modifier = Modifier,
             color = Color.Black,
             style = MaterialTheme.typography.titleLarge
         )
@@ -217,6 +252,12 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
         SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
         SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
         SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
+
+        Spacer(modifier = Modifier.height(20.dp))
+        LogOut {
+            sp.logOut()
+            onItemClick.invoke("login_screen")
+        }
     }
 }
 
@@ -294,4 +335,44 @@ fun openSupport(context:Context, number : String){
     val i = Intent(Intent.ACTION_VIEW)
     i.setData(Uri.parse(url))
     context.startActivity(i)
+}
+
+@Composable
+fun LogOut(
+    onClick: () -> Unit
+) {
+    Surface(
+        shape = RoundedCornerShape(CornerSize(size = 10.dp)),
+        modifier = Modifier
+            .padding(horizontal = 25.dp)
+            .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+            .background(colorResource(id = R.color.orange))
+            .fillMaxWidth()
+            .clickable {
+                onClick.invoke()
+            }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(colorResource(id = R.color.orange)),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "Log out",
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                fontSize = 18.sp,
+                style = TextStyle(
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier
+                    .background(colorResource(id = R.color.orange))
+                    .padding(5.dp, 8.dp)
+                    .fillMaxWidth()
+            )
+        }
+    }
 }

@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,5 +58,35 @@ fun LoadingAlertDialog() {
                 )
             }
         }
+    }
+}
+
+
+@Composable
+fun LogoutDialog(
+    showDialog: Boolean,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { onDismiss() },
+            title = {
+                Text(text = "Logout")
+            },
+            text = {
+                Text("Are you sure you want to logout?")
+            },
+            confirmButton = {
+                TextButton(onClick = { onConfirm() }) {
+                    Text("Logout")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { onDismiss() }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
