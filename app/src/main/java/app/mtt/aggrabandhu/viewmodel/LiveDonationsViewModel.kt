@@ -14,6 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LiveDonationsViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
+    val responseCode : StateFlow<Int>
+        get() = repository.liveDonationResponseCode
     val liveDonationsData : StateFlow<List<LiveDonationData>>
     get() = repository.liveDonation
 

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -29,9 +31,9 @@ import app.mtt.aggrabandhu.utils.CircularImage
 fun HomePage(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
-            .background(Color.White)
-            .padding(vertical = 10.dp),
+            .background(Color.White),
     ) {
         Text(
             text = "Notifications",
@@ -82,25 +84,25 @@ fun HomeCard () {
                 }
         }
             Text(
-                text = "The Person",
+                text = "",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,
             )
             Text(
-                text = "The Person",
+                text = "Testing",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,
             )
             Text(
-                text = "The Person",
+                text = "Testing",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,
             )
             Text(
-                text = "The Person",
+                text = "Testing",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color.Black,

@@ -39,7 +39,7 @@ interface AllApi {
     suspend fun getProfileInfo(
         @Query("key") key : String,
         @Query("value") value : Int
-    ) : Response<List<ProfileData>>
+    ) : Response<ProfileData>
 
     @GET("donation/detail")
     suspend fun getDonationInfo(

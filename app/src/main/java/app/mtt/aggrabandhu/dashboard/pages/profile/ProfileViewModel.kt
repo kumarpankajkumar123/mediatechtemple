@@ -13,10 +13,12 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
 
     val profileData : StateFlow<ProfileData>
         get() = repository.profileData
+    val profileResponseCode : StateFlow<Int>
+        get() = repository.profileResponseCode
 
     init {
         viewModelScope.launch {
-            repository.getProfileDetails(136)
+            repository.getProfileDetails(94)
         }
     }
 

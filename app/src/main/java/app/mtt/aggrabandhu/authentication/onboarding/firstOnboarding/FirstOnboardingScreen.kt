@@ -258,23 +258,31 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 label = "Date of Birth",
                 value = dob.value,
                 onClick = { date ->
-                    onboarding1Viewmodel.onDobTextChanged(date)
-                    Log.d("Age", calculateAge(date).toString())
-                    Toasty.success(context, calculateAge(date).toString(), Toast.LENGTH_SHORT).show()
+                    if (date.isNotEmpty()) {
+                        onboarding1Viewmodel.onDobTextChanged(date)
+                        Log.d("Age", calculateAge(date).toString())
+                        Toasty.success(context, calculateAge(date).toString(), Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        Log.d("Date", "Empty Date")
+                    }
                 }
             )
             /* ------------- Selected Date ------------ */
-            if (calculateAge(dob.value) != 0) {
-                Log.d("AgeField", dob.value)
-                DropDownField(
-                    selectedValue = calculateAge(dob.value).toString(),
-                    options = emptyList(),
-                    label = "Current Age",
-                    Icons.Default.PermContactCalendar,
-                    onValueChangedEvent = {
 
-                    }
-                )
+            if (dob.value.isNotEmpty()) {
+                if (calculateAge(dob.value) != 0) {
+                    Log.d("AgeField", dob.value)
+                    DropDownField(
+                        selectedValue = calculateAge(dob.value).toString(),
+                        options = emptyList(),
+                        label = "Current Age",
+                        Icons.Default.PermContactCalendar,
+                        onValueChangedEvent = {
+
+                        }
+                    )
+                }
             }
 
             /* ------------- Select Profession ------------ */
@@ -309,7 +317,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
         }
     }
 }
-fun calculateAge(dob: String, dateFormat: String = "yyyy-MM-dd"): Int {
+fun calculateAge(dob: String?="1940-08-23", dateFormat: String = "yyyy-MM-dd"): Int {
     // Parse the string into a LocalDate using the provided date format
     val formatter = DateTimeFormatter.ofPattern(dateFormat)
     val parsedDob = LocalDate.parse(dob, formatter)

@@ -15,6 +15,9 @@ class AllMembersViewModel @Inject constructor(private val repository: Repository
     val allMembers : StateFlow<List<AllMemberData>>
     get() = repository.allMembers
 
+    val allMembersResponseCode : StateFlow<Int>
+    get() = repository.membersResponseCode
+
     init {
         viewModelScope.launch {
             repository.getAllMembers()

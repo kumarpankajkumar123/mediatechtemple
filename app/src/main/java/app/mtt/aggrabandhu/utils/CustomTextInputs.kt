@@ -66,7 +66,7 @@ fun TextFieldWithIcons(
             if (text.text.isNotEmpty()) {
                 Icon(
                     imageVector = Icons.Filled.Clear,
-                    contentDescription = null,
+                    contentDescription = "Clear Text",
                     modifier = Modifier.clickable {
                         text = TextFieldValue("")
                         onValueChanged.invoke("")
@@ -120,14 +120,14 @@ fun PasswordTextFieldWithIcons(
                 if (passwordVisible) {
                     Icon(
                         imageVector = Icons.Default.Visibility,
-                        contentDescription = null,
+                        contentDescription = "Password Visibility",
                         modifier = Modifier.clickable { passwordVisible = !passwordVisible },
                         tint = Color.Black
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Filled.VisibilityOff,
-                        contentDescription = null,
+                        contentDescription = "Password Visibility",
                         modifier = Modifier
                             .clickable { passwordVisible = !passwordVisible },
                         tint = Color.Black
@@ -171,7 +171,7 @@ fun DropDownField(
             onValueChange = {},
             label = { Text(text = label) },
             leadingIcon = {
-                Icon(imageVector = imageVector, contentDescription = "")
+                Icon(imageVector = imageVector, contentDescription = "Leading Icon")
             },
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
@@ -220,7 +220,7 @@ fun DatePickerField(
             onValueChange = {},
             label = { Text(text = label) },
             leadingIcon = {
-                Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = "")
+                Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = "Calendar Icon")
             },
             enabled = false,
             colors = TextFieldDefaults.outlinedTextFieldColors(

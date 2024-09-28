@@ -32,10 +32,16 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val receivedDonationData : StateFlow<List<ReceivedDonationData>>
         get() = _receivedDonations
 
+    private val _liveDonationResponseCode = MutableStateFlow(0)
+    val liveDonationResponseCode : StateFlow<Int>
+        get() = _liveDonationResponseCode
     private val _liveDonation = MutableStateFlow<List<LiveDonationData>>(emptyList())
     val liveDonation : StateFlow<List<LiveDonationData>>
         get() = _liveDonation
 
+    private val _membersResponseCode = MutableStateFlow<Int>(0)
+    val membersResponseCode : StateFlow<Int>
+        get() = _membersResponseCode
     private val _allMembers = MutableStateFlow<List<AllMemberData>>(emptyList())
     val allMembers : StateFlow<List<AllMemberData>>
         get() = _allMembers
@@ -78,16 +84,36 @@ class Repository @Inject constructor(private val allApi: AllApi){
     }
 
     suspend fun getLiveDonationsData(){
-        val response = allApi.liveDonations()
-        if (response.isSuccessful && response.body() != null){
-            _liveDonation.emit(response.body()!!.data)
+        try {
+            val response = allApi.liveDonations()
+            if (response.isSuccessful && response.body() != null) {
+                _liveDonation.emit(response.body()!!.data)
+                _liveDonationResponseCode.emit(response.code())
+                Log.d("Live  Donation", "${response.code()}-> ${response.body()!!.data.toString()}")
+            } else {
+                _liveDonationResponseCode.emit(response.code())
+                Log.d("Live  Donation", "${response.code()}-> ${response.message()}")
+            }
+        } catch (e : Exception){
+            _liveDonationResponseCode.emit(400)
+            e.printStackTrace()
         }
     }
 
     suspend fun getAllMembers() {
-        val response = allApi.getAllMembers()
-        if (response.isSuccessful && response.body() != null){
-            _allMembers.emit(response.body()!!.data)
+        try {
+            val response = allApi.getAllMembers()
+            if (response.isSuccessful && response.body() != null) {
+                _allMembers.emit(response.body()!!.data)
+                _membersResponseCode.emit(response.code())
+                Log.d("All Members", "${response.code()}-> ${response.body()!!.data.toString()}")
+            } else {
+                Log.d("All Members", "${response.code()}-> {${response.message()}}")
+                _membersResponseCode.emit(response.code())
+            }
+        } catch (e : Exception) {
+            _membersResponseCode.emit(400)
+            e.printStackTrace()
         }
     }
 
@@ -317,6 +343,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
+
+    private val _profileResponseCode = MutableStateFlow(0)
+    val profileResponseCode : StateFlow<Int>
+        get() = _profileResponseCode
     private val _profileData = MutableStateFlow<ProfileData>(
         ProfileData("","","","",false,"","","","","","",0,"","","","","","","","","","","","",false,"","","","","")
     )
@@ -324,12 +354,20 @@ class Repository @Inject constructor(private val allApi: AllApi){
         get() = _profileData
 
     suspend fun getProfileDetails(memberID : Int){
-        val response = allApi.getProfileInfo("id",memberID)
-        if (response.isSuccessful && response.body() != null){
-            _profileData.emit(response.body()!![0])
-            Log.d("Profile" ,"${response.body().toString()} ${response.code().toString()}")
+        try {
+            val response = allApi.getProfileInfo("id", memberID)
+            if (response.isSuccessful && response.body() != null) {
+                _profileResponseCode.emit(response.code())
+                _profileData.emit(response.body()!!)
+                Log.d("Profile", "${response.body().toString()} ${response.code()}")
+            } else {
+                _profileResponseCode.emit(response.code())
+                Log.d("Profile", "${response.message()} ${response.code()} ")
+            }
+        }catch (e:Exception){
+            e.printStackTrace()
+            _profileResponseCode.emit(400)
         }
-        Log.d("Profile" ,"${response.body().toString()} ${response.code()} ")
     }
 
     private val _rules = MutableStateFlow("wait")

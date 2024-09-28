@@ -36,8 +36,8 @@
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "app.mtt.aggrabandhu.app-debug-68:/drawable_png_ig.png.flat",
-        "source": "app.mtt.aggrabandhu.app-main-70:/drawable/png_ig.png"
+        "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\drawable_png_logo.png.flat",
+        "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\drawable\\png_logo.png"
     },
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-xxhdpi_ic_launcher.webp.flat",
@@ -72,16 +72,16 @@
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\drawable\\png_logo.jpeg"
     },
     {
+        "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\drawable_png_ig.png.flat",
+        "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\drawable\\png_ig.png"
+    },
+    {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
     },
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "app.mtt.aggrabandhu.app-debug-68:/drawable_png_fb.png.flat",
-        "source": "app.mtt.aggrabandhu.app-main-70:/drawable/png_fb.png"
     },
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-mdpi_ic_launcher.webp.flat",
@@ -96,8 +96,16 @@
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "app.mtt.aggrabandhu.app-debug-68:/drawable_png_logo.webp.flat",
+        "source": "app.mtt.aggrabandhu.app-main-70:/drawable/png_logo.webp"
+    },
+    {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\drawable_png_logo.webp.flat",
+        "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\drawable\\png_logo.webp"
     },
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\drawable_ic_launcher_foreground.xml.flat",
@@ -114,6 +122,10 @@
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\font_falling_sky_black.otf.flat",
         "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\font\\falling_sky_black.otf"
+    },
+    {
+        "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\drawable_png_fb.png.flat",
+        "source": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-main-70:\\drawable\\png_fb.png"
     },
     {
         "merged": "C:\\Users\\MTT PC\\.gradle\\daemon\\8.7\\app.mtt.aggrabandhu.app-debug-68:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
