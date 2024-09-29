@@ -14,7 +14,7 @@ class LoginViewmodel @Inject constructor(
     private val repository: Repository) : ViewModel() {
 
      val loginResponse : StateFlow<LoginResponse>
-        get() = repository.loginResponse
+         get() = repository.loginResponse
 
     private val _loginResponseCode = MutableStateFlow(0)  // Default to 0
     val loginResponseCode: StateFlow<Int> get() = _loginResponseCode

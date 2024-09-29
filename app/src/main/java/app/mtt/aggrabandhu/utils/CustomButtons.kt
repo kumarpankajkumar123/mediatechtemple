@@ -1,19 +1,24 @@
 package app.mtt.aggrabandhu.utils
 
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
@@ -21,9 +26,11 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -42,6 +49,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -112,6 +120,52 @@ fun CustomButton2(
                 .padding(5.dp, 8.dp)
                 .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+fun EditProfileButton(
+    text: String? ="Edit Your Profile",
+    background : Color ?= colorResource(id = R.color.orange),
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+
+    Surface(shape = RoundedCornerShape(CornerSize(size = 10.dp)),
+        modifier = modifier
+            .clip(RoundedCornerShape(corner = CornerSize(10.dp)))
+            .background(background!!)
+            .padding(4.dp)
+            .clickable {
+                onClick.invoke()
+            }
+    ) {
+        Row(
+            modifier = Modifier.background(background),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                modifier = Modifier
+                    .background(background)
+                    .size(18.dp),
+                imageVector = Icons.Default.Edit,
+                contentDescription = "Edit Profile",
+                tint = Color.White
+            )
+            Text(
+                text = text!!,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                fontSize = 14.sp,
+                style = TextStyle(
+                    color = Color.White,
+                    fontWeight = FontWeight.SemiBold
+                ),
+                modifier = Modifier
+                    .background(background)
+                    .padding(5.dp, 5.dp)
+            )
+        }
     }
 }
 

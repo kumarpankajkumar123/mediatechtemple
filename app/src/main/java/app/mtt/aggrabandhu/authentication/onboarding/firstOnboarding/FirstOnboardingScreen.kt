@@ -317,6 +317,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
         }
     }
 }
+
 fun calculateAge(dob: String?="1940-08-23", dateFormat: String = "yyyy-MM-dd"): Int {
     // Parse the string into a LocalDate using the provided date format
     val formatter = DateTimeFormatter.ofPattern(dateFormat)

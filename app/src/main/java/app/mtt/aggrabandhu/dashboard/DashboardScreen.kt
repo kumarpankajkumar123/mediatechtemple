@@ -208,7 +208,7 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
             1-> DonationsPage(navController)
             2-> RulesRegulationsPage()
             3-> SupportPage(fromDashboard = true)
-            4-> ProfilePage()
+            4-> ProfilePage(navController)
         }
     }
 }

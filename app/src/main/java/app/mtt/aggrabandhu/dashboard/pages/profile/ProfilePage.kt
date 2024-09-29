@@ -2,6 +2,7 @@ package app.mtt.aggrabandhu.dashboard.pages.profile
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,20 +42,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.di.baseUrl
 import app.mtt.aggrabandhu.utils.CircularImage
+import app.mtt.aggrabandhu.utils.CustomButton2
+import app.mtt.aggrabandhu.utils.EditProfileButton
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun ProfilePage() {
+fun ProfilePage(navController: NavController?= null) {
 
     val context = LocalContext.current
 
@@ -112,6 +117,17 @@ fun ProfilePage() {
                 painter = rememberAsyncImagePainter(profileUrl),
             )
             Spacer(modifier = Modifier.height(10.dp))
+            EditProfileButton(
+                text = "Edit your Profile",
+                background = colorResource(id = R.color.orange),
+                modifier = Modifier
+                    .fillMaxWidth(0.36f)
+            ){
+                Log.d("Click", "Click")
+                navController?.navigate("edit_profile_screen")
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
             ReferralInfoCard(referenceID, context)
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = name)
             ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = fatherName)

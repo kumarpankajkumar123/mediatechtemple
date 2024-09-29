@@ -1,6 +1,7 @@
 package app.mtt.aggrabandhu
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,6 +13,9 @@ import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SecondOnbo
 import app.mtt.aggrabandhu.authentication.signup.SignupScreen
 import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
+import app.mtt.aggrabandhu.dashboard.pages.profile.EditProfileScreen
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
@@ -23,6 +27,12 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 @Composable
 fun NavigationComponent(loginStatus : Boolean) {
     val navController = rememberNavController()
+
+    var profileViewModel: ProfileViewModel ?= null
+
+    if (loginStatus){
+        profileViewModel = hiltViewModel()
+    }
 
     NavHost(
         navController = navController,
@@ -96,6 +106,12 @@ fun NavigationComponent(loginStatus : Boolean) {
 
         composable("dashboard_screen") {
             DashboardScreen(navController = navController)
+        }
+        composable("profile_screen") {
+            ProfilePage(navController = navController)
+        }
+        composable("edit_profile_screen") {
+            EditProfileScreen(navController = navController, profileViewModel = profileViewModel!!)
         }
         composable("make_donation_screen") {
             MakeDonationPage(navController = navController)

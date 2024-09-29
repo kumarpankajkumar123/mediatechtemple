@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Adhar verification API">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginResponse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginViewmodel.kt" afterDir="false" />
+    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Log out">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/pages/profile/EditProfileeScreen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/fileHashes.bin" afterDir="false" />
@@ -19,27 +18,31 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.7/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.7/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Aggrabandhu.app.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/apk/debug/app-debug.apk" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/10/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/10/classes.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/12/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/12/classes.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/13/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/13/classes.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/15/classes.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/mergeProjectDexDebug/9/classes.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/app_debug.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/java_res/debug/processDebugJavaRes/out/META-INF/app_debug.kotlin_module" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$10.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$10.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$11.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$11.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$2.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$2.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$3.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$3.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$4.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$4.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$5.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$5.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$6.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$6.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$7.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$7.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$8.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$8.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$9.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$9.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1.dex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/NavigationComponentKt.dex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$1.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$2.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$3.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$4.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$2.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt$Preview$1.dex" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/authentication/LoginScreenKt.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/dashboard/DashboardScreenKt.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/dashboard/DashboardScreenKt.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$1$1.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$1$1.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$2.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$2.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt.dex" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/project_dex_archive/debug/dexBuilderDebug/out/app/mtt/aggrabandhu/utils/CustomButtonsKt.dex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/intermediates/stable_resource_ids_file/debug/processDebugResources/stableIds.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/intermediates/stable_resource_ids_file/debug/processDebugResources/stableIds.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.keystream.len" afterDir="false" />
@@ -49,17 +52,9 @@
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab.values.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/inputs/source-to-output.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-attributes.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/class-fq-name-to-source.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/internal-name-to-source.tab.keystream.len" afterDir="false" />
@@ -87,11 +82,7 @@
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/subtypes.tab.values.at" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.keystream.len" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.len" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab.values.at" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/jvm/kotlin/supertypes.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/counters.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/file-to-id.tab.keystream" afterDir="false" />
@@ -114,31 +105,35 @@
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.s" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab.values.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/caches-jvm/lookups/lookups.tab_i" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/last-build.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/cacheable/last-build.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/classpath-snapshot/shrunk-classpath-snapshot.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/local-state/build-history.bin" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/kotlin/compileDebugKotlin/local-state/build-history.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/META-INF/app_debug.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/META-INF/app_debug.kotlin_module" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$11.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$6.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1$9.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt$NavigationComponent$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/NavigationComponentKt.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$1$1$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$LoginScreen$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt$Preview$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/authentication/LoginScreenKt.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/dashboard/DashboardScreenKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/dashboard/DashboardScreenKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt$CustomButton$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/app/build/tmp/kotlin-classes/debug/app/mtt/aggrabandhu/utils/CustomButtonsKt.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/NavigationComponent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/NavigationComponent.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/api/AllApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/api/AllApi.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/LoginScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginViewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/login/LoginViewmodel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/firstOnboarding/FirstOnboardingScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/firstOnboarding/FirstOnboardingScreen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/secondOnboarding/SecondOnboardingScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/secondOnboarding/SecondOnboardingScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/secondOnboarding/SignupResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/authentication/onboarding/secondOnboarding/SignupResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/DashboardScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/DashboardScreen.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/pages/profile/ProfilePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/pages/profile/ProfilePage.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/pages/profile/ProfileViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/dashboard/pages/profile/ProfileViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/repository/Repository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/repository/Repository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/viewmodel/Onboarding1Viewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/viewmodel/Onboarding1Viewmodel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/viewmodel/Onboarding2Viewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/viewmodel/Onboarding2Viewmodel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/utils/CustomButtons.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mtt/aggrabandhu/utils/CustomButtons.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,11 +153,16 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin File" />
         <option value="Kotlin Data Class" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="D:\MTT Project\AgrabandhuKey.jks" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -193,8 +193,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Android App.app.executor": "Run",
+    "BundleExportedModule": "Aggrabandhu.app",
     "Compose Preview.Preview.executor": "Run",
     "Compose Preview.SecondOnboardingScreen.executor": "Run",
+    "ExportBundle.BundlePathForAggrabandhu.app": "D:\\MTT Project\\Aggrabandhu\\app",
     "ResourceManagerPrefKey.ResourceType": "MIPMAP",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
@@ -211,6 +213,9 @@
     "show.migrate.to.gradle.popup": "false"
   },
   "keyToStringList": {
+    "ExportApk.BuildVariants": [
+      "release"
+    ],
     "kotlin-gradle-user-dirs": [
       "C:\\Users\\MTT PC\\.gradle"
     ]
@@ -686,7 +691,47 @@
       <option name="project" value="LOCAL" />
       <updated>1727355640270</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Login API">
+      <option name="closed" value="true" />
+      <created>1727410931505</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1727410931505</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Auto Fetch Current Age,&#10;Rule API">
+      <option name="closed" value="true" />
+      <created>1727417126461</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1727417126461</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Manage Session">
+      <option name="closed" value="true" />
+      <created>1727432696380</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1727432696380</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Changes in API">
+      <option name="closed" value="true" />
+      <created>1727519612273</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1727519612273</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Log out">
+      <option name="closed" value="true" />
+      <created>1727524524384</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1727524524384</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -704,11 +749,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Login Screen Designed" />
-    <MESSAGE value="CustomTextInputs.kt" />
-    <MESSAGE value="Login and CustomTextInputs.kt" />
-    <MESSAGE value="SignupScreen and NavigationItems" />
-    <MESSAGE value="DashboardScreen Setup done" />
     <MESSAGE value="SideNavigation Setup done" />
     <MESSAGE value="TopAppBar Setup done" />
     <MESSAGE value="ProfilePage Setup done" />
@@ -728,6 +768,12 @@
     <MESSAGE value="Support Page designed" />
     <MESSAGE value="ProfilePage API implemented" />
     <MESSAGE value="Adhar verification API" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adhar verification API" />
+    <MESSAGE value="Login API" />
+    <MESSAGE value="Signup API" />
+    <MESSAGE value="Auto Fetch Current Age,&#10;Rule API" />
+    <MESSAGE value="Manage Session" />
+    <MESSAGE value="Changes in API" />
+    <MESSAGE value="Log out" />
+    <option name="LAST_COMMIT_MESSAGE" value="Log out" />
   </component>
 </project>

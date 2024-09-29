@@ -50,6 +50,7 @@ import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
 import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 
 @Composable
@@ -58,21 +59,26 @@ fun LoginScreen (navController: NavController?= null) {
 
     val loginViewmodel : LoginViewmodel = hiltViewModel()
 
-    val loginResponseCode by loginViewmodel.loginResponseCode.collectAsState()
+    val loginResponseCode = loginViewmodel.loginResponseCode.collectAsState()
     val loginResponse by loginViewmodel.loginResponse.collectAsState()
 
     val sp = SharedPrefManager(context)
     val showProgress = remember { mutableStateOf(false) }
 
-    if (loginResponseCode != 0) {
-        if (loginResponseCode  == 200) {
+    if (loginResponseCode.value != 0) {
+        if (loginResponseCode.value  == 200) {
             showProgress.value = false
             if (!loginViewmodel.isLogin) {
                 Toasty.success(context, "Login", Toast.LENGTH_SHORT).show()
                 loginViewmodel.isLogin = true
                 Log.d("Login", "Login ${loginResponse.userid}")
                 sp.saveLoginStatus(loginResponse.userid.toString())
-                navController?.navigate("dashboard_screen")
+
+                navController?.navigate("dashboard_screen") {
+                    popUpTo("dashboard_screen"){
+                        inclusive = true
+                    }
+                }
             }
         } else {
             showProgress.value = false
@@ -169,9 +175,8 @@ fun LoginScreen (navController: NavController?= null) {
 //                } else if (password?.isEmpty()!!) {
 //                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
 //                } else {
-//                showProgress.value = true
-//                loginViewmodel.login()
-                navController?.navigate("dashboard_screen")
+                showProgress.value = true
+                loginViewmodel.login()
 //                    Toasty.success(context, "${phone.value} - ${password.value}", Toast.LENGTH_SHORT).show()
 //                }
             }

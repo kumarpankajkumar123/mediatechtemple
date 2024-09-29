@@ -103,7 +103,11 @@ fun SecondOnboardingScreen(
                     sp.saveLoginStatus(signupResponse.value.memberAdd?.id.toString())
                     Log.d("userID", signupResponse.value.memberAdd?.id.toString())
                     Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
-                    navController?.navigate("dashboard_screen")
+                            navController?.navigate("dashboard_screen"){
+                                popUpTo("dashboard_screen"){
+                                    inclusive = true
+                                }
+                            }
                 }
                 406 -> {
                     showProgressDialog.value = false
