@@ -86,6 +86,7 @@ fun ProfilePage(navController: NavController?= null) {
     val phone = profileData.value.mobile_no
     val dob = profileData.value.dob
     val maritalStatus = profileData.value.marital_status
+    val spouseName = profileData.value.spouse_name
     val profession = profileData.value.profession
     val district = profileData.value.district
     val state = profileData.value.state
@@ -124,7 +125,7 @@ fun ProfilePage(navController: NavController?= null) {
                     .fillMaxWidth(0.36f)
             ){
                 Log.d("Click", "Click")
-                navController?.navigate("edit_profile_screen")
+                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}/$profileUrl")
             }
 
             Spacer(modifier = Modifier.height(20.dp))

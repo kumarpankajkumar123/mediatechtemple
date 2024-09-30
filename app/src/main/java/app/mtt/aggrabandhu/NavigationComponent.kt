@@ -28,12 +28,6 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 fun NavigationComponent(loginStatus : Boolean) {
     val navController = rememberNavController()
 
-    var profileViewModel: ProfileViewModel ?= null
-
-    if (loginStatus){
-        profileViewModel = hiltViewModel()
-    }
-
     NavHost(
         navController = navController,
         startDestination = if (loginStatus) "dashboard_screen" else "login_screen"
@@ -110,8 +104,40 @@ fun NavigationComponent(loginStatus : Boolean) {
         composable("profile_screen") {
             ProfilePage(navController = navController)
         }
-        composable("edit_profile_screen") {
-            EditProfileScreen(navController = navController, profileViewModel = profileViewModel!!)
+        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}/{profileUri}",
+            arguments = listOf(
+                navArgument("name") {
+                    type = NavType.StringType
+                },
+                navArgument("phone") {
+                    type = NavType.StringType
+                },
+                navArgument("father") {
+                    type = NavType.StringType
+                },
+                navArgument("mother") {
+                    type = NavType.StringType
+                },
+                navArgument("gotra") {
+                    type = NavType.StringType
+                },
+                navArgument("maritalStatus") {
+                    type = NavType.StringType
+                },
+                navArgument("spouse") {
+                    type = NavType.StringType
+                },
+                navArgument("dob") {
+                    type = NavType.StringType
+                },
+                navArgument("profession") {
+                    type = NavType.StringType
+                },
+                navArgument("profileUri") {
+                    type = NavType.StringType
+                }
+            )) {
+            EditProfileScreen(navController = navController)
         }
         composable("make_donation_screen") {
             MakeDonationPage(navController = navController)

@@ -1,8 +1,5 @@
 package app.mtt.aggrabandhu.dashboard.pages.profile
 
-import android.net.Uri
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -25,14 +22,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArtTrack
-import androidx.compose.material.icons.filled.BusinessCenter
-import androidx.compose.material.icons.filled.FamilyRestroom
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.PeopleOutline
-import androidx.compose.material.icons.filled.PermContactCalendar
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material.icons.filled.PersonPin
@@ -42,6 +35,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -77,9 +72,21 @@ import es.dmoral.toasty.Toasty
 
 
 @Composable
-fun EditProfileScreen(navController: NavController?=null, profileViewModel: ProfileViewModel) {
+fun EditProfileScreen(navController: NavController?=null) {
 
     val context = LocalContext.current
+
+    val profileViewModel : EditProfileViewModel = hiltViewModel()
+
+    val showProgress = remember { mutableStateOf(true) }
+
+//    if (editProfileResponseCode.value != 0) {
+//        showProgress.value = false
+//    }
+
+    if (showProgress.value) {
+        LoadingAlertDialog()
+    }
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -164,6 +171,28 @@ fun EditProfileScreen(navController: NavController?=null, profileViewModel: Prof
 
             Spacer(modifier = Modifier.height(10.dp))
 
+            /* ------------------- Name ID ----------------------- */
+            TextFieldWithIcons(
+                "Full Name",
+                "Enter your Full Name",
+                12,
+                KeyboardType.Text,
+                Icons.Filled.Person,
+//                name
+            ) {
+                profileViewModel.onNameTextChanged(it)
+            }
+            /* ------------------- Phone number ----------------------- */
+            TextFieldWithIcons(
+                "Phone Number",
+                "Enter your Phone Number",
+                10,
+                KeyboardType.Phone,
+                Icons.Filled.Person,
+//                phone.value
+            ) {
+                profileViewModel.onPhoneTextChanged(it)
+            }
             /* ------------------- Reference ID ----------------------- */
             TextFieldWithIcons(
                 "Father's Name",
@@ -171,22 +200,22 @@ fun EditProfileScreen(navController: NavController?=null, profileViewModel: Prof
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                father.value
+//                fatherName.value
             ) {
-
+                profileViewModel.onFatherNameTextChanged(it)
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
-            /* ------------------- Name ----------------------- */
+            /* ------------------- Mother Name ----------------------- */
             TextFieldWithIcons(
                 "Mother's Name",
                 "Enter your Mother's name",
                 20,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                mother.value
+//                motherName.value
             ) {
-
+                profileViewModel.onMotherNameTextChanged(it)
             }
 
             /*   ------------- Pin Code ---------------- */
@@ -284,7 +313,6 @@ fun EditProfileScreen(navController: NavController?=null, profileViewModel: Prof
             ) { text ->
 
             }
-
 
         }
     }
