@@ -80,6 +80,7 @@ class Onboarding2Viewmodel @Inject constructor(
     var city : String? = ""
     var state : String? = ""
     var address : String? = ""
+    var email : String? = ""
     var adharNumber : String? = ""
     var adharUri : Uri?= null
 

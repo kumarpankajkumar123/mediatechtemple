@@ -80,18 +80,14 @@ fun SecondOnboardingScreen(
     val showProgressDialog = remember { mutableStateOf(false) }
 
     if (validation.value != 0) {
-        if (validation.value == 200) {
+        if (validation.value == 406) {
             showProgressDialog.value = false
-            onboarding2Viewmodel.isDocVerified = true
-            Toast.makeText(context, "Verified", Toast.LENGTH_SHORT).show()
-        } else if (validation.value == 400) {
-            showProgressDialog.value = false
-            onboarding2Viewmodel.isDocVerified = false
-            Toasty.error(context, "Not Verified", Toast.LENGTH_SHORT).show()
+//            onboarding2Viewmodel.isDocVerified = true
+            Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
         } else {
             showProgressDialog.value = false
-            onboarding2Viewmodel.isDocVerified = false
-            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+//            onboarding2Viewmodel.isDocVerified = false
+//            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -104,11 +100,11 @@ fun SecondOnboardingScreen(
                     sp.saveLoginStatus(signupResponse.value.memberAdd?.id.toString())
                     Log.d("userID", signupResponse.value.memberAdd?.id.toString())
                     Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
-                            navController?.navigate("dashboard_screen"){
-                                popUpTo("dashboard_screen"){
-                                    inclusive = true
-                                }
+                        navController?.navigate("dashboard_screen"){
+                            popUpTo("dashboard_screen"){
+                                inclusive = true
                             }
+                        }
                 }
                 406 -> {
                     showProgressDialog.value = false
@@ -179,6 +175,17 @@ fun SecondOnboardingScreen(
             leadingIcon = Icons.Default.LocationOn,
         ) { text ->
             onboarding2Viewmodel.address = text
+        }
+
+        /* ------------- Address ---------------- */
+        TextFieldWithIcons(
+            label = "Email (OPTIONAL)",
+            placeholder = "Email (OPTIONAL)",
+            maxLength = 26,
+            keyboardType = KeyboardType.Email,
+            leadingIcon = Icons.Default.LocationOn,
+        ) { text ->
+            onboarding2Viewmodel.email = text
         }
 
         TextFieldWithIcons(
@@ -305,7 +312,7 @@ fun SecondOnboardingScreen(
         } else {
             onboarding2Viewmodel.diseaseFile = null
         }
-        RulesAndRegulationsCheck(text = "Accept Rules and regulations"){
+        RulesAndRegulationsCheck(rules = rules.value, text = "Accept Rules and regulations"){
             Log.d("Rules", "$it")
             Toast.makeText(context, "AGE - ${onboarding2Viewmodel.ageYears}", Toast.LENGTH_SHORT).show()
 
@@ -319,7 +326,27 @@ fun SecondOnboardingScreen(
             text = "Next",
             background = colorResource(id = R.color.orange)
         ) {
-            if (onboarding2Viewmodel.isRuleAccepted) {
+            if (onboarding2Viewmodel.pincode.length < 6){
+                Toasty.error(context, "Please enter pin code", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.city!!.isEmpty()){
+                Toasty.error(context, "Please enter city", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.state!!.isEmpty()){
+                Toasty.error(context, "Please enter state", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.address!!.isEmpty()){
+                Toasty.error(context, "Please enter address", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.adharNumber!!.isEmpty()){
+                Toasty.error(context, "Please enter adhar number", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.nominee!!.isEmpty()){
+                Toasty.error(context, "Please enter nominee name", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.relation!!.isEmpty()){
+                Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.nominee2!!.isEmpty()){
+                Toasty.error(context, "Please enter nominee name", Toast.LENGTH_SHORT).show()
+            } else if (onboarding2Viewmodel.relation2!!.isEmpty()){
+                Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
+            } else if (!onboarding2Viewmodel.isRuleAccepted) {
+                Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
+            } else {
                 onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
                 if (onboarding2Viewmodel.isDisease) {
                     if (onboarding2Viewmodel.diseaseFile != null) {
@@ -342,8 +369,6 @@ fun SecondOnboardingScreen(
                         "${onboarding2Viewmodel.isRuleAccepted}"
                     )
                 }
-            } else {
-                Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -351,6 +376,7 @@ fun SecondOnboardingScreen(
 
 @Composable
 fun RulesAndRegulationsCheck(
+    rules: String,
     text: String,
     onClick: (Boolean) -> Unit
 ) {
@@ -362,7 +388,9 @@ fun RulesAndRegulationsCheck(
         val isChecked = remember { mutableStateOf(false) }
 
         if (isOpened.value) {
-            CustomAlertDialog(onAccept = {
+            CustomAlertDialog(
+                rules = rules,
+                onAccept = {
                 isOpened.value = false
                 isChecked.value = true
             })

@@ -283,6 +283,7 @@ fun SelectImageCardWithButton(
 
 @Composable
 fun CustomAlertDialog(
+    rules : String,
     onAccept: () -> Unit
 ) {
     Dialog(onDismissRequest = { onAccept() }, properties = DialogProperties(
@@ -312,7 +313,7 @@ fun CustomAlertDialog(
                     modifier = Modifier.padding(8.dp), fontSize = 20.sp
                 )
                 Text(
-                    text = "stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)stringResource(id = R.string.app_name)",
+                    text = rules,
                     modifier = Modifier
                         .padding(8.dp)
                         .fillMaxWidth()
@@ -333,5 +334,5 @@ fun CustomAlertDialog(
 @Preview
 @Composable
 private fun Preview() {
-    CustomAlertDialog {}
+//    CustomAlertDialog {}
 }
