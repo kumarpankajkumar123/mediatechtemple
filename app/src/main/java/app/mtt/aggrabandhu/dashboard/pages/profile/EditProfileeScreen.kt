@@ -24,7 +24,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.PeopleOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Person2
@@ -46,29 +45,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
-import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.calculateAge
-import app.mtt.aggrabandhu.utils.CustomButton
-import app.mtt.aggrabandhu.utils.DatePickerField
-import app.mtt.aggrabandhu.utils.DropDownField
-import app.mtt.aggrabandhu.utils.LoadingAlertDialog
-import app.mtt.aggrabandhu.utils.SelectImageCardWithButton
-import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
-import app.mtt.aggrabandhu.utils.prepareFilePart
-import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
-import coil.compose.rememberAsyncImagePainter
-import es.dmoral.toasty.Toasty
 
 
 @Composable
@@ -78,15 +62,30 @@ fun EditProfileScreen(navController: NavController?=null) {
 
     val profileViewModel : EditProfileViewModel = hiltViewModel()
 
-    val showProgress = remember { mutableStateOf(true) }
+    profileViewModel.getFields()
+
+    val name = profileViewModel.fullNameField.collectAsState()
+    val phone = profileViewModel.phone
+    val father = profileViewModel.father
+    val mother = profileViewModel.mother
+    val nominee = profileViewModel.nominee
+    val relation = profileViewModel.relation
+    val nominee2 = profileViewModel.nominee2
+    val relation2 = profileViewModel.relation2
+    val pinCode = profileViewModel.pinCode
+    val city = profileViewModel.city
+    val state = profileViewModel.state
+    val address = profileViewModel.address
+
+    val showProgress = remember { mutableStateOf(false) }
 
 //    if (editProfileResponseCode.value != 0) {
 //        showProgress.value = false
 //    }
 
-    if (showProgress.value) {
-        LoadingAlertDialog()
-    }
+//    if (showProgress.value) {
+//        LoadingAlertDialog()
+//    }
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -105,7 +104,7 @@ fun EditProfileScreen(navController: NavController?=null) {
         // Background image
         Image(
             painter = painterResource(id = R.drawable.textured_bg), // Replace with your image resource
-            contentDescription = null,
+            contentDescription = "back",
             contentScale = ContentScale.Crop, // Adjust content scaling as needed
             modifier = Modifier.fillMaxSize(), // Ensure the image fills the entire screen
             alpha = 0.3f
@@ -121,7 +120,7 @@ fun EditProfileScreen(navController: NavController?=null) {
             Row (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, top = 10.dp)
+                    .padding(5.dp)
                     .height(50.dp),
                 verticalAlignment = Alignment.CenterVertically
             ){
@@ -149,11 +148,12 @@ fun EditProfileScreen(navController: NavController?=null) {
                     .clip(CircleShape)
                     .size(180.dp)
                     .border(BorderStroke(2.dp, Color.Black), CircleShape),
-                painter = //if (imageUri.value != null) {
+                painter =
+//                if (imageUri.value != null) {
 //                    rememberAsyncImagePainter(model = imageUri.value)
 //                } else {
                     rememberVectorPainter(image = Icons.Default.PersonPin)
-//          }
+//                }
             ,
                 contentDescription = "",
                 contentScale = ContentScale.Crop
@@ -178,7 +178,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                name
+                name.value
             ) {
                 profileViewModel.onNameTextChanged(it)
             }
@@ -189,7 +189,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 10,
                 KeyboardType.Phone,
                 Icons.Filled.Person,
-//                phone.value
+                phone
             ) {
                 profileViewModel.onPhoneTextChanged(it)
             }
@@ -200,7 +200,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                fatherName.value
+                father
             ) {
                 profileViewModel.onFatherNameTextChanged(it)
             }
@@ -213,7 +213,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 20,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                motherName.value
+                mother
             ) {
                 profileViewModel.onMotherNameTextChanged(it)
             }
@@ -225,6 +225,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 6,
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.PinDrop,
+                pinCode
             ) { text ->
 
             }
@@ -236,6 +237,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationCity,
+                city
             ) { text ->
 
             }
@@ -247,6 +249,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationOn,
+                state
             ) { text ->
 
             }
@@ -257,20 +260,21 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationOn,
+                address
             ) { text ->
 
             }
 
-            TextFieldWithIcons(
-                label = "Aadhar Card Number",
-                placeholder = "Aadhar card Number",
-                maxLength = 12,
-                keyboardType = KeyboardType.Number,
-                leadingIcon = Icons.Default.Newspaper
-            ) {
-
-            }
-            Spacer(modifier = Modifier.height(10.dp))
+//            TextFieldWithIcons(
+//                label = "Aadhar Card Number",
+//                placeholder = "Aadhar card Number",
+//                maxLength = 12,
+//                keyboardType = KeyboardType.Number,
+//                leadingIcon = Icons.Default.Newspaper
+//            ) {
+//
+//            }
+//            Spacer(modifier = Modifier.height(10.dp))
 
             /*   - ------------ Nominee 1 ---------------- */
             TextFieldWithIcons(
@@ -279,6 +283,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
+                nominee
             ) { text ->
             }
             /*   ------------- Relation 1 ---------------- */
@@ -288,6 +293,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
+                relation
             ) { text ->
 
             }
@@ -299,6 +305,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
+                nominee2
             ) { text ->
 
             }
@@ -310,6 +317,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
+                relation2
             ) { text ->
 
             }

@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.dashboard.pages.profile
 
+import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -16,22 +17,31 @@ class EditProfileViewModel @Inject constructor(
     private val repository : Repository,
     private val savedStateHandle: SavedStateHandle) : ViewModel(){
 
-//    val editProfileResponseCode : MutableStateFlow(0)
+    val editProfileResponseCode : StateFlow<Int>
+        get() = repository.editProfileResponseCode
 
     var getName : String = savedStateHandle.get<String>("name")!!
     var phone : String = savedStateHandle.get<String>("phone")!!
-    var profileUri : String = savedStateHandle.get<String>("profileUri")!!
+//    var profileUri : String = savedStateHandle.get<String>("profileUri")!!
     var father : String= savedStateHandle.get<String>("father")!!
     var mother : String = savedStateHandle.get<String>("mother")!!
-    var gotra : String = savedStateHandle.get<String>("gotra")!!
-    var maritalStatus : String = savedStateHandle.get<String>("maritalStatus")!!
-    var dob : String = savedStateHandle.get<String>("dob")!!
-    var profession : String = savedStateHandle.get<String>("profession")!!
-    var spouseName : String = savedStateHandle.get<String>("spouse")!!
+    var pinCode : String = savedStateHandle.get<String>("pinCode")!!
+    var city : String = savedStateHandle.get<String>("city")!!
+    var state : String = savedStateHandle.get<String>("state")!!
+    var address : String = savedStateHandle.get<String>("address")!!
+    var nominee : String= savedStateHandle.get<String>("nominee")!!
+    var relation : String = savedStateHandle.get<String>("relation")!!
+    var nominee2 : String= savedStateHandle.get<String>("nominee2")!!
+    var relation2 : String = savedStateHandle.get<String>("relation2")!!
+//    var gotra : String = savedStateHandle.get<String>("gotra")!!
+//    var maritalStatus : String = savedStateHandle.get<String>("maritalStatus")!!
+//    var dob : String = savedStateHandle.get<String>("dob")!!
+//    var profession : String = savedStateHandle.get<String>("profession")!!
+//    var spouseName : String = savedStateHandle.get<String>("spouse")!!
 
     // MutableLiveData to hold the current text state
     private var _fullNameState = MutableStateFlow("")
-    val fullNameFieldState: StateFlow<String>
+    val fullNameField: StateFlow<String>
         get() = _fullNameState
 
     // MutableLiveData to hold the current text state
@@ -46,22 +56,6 @@ class EditProfileViewModel @Inject constructor(
     private val _motherNameState = MutableStateFlow("")
     val motherNameFieldState: StateFlow<String> = _motherNameState
 
-    // MutableLiveData to hold the current text state
-    private val _password = MutableStateFlow("")
-    val passwordTextState: StateFlow<String> = _password
-
-    fun getIntent() {
-        if(_fullNameState.value.isEmpty()) {
-            _fullNameState.value = savedStateHandle.get<String>("name")!!
-        }
-        if(_phoneTextState.value.isEmpty()) {
-            _phoneTextState.value = savedStateHandle.get<String>("phone")!!
-        }
-        if(_phoneTextState.value.isEmpty()) {
-            _phoneTextState.value = savedStateHandle.get<String>("phone")!!
-        }
-    }
-
     fun onNameTextChanged(newText: String) {
         _fullNameState.value = newText
     }
@@ -74,8 +68,20 @@ class EditProfileViewModel @Inject constructor(
     fun onMotherNameTextChanged(newText: String) {
         _motherNameState.value = newText
     }
-    fun onPasswordTextChanged(newText: String) {
-        _password.value = newText
+
+    fun getFields(){
+        if(_fullNameState.value.isEmpty()){
+            _fullNameState.value = getName
+            Log.d("Name", getName)
+        }
+    }
+
+    fun editProfile() {
+        viewModelScope.launch {
+//            repository.editProfile(
+//
+//            )
+        }
     }
 
 }

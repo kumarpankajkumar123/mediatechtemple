@@ -30,5 +30,13 @@ data class ProfileData(
     val state: String,
     val status: String,
     val tahsil: String,
-    val updatedAt: String
+    val updatedAt: String,
+    val nominees: List<Nominees>,
+)
+
+data class Nominees (
+    val nominee : String,
+    val relationship : String,
+    val nominee2 : String,
+    val relationship2 : String,
 )

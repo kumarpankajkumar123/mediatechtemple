@@ -110,6 +110,15 @@ class SharedPrefManager(private val context : Context) {
     }
 
     /*  ------------------------------------------------------------------*/
+    fun saveMarriageDate(marriageDate : String){
+        editor.putString("marriageDate",marriageDate)
+        editor.apply()
+    }
+    fun getMarriageDate(): String? {
+        return sharedPreferences.getString("marriageDate", "")
+    }
+
+    /*  ------------------------------------------------------------------*/
     fun saveProfession(referenceID : String){
         editor.putString("profession",referenceID)
         editor.apply()

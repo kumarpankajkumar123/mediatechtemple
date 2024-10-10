@@ -6,6 +6,7 @@ import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
+import app.mtt.aggrabandhu.dashboard.pages.profile.Nominees
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
@@ -57,6 +58,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
     private val _signUpResponseCode = MutableStateFlow<Int>( 0 )
     val signUpResponseCode : StateFlow<Int>
         get() = _signUpResponseCode
+
+    private val _editProfileResponseCode = MutableStateFlow<Int>( 0 )
+    val editProfileResponseCode : StateFlow<Int>
+        get() = _editProfileResponseCode
 
     private val _validateID = MutableStateFlow<Int>(0)
     val validateID : StateFlow<Int>
@@ -343,12 +348,62 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
+    suspend fun editProfile (
+        name : String,
+        fatherName : String,
+        motherName : String,
+        mobileNumber : String,
+        address : String,
+        district : String,
+        state : String,
+        pincode : String,
+        nominee : String,
+        relationShip : String,
+        nominee2 : String,
+        relationShip2 : String,
+        profile : MultipartBody.Part,
+    ) {
+        Log.d("Edit Profile",
+                    "father : $fatherName, " +
+                    "mother : $motherName, " +
+                    "City :$district, " +
+                    "State : $state,  " +
+                    "Pin : $pincode, "
+        )
+        Log.d("Files","$profile")
+
+        val response = allApi.editProfile(
+            "2",
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
+            profile,
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2)
+        )
+        if (response.isSuccessful && response.body() != null) {
+            Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")
+            _editProfileResponseCode.emit(response.code())
+        } else {
+            Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
+            _editProfileResponseCode.emit(response.code())
+        }
+    }
+
 
     private val _profileResponseCode = MutableStateFlow(0)
     val profileResponseCode : StateFlow<Int>
         get() = _profileResponseCode
     private val _profileData = MutableStateFlow<ProfileData>(
-        ProfileData("","","","",false,"","","","","","",0,"","","","","","","","","","","","",false,"","","","","")
+        ProfileData("","","","",false,"","","","","","",0,"","","","","","","","","","","","",false,"","","","","",
+            listOf(Nominees("","","","")))
     )
     val profileData : StateFlow<ProfileData>
         get() = _profileData

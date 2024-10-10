@@ -56,7 +56,7 @@ fun NavigationComponent(loginStatus : Boolean) {
             FirstOnboardingScreen(navController = navController)
         }
         composable(
-            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}/{profileUri}",
+            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{marriageDate}/{marriageYears}/{dob}/{ageYears}/{profession}/{profileUri}",
             arguments = listOf(
                 navArgument("referenceID") {
                     type = NavType.StringType
@@ -85,7 +85,16 @@ fun NavigationComponent(loginStatus : Boolean) {
                 navArgument("spouse") {
                     type = NavType.StringType
                 },
+                navArgument("marriageDate") {
+                    type = NavType.StringType
+                },
+                navArgument("marriageYears") {
+                    type = NavType.StringType
+                },
                 navArgument("dob") {
+                    type = NavType.StringType
+                },
+                navArgument("ageYears") {
                     type = NavType.StringType
                 },
                 navArgument("profession") {
@@ -104,7 +113,8 @@ fun NavigationComponent(loginStatus : Boolean) {
         composable("profile_screen") {
             ProfilePage(navController = navController)
         }
-        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}/{profileUri}",
+        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{pinCode}/{city}/{state}/{address}/{nominee}/{relation}/{nominee2}/{relation2}",
+//        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}",
             arguments = listOf(
                 navArgument("name") {
                     type = NavType.StringType
@@ -118,24 +128,50 @@ fun NavigationComponent(loginStatus : Boolean) {
                 navArgument("mother") {
                     type = NavType.StringType
                 },
-                navArgument("gotra") {
+                navArgument("pinCode") {
                     type = NavType.StringType
                 },
-                navArgument("maritalStatus") {
+                navArgument("city") {
                     type = NavType.StringType
                 },
-                navArgument("spouse") {
+                navArgument("state") {
                     type = NavType.StringType
                 },
-                navArgument("dob") {
+                navArgument("address") {
                     type = NavType.StringType
                 },
-                navArgument("profession") {
+                navArgument("nominee") {
                     type = NavType.StringType
                 },
-                navArgument("profileUri") {
+                navArgument("relation") {
+                    type = NavType.StringType
+                },
+                navArgument("nominee2") {
+                    type = NavType.StringType
+                },
+                navArgument("relation2") {
                     type = NavType.StringType
                 }
+//                ,
+//                navArgument("gotra") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("maritalStatus") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("spouse") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("dob") {
+//                    type = NavType.StringType
+//                },
+//                navArgument("profession") {
+//                    type = NavType.StringType
+//                }
+//                ,
+//                navArgument("profileUri") {
+//                    type = NavType.StringType
+//                }
             )) {
             EditProfileScreen(navController = navController)
         }

@@ -16,7 +16,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface AllApi {
@@ -125,6 +127,25 @@ interface AllApi {
         @Part("reference_id") reference_id : RequestBody,
         @Part("disease") disease : RequestBody, // True/False
         @Part("rulesAccepted") rulesAccepted : RequestBody,
+    ) : Response<SignupResponse>
+
+    @Multipart
+    @PUT("member/{memberID}")
+    suspend fun editProfile(
+        @Path("memberID") memberID: String,
+        @Part("name") name : RequestBody,
+        @Part("father_name") father_name : RequestBody,
+        @Part("mother_name") mother_name : RequestBody,
+        @Part("mobile_no") mobile_no : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("district") district : RequestBody,
+        @Part("state") state : RequestBody,
+        @Part("pincode") pincode : RequestBody,
+        @Part profile : MultipartBody.Part, // Profile
+        @Part("nominee") nominee : RequestBody,
+        @Part("nominee2") nominee2 : RequestBody,
+        @Part("relationship") relationship : RequestBody,
+        @Part("relationship2") relationship2 : RequestBody
     ) : Response<SignupResponse>
 
     @GET("member")

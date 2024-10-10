@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Log in" />
+    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Edit Profile" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -112,6 +112,7 @@
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\sideNavigation\allMembers" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="app.mtt.aggrabandhu.dashboard.pages.profile" />
       <recent name="app.mtt.aggrabandhu.authentication.login" />
       <recent name="app.mtt.aggrabandhu.authentication.signup" />
       <recent name="app.mtt.aggrabandhu.viewmodel" />
@@ -614,7 +615,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727629637590</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Edit Profile">
+      <option name="closed" value="true" />
+      <created>1727700859377</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1727700859377</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -632,7 +641,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="TopAppBar Setup done" />
     <MESSAGE value="ProfilePage Setup done" />
     <MESSAGE value="DonorsPage Setup done" />
     <MESSAGE value="OnBoarding 1 Page Setup done" />
@@ -657,6 +665,7 @@
     <MESSAGE value="Changes in API" />
     <MESSAGE value="Log out" />
     <MESSAGE value="Log in" />
-    <option name="LAST_COMMIT_MESSAGE" value="Log in" />
+    <MESSAGE value="Edit Profile" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edit Profile" />
   </component>
 </project>

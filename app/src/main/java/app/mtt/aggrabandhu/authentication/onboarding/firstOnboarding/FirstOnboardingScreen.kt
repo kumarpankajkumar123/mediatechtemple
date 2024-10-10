@@ -60,7 +60,6 @@ import app.mtt.aggrabandhu.utils.DropDownField
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
-import app.mtt.aggrabandhu.viewmodel.Onboarding1Viewmodel
 import coil.compose.rememberAsyncImagePainter
 import es.dmoral.toasty.Toasty
 import java.time.LocalDate
@@ -87,6 +86,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val father = onboarding1Viewmodel.fatherNameFieldState.collectAsState()
     val mother = onboarding1Viewmodel.motherNameFieldState.collectAsState()
     val dob = onboarding1Viewmodel.dobTextFieldState.collectAsState()
+    val marriageDate = onboarding1Viewmodel.marriageDateTextFieldState.collectAsState()
     val selectedGotra = onboarding1Viewmodel.selectedGotra.collectAsState()
     val selectedMaritalStatus = onboarding1Viewmodel.selectedMaritalStatus.collectAsState()
     val spouseName = onboarding1Viewmodel.spouseNameText.collectAsState()
@@ -195,7 +195,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
 
             /* ------------------- Reference ID ----------------------- */
             TextFieldWithIcons(
-                "Father's Name",
+                "Father's / Husband's Name",
                 "Enter your Father's Name",
                 12,
                 KeyboardType.Text,
@@ -252,6 +252,36 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 ) {
                     onboarding1Viewmodel.spouseNameChanged(it)
                 }
+                /* ------------- Select Date ------------ */
+                DatePickerField(
+                    label = "Date of Marriage",
+                    value = marriageDate.value,
+                    onClick = { date ->
+                        if (date.isNotEmpty()) {
+                            onboarding1Viewmodel.onMarriageDateTextChanged(date)
+                            onboarding1Viewmodel.marriageYears = calculateAge(date)
+                            Log.d("marriageDate", onboarding1Viewmodel.marriageYears.toString())
+                            Toasty.success(context, onboarding1Viewmodel.marriageYears.toString(), Toast.LENGTH_SHORT)
+                                .show()
+                        } else {
+                            Log.d("marriageDate", "Empty marriageDate")
+                        }
+                    }
+                )
+            }
+            if (marriageDate.value.isNotEmpty()) {
+                if (calculateAge(marriageDate.value) != 0) {
+                    Log.d("marriageDate", marriageDate.value)
+                    DropDownField(
+                        selectedValue = onboarding1Viewmodel.marriageYears.toString(),
+                        options = emptyList(),
+                        label = "Current marriage Years",
+                        Icons.Default.PermContactCalendar,
+                        onValueChangedEvent = {
+
+                        }
+                    )
+                }
             }
             /* ------------- Select Date ------------ */
             DatePickerField(
@@ -259,10 +289,19 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 value = dob.value,
                 onClick = { date ->
                     if (date.isNotEmpty()) {
-                        onboarding1Viewmodel.onDobTextChanged(date)
-                        Log.d("Age", calculateAge(date).toString())
-                        Toasty.success(context, calculateAge(date).toString(), Toast.LENGTH_SHORT)
-                            .show()
+                        if (calculateAge(date) in 18..70) {
+                            onboarding1Viewmodel.onDobTextChanged(date)
+                            onboarding1Viewmodel.ageYears = calculateAge(date)
+                            Toasty.success(
+                                context,
+                                onboarding1Viewmodel.ageYears.toString(),
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                            Log.d("Age", onboarding1Viewmodel.ageYears.toString())
+                        } else {
+                            Toasty.error(context, "People of Age group of 18-70 are allowed", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
                         Log.d("Date", "Empty Date")
                     }
@@ -274,7 +313,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 if (calculateAge(dob.value) != 0) {
                     Log.d("AgeField", dob.value)
                     DropDownField(
-                        selectedValue = calculateAge(dob.value).toString(),
+                        selectedValue = onboarding1Viewmodel.ageYears.toString(),
                         options = emptyList(),
                         label = "Current Age",
                         Icons.Default.PermContactCalendar,
@@ -299,24 +338,45 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             Spacer(modifier = Modifier.height(10.dp))
 
             CustomButton(text = "Next", background = colorResource(id = R.color.orange)) {
-                val enCodedUri1 = imageUri.value.toString()
-                val enCodedUri = (Uri.encode(imageUri.toString()))
-                val sp = SharedPrefManager(context)
-                sp.saveProfileImageUri(enCodedUri1)
-                sp.saveFatherName(father.value)
-                sp.saveMotherName(mother.value)
-                sp.saveGotra(selectedGotra.value)
-                sp.saveMarital(selectedMaritalStatus.value)
-                sp.saveSpouseName(spouseName.value)
-                sp.saveDOB(dob.value)
-                sp.saveProfession(selectedProfession.value)
+                if (imageUri.value == null) {
+                    Toasty.error(context, "Please Select Image", Toast.LENGTH_SHORT).show()
+                } else if (father.value.length <= 3) {
+                    Toasty.error(context, "Please Enter Father Name", Toast.LENGTH_SHORT).show()
+                } else if (mother.value.length <= 3) {
+                    Toasty.error(context, "Please Enter Mother Name", Toast.LENGTH_SHORT).show()
+                } else if (selectedGotra.value == "") {
+                    Toasty.error(context, "Please Select Gotra", Toast.LENGTH_SHORT).show()
+                } else if (selectedMaritalStatus.value == "") {
+                    Toasty.error(context, "Please Select Marital Status", Toast.LENGTH_SHORT).show()
+                } else if (selectedProfession.value == "") {
+                    Toasty.error(context, "Please Select Profession", Toast.LENGTH_SHORT).show()
+                } else if (selectedMaritalStatus.value == "Married" && (spouseName.value == "" || marriageDate.value == "")) {
+                    Toasty.error(context, "Please Fill all the fields", Toast.LENGTH_SHORT).show()
+                } else {
+                        val enCodedUri1 = imageUri.value.toString()
+                        val enCodedUri = (Uri.encode(imageUri.toString()))
+                        val sp = SharedPrefManager(context)
+                        sp.saveProfileImageUri(enCodedUri1)
+                        sp.saveFatherName(father.value)
+                        sp.saveMotherName(mother.value)
+                        sp.saveGotra(selectedGotra.value)
+                        sp.saveMarital(selectedMaritalStatus.value)
+                        sp.saveSpouseName(spouseName.value)
+                        sp.saveDOB(dob.value)
+                        sp.saveMarriageDate(marriageDate.value)
+                        sp.saveProfession(selectedProfession.value)
 
-                navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${spouseName.value}/${dob.value}/${selectedProfession.value}/$enCodedUri")
+                        Log.d(
+                            "Marriage",
+                            "${onboarding1Viewmodel.marriageYears}, ${onboarding1Viewmodel.ageYears}"
+                        )
+                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
+                    }
+                }
             }
 
         }
     }
-}
 
 fun calculateAge(dob: String?="1940-08-23", dateFormat: String = "yyyy-MM-dd"): Int {
     // Parse the string into a LocalDate using the provided date format

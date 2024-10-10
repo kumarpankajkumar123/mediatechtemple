@@ -68,6 +68,7 @@ fun SecondOnboardingScreen(
     val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
     val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
 
+//    Toast.makeText(context, "AGE - ${onboarding2Viewmodel.marriageYears}", Toast.LENGTH_SHORT).show()
     val sp = SharedPrefManager(context)
 
     val docsList = arrayListOf(
@@ -306,8 +307,10 @@ fun SecondOnboardingScreen(
         }
         RulesAndRegulationsCheck(text = "Accept Rules and regulations"){
             Log.d("Rules", "$it")
-            onboarding2Viewmodel.isRuleAccepted = it
-            Log.d("Rules", "${onboarding2Viewmodel.isRuleAccepted}")
+            Toast.makeText(context, "AGE - ${onboarding2Viewmodel.ageYears}", Toast.LENGTH_SHORT).show()
+
+//            onboarding2Viewmodel.isRuleAccepted = it
+//            Log.d("Rules", "${onboarding2Viewmodel.isRuleAccepted}")
         }
 
         Spacer(modifier = Modifier.height(10.dp))

@@ -69,6 +69,12 @@ class Onboarding2Viewmodel @Inject constructor(
         get() = savedStateHandle.get<String>("profession")!!
     private val spouseName : String
         get() = savedStateHandle.get<String>("spouse")!!
+    private val marriageDate : String
+        get() = savedStateHandle.get<String>("marriageDate")!!
+    val marriageYears : String
+        get() = savedStateHandle.get<String>("marriageYears")!!
+    val ageYears : String
+        get() = savedStateHandle.get<String>("ageYears")!!
 
     var pincode : String? = ""
     var city : String? = ""

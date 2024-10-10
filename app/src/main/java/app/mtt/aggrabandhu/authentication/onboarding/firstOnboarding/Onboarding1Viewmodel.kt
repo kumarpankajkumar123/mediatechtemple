@@ -1,4 +1,4 @@
-package app.mtt.aggrabandhu.viewmodel
+package app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding
 
 import android.content.Context
 import android.net.Uri
@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.repository.Repository
 import app.mtt.aggrabandhu.utils.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,6 +56,14 @@ class Onboarding1Viewmodel @Inject constructor(
     private val _dobTextState = MutableStateFlow("")
     val dobTextFieldState: StateFlow<String> = _dobTextState
 
+    var ageYears = 0
+
+    // MutableLiveData to hold the current text state
+    private val _marriageDateTextState = MutableStateFlow("")
+
+    val marriageDateTextFieldState: StateFlow<String> = _marriageDateTextState
+    var marriageYears = 0
+
     // MutableLiveData to hold the current text state
     private val _professionTextState = MutableStateFlow("")
     val professionState: StateFlow<String> = _professionTextState
@@ -66,7 +73,7 @@ class Onboarding1Viewmodel @Inject constructor(
     val imageUri: StateFlow<Uri?> = _imageUri
 
     /* --------------------- Get MarriageStatus Data -------------------*/
-    val maritalStatusList = arrayListOf("Married", "Single", "Divorced", "Widowed")
+    val maritalStatusList = arrayListOf("Married", "Single", "Divorced", "Widow", "Widower")
     private val _selectedMaritalStatus = MutableStateFlow("")
     val selectedMaritalStatus: StateFlow<String> = _selectedMaritalStatus
 
@@ -100,6 +107,15 @@ class Onboarding1Viewmodel @Inject constructor(
         }
         if (_dobTextState.value.isEmpty()) {
             _dobTextState.value = sharedPref.getDOB()!!
+            if (_dobTextState.value.isNotEmpty()) {
+                ageYears = calculateAge(_dobTextState.value)
+            }
+        }
+        if (_marriageDateTextState.value.isEmpty()) {
+            _marriageDateTextState.value = sharedPref.getMarriageDate()!!
+            if (_marriageDateTextState.value.isNotEmpty()) {
+                marriageYears = calculateAge(_marriageDateTextState.value)
+            }
         }
         if (_professionTextState.value.isEmpty()) {
             _professionTextState.value = sharedPref.getProfession()!!
@@ -134,6 +150,10 @@ class Onboarding1Viewmodel @Inject constructor(
     // Function to update the text state
     fun onDobTextChanged(newText: String) {
         _dobTextState.value = newText
+    }
+    // Function to update the text state
+    fun onMarriageDateTextChanged(newText: String) {
+        _marriageDateTextState.value = newText
     }
     // Function to update the text state
     fun onProfessionChanged(newText: String) {

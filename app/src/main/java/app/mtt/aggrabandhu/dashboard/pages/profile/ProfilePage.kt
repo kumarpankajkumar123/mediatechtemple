@@ -92,6 +92,10 @@ fun ProfilePage(navController: NavController?= null) {
     val state = profileData.value.state
     val pinCode = profileData.value.pincode
     val address = profileData.value.address
+    val nominee = profileData.value.nominees[0].nominee
+    val relation = profileData.value.nominees[0].relationship
+    val nominee2 = profileData.value.nominees[0].nominee2
+    val relation2 = profileData.value.nominees[0].relationship2
 
     Box(
         modifier = Modifier
@@ -124,8 +128,11 @@ fun ProfilePage(navController: NavController?= null) {
                 modifier = Modifier
                     .fillMaxWidth(0.36f)
             ){
-                Log.d("Click", "Click")
-                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}/$profileUrl")
+                Log.d("Click", "Click - $name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}")
+//                navController?.navigate("edit_profile_screen/$name/$phone")
+//                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}")
+                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/$pinCode/$district/$state/$address/$nominee/$relation/${nominee2}/${relation2}")
+//                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}/$profileUrl")
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -142,12 +149,14 @@ fun ProfilePage(navController: NavController?= null) {
             ProfileInfoCard(Icons.Default.LocationOn, heading = "District", text = district)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "State", text = state)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "Address", text = address)
-            Text(
+            Text (
                 text = "Nominee Details",
                 modifier = Modifier.padding(vertical = 6.dp)
             )
-            ProfileInfoCard(Icons.Default.Person, heading = "Nominee 1 Name", text = "The Person")
-            ProfileInfoCard(Icons.Default.Person, heading = "Nominee 2 Name", text = "The Person")
+            ProfileInfoCard(Icons.Default.Person, heading = relation, text = nominee)
+            if (nominee2.isNotEmpty()) {
+                ProfileInfoCard(Icons.Default.Person, heading = relation2, text = nominee2)
+            }
             Spacer(modifier = Modifier.height(30.dp))
         }
     }

@@ -175,8 +175,9 @@ fun LoginScreen (navController: NavController?= null) {
 //                } else if (password?.isEmpty()!!) {
 //                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
 //                } else {
-                showProgress.value = true
-                loginViewmodel.login()
+//                showProgress.value = true
+                navController?.navigate("dashboard_screen")
+//                loginViewmodel.login()
 //                    Toasty.success(context, "${phone.value} - ${password.value}", Toast.LENGTH_SHORT).show()
 //                }
             }
