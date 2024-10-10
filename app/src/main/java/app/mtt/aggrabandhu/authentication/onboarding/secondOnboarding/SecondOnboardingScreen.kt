@@ -326,7 +326,7 @@ fun SecondOnboardingScreen(
             text = "Next",
             background = colorResource(id = R.color.orange)
         ) {
-            if (onboarding2Viewmodel.pincode.length < 6){
+            if (onboarding2Viewmodel.pincode!!.length < 6){
                 Toasty.error(context, "Please enter pin code", Toast.LENGTH_SHORT).show()
             } else if (onboarding2Viewmodel.city!!.isEmpty()){
                 Toasty.error(context, "Please enter city", Toast.LENGTH_SHORT).show()
