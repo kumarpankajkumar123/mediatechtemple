@@ -4,6 +4,7 @@ import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.authentication.onboarding.ResponseData
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.RulesData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData

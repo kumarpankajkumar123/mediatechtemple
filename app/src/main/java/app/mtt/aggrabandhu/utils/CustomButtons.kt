@@ -2,6 +2,7 @@ package app.mtt.aggrabandhu.utils
 
 import android.net.Uri
 import android.util.Log
+import android.widget.TextView
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -52,8 +53,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.text.HtmlCompat
 import app.mtt.aggrabandhu.R
 import coil.compose.rememberAsyncImagePainter
 
@@ -293,7 +296,7 @@ fun CustomAlertDialog(
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(150.dp, 400.dp)
+                .heightIn(150.dp, 750.dp)
                 .padding(8.dp),
             //shape = MaterialTheme.shapes.medium,
             shape = RoundedCornerShape(10.dp),
@@ -312,12 +315,13 @@ fun CustomAlertDialog(
                     text = "Rules and Regulations",
                     modifier = Modifier.padding(8.dp), fontSize = 20.sp
                 )
-                Text(
-                    text = rules,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                )
+//                Text(
+//                    text = rules,
+//                    modifier = Modifier
+//                        .padding(8.dp)
+//                        .fillMaxWidth()
+//                )
+                HtmlText(html = rules, modifier = Modifier.padding(8.dp))
                 OutlinedButton(
                     onClick = { onAccept() },
                     Modifier
@@ -331,6 +335,14 @@ fun CustomAlertDialog(
     }
 }
 
+@Composable
+fun HtmlText(html: String, modifier: Modifier = Modifier) {
+    AndroidView(
+        modifier = modifier,
+        factory = { context -> TextView(context) },
+        update = { it.text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_COMPACT) }
+    )
+}
 @Preview
 @Composable
 private fun Preview() {

@@ -5,9 +5,11 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
@@ -28,6 +30,22 @@ class Onboarding2Viewmodel @Inject constructor(
         viewModelScope.launch {
             repository.getRules()
         }
+    }
+
+    val tahsilList : StateFlow<PostalData>
+        get() = repository.postalData
+
+    private val _selectedTahsil = MutableStateFlow("")
+    val selectedTahsil: StateFlow<String> = _selectedTahsil
+
+    fun getPostalData(postalCode : String) {
+        viewModelScope.launch {
+            repository.getPostalData(postalCode)
+        }
+    }
+    // Function to update the text state
+    fun selectedTahsilChanged(newText: String) {
+        _selectedTahsil.value = newText
     }
 
     val signupResponse : StateFlow<SignupResponse>
@@ -77,8 +95,15 @@ class Onboarding2Viewmodel @Inject constructor(
         get() = savedStateHandle.get<String>("ageYears")!!
 
     var pincode : String? = ""
-    var city : String? = ""
-    var state : String? = ""
+
+    private val _city = MutableStateFlow("")
+    val city: StateFlow<String>
+        get() = _city
+
+    private val _state = MutableStateFlow("")
+    val state: StateFlow<String>
+        get() = _state
+
     var address : String? = ""
     var email : String? = ""
     var adharNumber : String? = ""
@@ -94,6 +119,12 @@ class Onboarding2Viewmodel @Inject constructor(
     var isRuleAccepted = false
     var isDocVerified = false
 
+    fun cityTextChanged(text : String) {
+        _city.value = text
+    }
+    fun stateTextChanged(text : String) {
+        _state.value = text
+    }
     fun validateDoc(
         idNumber : String,
         idType : String,
@@ -120,8 +151,8 @@ class Onboarding2Viewmodel @Inject constructor(
                 spouseName,
                 phone,
                 address!!,
-                city!!,
-                state!!,
+                city.value,
+                state.value,
                 pincode!!,
                 profession,
                 adharNumber!!,
@@ -156,8 +187,8 @@ class Onboarding2Viewmodel @Inject constructor(
                 spouseName,
                 phone,
                 address!!,
-                city!!,
-                state!!,
+                city.value,
+                state.value,
                 pincode!!,
                 profession,
                 adharNumber!!,

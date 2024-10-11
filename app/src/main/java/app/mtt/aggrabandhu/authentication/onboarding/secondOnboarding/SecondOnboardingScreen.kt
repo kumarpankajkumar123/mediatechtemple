@@ -61,12 +61,18 @@ fun SecondOnboardingScreen(
     val validation = onboarding2Viewmodel.validateID.collectAsState()
     val rules = onboarding2Viewmodel.rules.collectAsState()
 
+    val city = onboarding2Viewmodel.city.collectAsState()
+    val state = onboarding2Viewmodel.state.collectAsState()
+
     if (rules.value == "wait") {
         LoadingAlertDialog()
     }
 
     val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
     val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
+
+    val postalData = onboarding2Viewmodel.tahsilList.collectAsState()
+    val selectedPostal = onboarding2Viewmodel.selectedTahsil.collectAsState()
 
 //    Toast.makeText(context, "AGE - ${onboarding2Viewmodel.marriageYears}", Toast.LENGTH_SHORT).show()
     val sp = SharedPrefManager(context)
@@ -76,6 +82,13 @@ fun SecondOnboardingScreen(
     )
     val selectedDoc = remember { mutableStateOf("") }
     val isSuffering = remember { mutableStateOf(false) }
+
+    val selectedCity = remember {
+        mutableStateOf("")
+    }
+    val selectedState = remember {
+        mutableStateOf("")
+    }
 
     val showProgressDialog = remember { mutableStateOf(false) }
 
@@ -90,6 +103,15 @@ fun SecondOnboardingScreen(
 //            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
         }
     }
+
+    if (postalData.value.Status == "Success"){
+        onboarding2Viewmodel.cityTextChanged(postalData.value.PostOffice[0].District)
+        onboarding2Viewmodel.stateTextChanged(postalData.value.PostOffice[0].State)
+        selectedCity.value = (postalData.value.PostOffice[0].District)
+        selectedState.value = (postalData.value.PostOffice[0].State)
+    } else if (postalData.value.Status == "Error"){
+            Toasty.error(context, "No records found", Toast.LENGTH_SHORT).show()
+        }
 
     if (signupResponseCode.value != 0) {
         if (!onboarding2Viewmodel.isSignUp) {
@@ -143,17 +165,38 @@ fun SecondOnboardingScreen(
             leadingIcon = Icons.Default.PinDrop,
         ) { text ->
             onboarding2Viewmodel.pincode = text
+            if (text.length == 6) {
+                onboarding2Viewmodel.getPostalData(text)
+            }
         }
         // Spacer(modifier = Modifier.height(15.dp))
-        /*   - ------------ City ---------------- */
+
+        DropDownField (
+            selectedValue = selectedPostal.value,
+            options = if (postalData.value.PostOffice != null) postalData.value.PostOffice.map { it.Name } else  emptyList(),
+            label = "Tahsil",
+            imageVector = Icons.Default.LocationCity,
+            onValueChangedEvent = {
+                onboarding2Viewmodel.selectedTahsilChanged(it)
+                onboarding2Viewmodel.cityTextChanged(postalData.value.PostOffice[0].District)
+                onboarding2Viewmodel.stateTextChanged(postalData.value.PostOffice[0].State)
+
+                selectedCity.value = (postalData.value.PostOffice[0].District)
+                selectedState.value = (postalData.value.PostOffice[0].State)
+                Log.d("City", "${postalData.value.PostOffice[0].District}")
+            }
+        )
+
+        /* ------------- City ---------------- */
         TextFieldWithIcons(
             label = "City",
             placeholder = "City",
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationCity,
+            selectedCity.value
         ) { text ->
-            onboarding2Viewmodel.city = text
+            onboarding2Viewmodel.cityTextChanged(text)
         }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ State ---------------- */
@@ -163,8 +206,9 @@ fun SecondOnboardingScreen(
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationOn,
+            selectedState.value
         ) { text ->
-            onboarding2Viewmodel.state = text
+            onboarding2Viewmodel.stateTextChanged(text)
         }
         /* ------------- Address ---------------- */
         TextFieldWithIcons(
@@ -323,14 +367,14 @@ fun SecondOnboardingScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         CustomButton2(
-            text = "Next",
+            text = "Submit",
             background = colorResource(id = R.color.orange)
         ) {
             if (onboarding2Viewmodel.pincode!!.length < 6){
                 Toasty.error(context, "Please enter pin code", Toast.LENGTH_SHORT).show()
-            } else if (onboarding2Viewmodel.city!!.isEmpty()){
+            } else if (city.value.isEmpty()){
                 Toasty.error(context, "Please enter city", Toast.LENGTH_SHORT).show()
-            } else if (onboarding2Viewmodel.state!!.isEmpty()){
+            } else if (state.value.isEmpty()){
                 Toasty.error(context, "Please enter state", Toast.LENGTH_SHORT).show()
             } else if (onboarding2Viewmodel.address!!.isEmpty()){
                 Toasty.error(context, "Please enter address", Toast.LENGTH_SHORT).show()

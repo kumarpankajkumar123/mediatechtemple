@@ -2,8 +2,10 @@ package app.mtt.aggrabandhu.repository
 
 import android.util.Log
 import app.mtt.aggrabandhu.api.AllApi
+import app.mtt.aggrabandhu.api.ApiService
 import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mtt.aggrabandhu.dashboard.pages.profile.Nominees
@@ -17,6 +19,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val allApi: AllApi){
@@ -437,6 +441,32 @@ class Repository @Inject constructor(private val allApi: AllApi){
         } else {
             _rules.emit("Error")
             Log.d("Rules", "${response.body().toString()} ${response.code()} ")
+        }
+    }
+
+    private val _postalData = MutableStateFlow(PostalData("", emptyList(),""))
+    val postalData : StateFlow<PostalData>
+        get() = _postalData
+
+    suspend fun getPostalData(postalCode : String) {
+        val BASE_URL = "https://api.postalpincode.in/"
+
+        val api: ApiService by lazy {
+            Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(ApiService::class.java)
+        }
+        val response = api.getPostalDetails(postalCode)
+        if (response.isSuccessful) {
+            if (response.body()!![0].PostOffice != null) {
+                _postalData.emit(response.body()!![0])
+            }
+            Log.d("Declaration" ,"${response.body().toString()} ${response.code().toString()}")
+        } else {
+            _postalData.emit(PostalData("No records found", emptyList(), "Error"))
+            Log.d("Postal" ,"${response.body().toString()} ${response.code().toString()}")
         }
     }
 

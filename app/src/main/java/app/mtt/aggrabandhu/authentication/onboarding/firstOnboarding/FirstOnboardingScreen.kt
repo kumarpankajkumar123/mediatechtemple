@@ -269,13 +269,13 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     }
                 )
             }
-            if (marriageDate.value.isNotEmpty()) {
+            if (marriageDate.value.isNotEmpty() && marriageDate.value != "No") {
                 if (calculateAge(marriageDate.value) != 0) {
                     Log.d("marriageDate", marriageDate.value)
                     DropDownField(
                         selectedValue = onboarding1Viewmodel.marriageYears.toString(),
                         options = emptyList(),
-                        label = "Current marriage Years",
+                        label = "Current Marriage Years",
                         Icons.Default.PermContactCalendar,
                         onValueChangedEvent = {
 
@@ -328,7 +328,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             DropDownField(
                 selectedValue = selectedProfession.value,
                 options = profession.value.map { it.name },
-                label = "Profession",
+                label = "Profession  of Donor",
                 Icons.Default.BusinessCenter,
                 onValueChangedEvent = {
                     onboarding1Viewmodel.onProfessionChanged(it)
@@ -353,6 +353,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 } else if (selectedMaritalStatus.value == "Married" && (spouseName.value == "" || marriageDate.value == "")) {
                     Toasty.error(context, "Please Fill all the fields", Toast.LENGTH_SHORT).show()
                 } else {
+                    onboarding1Viewmodel.spouseNameChanged("No")
+                    onboarding1Viewmodel.onMarriageDateTextChanged("No")
                         val enCodedUri1 = imageUri.value.toString()
                         val enCodedUri = (Uri.encode(imageUri.toString()))
                         val sp = SharedPrefManager(context)
