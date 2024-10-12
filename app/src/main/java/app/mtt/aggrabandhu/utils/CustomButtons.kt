@@ -286,6 +286,7 @@ fun SelectImageCardWithButton(
 
 @Composable
 fun CustomAlertDialog(
+    heading : String,
     rules : String,
     onAccept: () -> Unit
 ) {
@@ -312,7 +313,7 @@ fun CustomAlertDialog(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Rules and Regulations",
+                    text = heading,
                     modifier = Modifier.padding(8.dp), fontSize = 20.sp
                 )
 //                Text(

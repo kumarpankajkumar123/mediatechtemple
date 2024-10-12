@@ -60,7 +60,6 @@ class Onboarding1Viewmodel @Inject constructor(
 
     // MutableLiveData to hold the current text state
     private val _marriageDateTextState = MutableStateFlow("")
-
     val marriageDateTextFieldState: StateFlow<String> = _marriageDateTextState
     var marriageYears = 0
 
@@ -71,6 +70,11 @@ class Onboarding1Viewmodel @Inject constructor(
     // MutableLiveData to hold the current text state
     private val _imageUri = MutableStateFlow<Uri?>(null)
     val imageUri: StateFlow<Uri?> = _imageUri
+
+    /* --------------------- Get Gender Data -------------------*/
+    val genderList = arrayListOf("Male", "Female")
+    private val _selectedGender = MutableStateFlow("")
+    val selectedGender: StateFlow<String> = _selectedGender
 
     /* --------------------- Get MarriageStatus Data -------------------*/
     val maritalStatusList = arrayListOf("Married", "Single", "Divorced", "Widow", "Widower")
@@ -113,7 +117,7 @@ class Onboarding1Viewmodel @Inject constructor(
         }
         if (_marriageDateTextState.value.isEmpty()) {
             _marriageDateTextState.value = sharedPref.getMarriageDate()!!
-            if (_marriageDateTextState.value.isNotEmpty()) {
+            if (_marriageDateTextState.value.isNotEmpty() && _marriageDateTextState.value != "No") {
                 marriageYears = calculateAge(_marriageDateTextState.value)
             }
         }
@@ -142,6 +146,10 @@ class Onboarding1Viewmodel @Inject constructor(
     // Function to update the text state
     fun selectedMaritalStatusChanged(newText: String) {
         _selectedMaritalStatus.value = newText
+    }
+    // Function to update the text state
+    fun selectedGenderChanged(newText: String) {
+        _selectedGender.value = newText
     }
     // Function to update the text state
     fun spouseNameChanged(newText: String) {

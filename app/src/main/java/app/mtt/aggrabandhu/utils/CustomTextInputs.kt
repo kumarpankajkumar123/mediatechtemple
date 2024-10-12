@@ -26,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,7 +58,12 @@ fun TextFieldWithIcons(
 ) {
     var text by remember { mutableStateOf(TextFieldValue(value!!)) }
     val focusManager = LocalFocusManager.current
-
+    // Update the text state if the passed value changes
+    LaunchedEffect(value) {
+        if (text.text != value) {
+            text = TextFieldValue(value!!)
+        }
+    }
     return OutlinedTextField(
         value = text,
         leadingIcon = { Icon( leadingIcon, contentDescription = "emailIcon",

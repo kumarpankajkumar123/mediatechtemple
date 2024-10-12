@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.PermContactCalendar
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.Transgender
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,6 +75,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
     onboarding1Viewmodel.initSharedPrefs(context)
 
+    /* --------------------- Get Gender Data -------------------*/
+    val genderList = onboarding1Viewmodel.genderList
+    /* ----------------------- ------------- -----------------------*/
+
     /* --------------------- Get Gotra Data -------------------*/
     val gotra = onboarding1Viewmodel.gotra.collectAsState()
     /* ----------------------- ------------- -----------------------*/
@@ -88,6 +93,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val dob = onboarding1Viewmodel.dobTextFieldState.collectAsState()
     val marriageDate = onboarding1Viewmodel.marriageDateTextFieldState.collectAsState()
     val selectedGotra = onboarding1Viewmodel.selectedGotra.collectAsState()
+    val selectedGender = onboarding1Viewmodel.selectedGender.collectAsState()
     val selectedMaritalStatus = onboarding1Viewmodel.selectedMaritalStatus.collectAsState()
     val spouseName = onboarding1Viewmodel.spouseNameText.collectAsState()
     val selectedProfession = onboarding1Viewmodel.professionState.collectAsState()
@@ -229,6 +235,17 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     onboarding1Viewmodel.onSelectedGotraTextChanged(it)
                 }
             )
+            // Spacer(modifier = Modifier.height(10.dp))
+            /* ------------- Select Gotra ------------ */
+            DropDownField(
+                selectedValue = selectedGender.value,
+                options = genderList,
+                label = "Gender",
+                Icons.Default.Transgender,
+                onValueChangedEvent = {
+                    onboarding1Viewmodel.selectedGenderChanged(it)
+                }
+            )
             /* ------------- Select Gotra ------------ */
             DropDownField(
                 selectedValue = selectedMaritalStatus.value,
@@ -346,6 +363,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     Toasty.error(context, "Please Enter Mother Name", Toast.LENGTH_SHORT).show()
                 } else if (selectedGotra.value == "") {
                     Toasty.error(context, "Please Select Gotra", Toast.LENGTH_SHORT).show()
+                } else if (selectedGender.value == "") {
+                    Toasty.error(context, "Please Select Gender", Toast.LENGTH_SHORT).show()
                 } else if (selectedMaritalStatus.value == "") {
                     Toasty.error(context, "Please Select Marital Status", Toast.LENGTH_SHORT).show()
                 } else if (selectedProfession.value == "") {
@@ -372,7 +391,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                             "Marriage",
                             "${onboarding1Viewmodel.marriageYears}, ${onboarding1Viewmodel.ageYears}"
                         )
-                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
+                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedGender.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
                     }
                 }
             }

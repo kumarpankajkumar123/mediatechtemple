@@ -59,14 +59,16 @@ fun SecondOnboardingScreen(
 
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
     val validation = onboarding2Viewmodel.validateID.collectAsState()
+    val otherDocValidation = onboarding2Viewmodel.validateOtherID.collectAsState()
     val rules = onboarding2Viewmodel.rules.collectAsState()
+    val declaration = onboarding2Viewmodel.declaration.collectAsState()
 
     val city = onboarding2Viewmodel.city.collectAsState()
     val state = onboarding2Viewmodel.state.collectAsState()
 
-    if (rules.value == "wait") {
-        LoadingAlertDialog()
-    }
+//    if (rules.value == "wait") {
+//        LoadingAlertDialog()
+//    }
 
     val signupResponse = onboarding2Viewmodel.signupResponse.collectAsState()
     val signupResponseCode = onboarding2Viewmodel.signupResponseCode.collectAsState()
@@ -83,9 +85,7 @@ fun SecondOnboardingScreen(
     val selectedDoc = remember { mutableStateOf("") }
     val isSuffering = remember { mutableStateOf(false) }
 
-    val selectedCity = remember {
-        mutableStateOf("")
-    }
+    val selectedCity = remember { mutableStateOf("") }
     val selectedState = remember {
         mutableStateOf("")
     }
@@ -93,13 +93,32 @@ fun SecondOnboardingScreen(
     val showProgressDialog = remember { mutableStateOf(false) }
 
     if (validation.value != 0) {
-        if (validation.value == 406) {
+        if (validation.value == 200) {
             showProgressDialog.value = false
-//            onboarding2Viewmodel.isDocVerified = true
+            onboarding2Viewmodel.isAdharVerified = true
+            Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+        } else if (validation.value == 406) {
+            showProgressDialog.value = false
+            onboarding2Viewmodel.isAdharVerified = false
             Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
         } else {
             showProgressDialog.value = false
-//            onboarding2Viewmodel.isDocVerified = false
+            onboarding2Viewmodel.isAdharVerified = false
+            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+        }
+    }
+    if (otherDocValidation.value != 0) {
+        if (otherDocValidation.value == 200) {
+            showProgressDialog.value = false
+            onboarding2Viewmodel.isOtherDocVerified = true
+            Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+        } else if (otherDocValidation.value == 406) {
+            showProgressDialog.value = false
+            onboarding2Viewmodel.isOtherDocVerified = false
+            Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+        } else {
+            showProgressDialog.value = false
+            onboarding2Viewmodel.isOtherDocVerified= true
 //            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
         }
     }
@@ -111,7 +130,7 @@ fun SecondOnboardingScreen(
         selectedState.value = (postalData.value.PostOffice[0].State)
     } else if (postalData.value.Status == "Error"){
             Toasty.error(context, "No records found", Toast.LENGTH_SHORT).show()
-        }
+    }
 
     if (signupResponseCode.value != 0) {
         if (!onboarding2Viewmodel.isSignUp) {
@@ -173,7 +192,7 @@ fun SecondOnboardingScreen(
 
         DropDownField (
             selectedValue = selectedPostal.value,
-            options = if (postalData.value.PostOffice != null) postalData.value.PostOffice.map { it.Name } else  emptyList(),
+            options = postalData.value.PostOffice.map { it.Name },
             label = "Tahsil",
             imageVector = Icons.Default.LocationCity,
             onValueChangedEvent = {
@@ -186,30 +205,48 @@ fun SecondOnboardingScreen(
                 Log.d("City", "${postalData.value.PostOffice[0].District}")
             }
         )
-
-        /* ------------- City ---------------- */
-        TextFieldWithIcons(
+        DropDownField(
+            selectedValue = selectedCity.value,
+            options = emptyList(),
             label = "City",
-            placeholder = "City",
-            maxLength = 26,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.LocationCity,
-            selectedCity.value
-        ) { text ->
-            onboarding2Viewmodel.cityTextChanged(text)
-        }
+            Icons.Default.LocationCity,
+//            Icons.Default.PermContactCalendar,
+            onValueChangedEvent = {
+
+            }
+        )
+        DropDownField(
+            selectedValue = selectedState.value,
+            options = emptyList(),
+            label = "State",
+            Icons.Default.LocationOn,
+//            Icons.Default.PermContactCalendar,
+            onValueChangedEvent = {
+
+            }
+        )
+        /* ------------- City ---------------- */
+//        TextFieldWithIcons(
+//            label = "City",
+//            placeholder = "City",
+//            maxLength = 26,
+//            keyboardType = KeyboardType.Text,
+//            leadingIcon =
+//        ) { text ->
+//            onboarding2Viewmodel.cityTextChanged(text)
+//        }
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ State ---------------- */
-        TextFieldWithIcons(
-            label = "State",
-            placeholder = "State",
-            maxLength = 26,
-            keyboardType = KeyboardType.Text,
-            leadingIcon = Icons.Default.LocationOn,
-            selectedState.value
-        ) { text ->
-            onboarding2Viewmodel.stateTextChanged(text)
-        }
+//        TextFieldWithIcons(
+//            label = "State",
+//            placeholder = "State",
+//            maxLength = 26,
+//            keyboardType = KeyboardType.Text,
+//            leadingIcon = Icons.Default.LocationOn,
+//            selectedState.value
+//        ) { text ->
+//            onboarding2Viewmodel.stateTextChanged(text)
+//        }
         /* ------------- Address ---------------- */
         TextFieldWithIcons(
             label = "Address",
@@ -287,7 +324,7 @@ fun SecondOnboardingScreen(
                 showProgressDialog.value = true
                 onboarding2Viewmodel.docFile = prepareFilePart(it,"file", context)
 
-                onboarding2Viewmodel.validateDoc(
+                onboarding2Viewmodel.validateOtherDoc(
                     onboarding2Viewmodel.idNumber!!,
                     if (selectedDoc.value == "PAN Card") {
                         "Pan card"
@@ -356,12 +393,14 @@ fun SecondOnboardingScreen(
         } else {
             onboarding2Viewmodel.diseaseFile = null
         }
-        RulesAndRegulationsCheck(rules = rules.value, text = "Accept Rules and regulations"){
-            Log.d("Rules", "$it")
-            Toast.makeText(context, "AGE - ${onboarding2Viewmodel.ageYears}", Toast.LENGTH_SHORT).show()
-
-//            onboarding2Viewmodel.isRuleAccepted = it
-//            Log.d("Rules", "${onboarding2Viewmodel.isRuleAccepted}")
+        RulesAndRegulationsCheck(rules = rules.value, checkBoxHeading = "Accept Rules and regulations", dialogHeading = "Rules and Regulations"){
+            onboarding2Viewmodel.isRuleAccepted = it
+            Log.d("Rules", "${onboarding2Viewmodel.isRuleAccepted}")
+        }
+        RulesAndRegulationsCheck(rules = declaration.value, checkBoxHeading = "Self Declaration", dialogHeading = "Self Declaration"){
+            Log.d("S-Declaration", "$it")
+            onboarding2Viewmodel.isDeclaration = it
+            Log.d("Rules", "${onboarding2Viewmodel.isRuleAccepted}")
         }
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -390,6 +429,8 @@ fun SecondOnboardingScreen(
                 Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
             } else if (!onboarding2Viewmodel.isRuleAccepted) {
                 Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
+            } else if (!onboarding2Viewmodel.isDeclaration) {
+                Toasty.error(context, "Self Declaration is required", Toast.LENGTH_SHORT).show()
             } else {
                 onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
                 if (onboarding2Viewmodel.isDisease) {
@@ -421,7 +462,8 @@ fun SecondOnboardingScreen(
 @Composable
 fun RulesAndRegulationsCheck(
     rules: String,
-    text: String,
+    checkBoxHeading: String,
+    dialogHeading: String,
     onClick: (Boolean) -> Unit
 ) {
     Row(
@@ -433,6 +475,7 @@ fun RulesAndRegulationsCheck(
 
         if (isOpened.value) {
             CustomAlertDialog(
+                dialogHeading,
                 rules = rules,
                 onAccept = {
                 isOpened.value = false
@@ -454,7 +497,7 @@ fun RulesAndRegulationsCheck(
             colors = CheckboxDefaults.colors(Color.Black)
         )
         Text(
-            text = text,
+            text = checkBoxHeading,
             fontWeight = FontWeight.SemiBold,
         )
     }

@@ -4,6 +4,7 @@ import app.mtt.aggrabandhu.authentication.login.LoginResponse
 import app.mtt.aggrabandhu.authentication.onboarding.DocValidationResponse
 import app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mtt.aggrabandhu.authentication.onboarding.ResponseData
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.DeclarationData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.RulesData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
@@ -33,6 +34,14 @@ interface AllApi {
     @Multipart
     @POST("validate-image")
     suspend fun validateDocuments(
+        @Part file : MultipartBody.Part,
+        @Part("number") number : RequestBody,
+        @Part("type_id") type_id : RequestBody,
+    ) : Response<DocValidationResponse>
+
+    @Multipart
+    @POST("validate-image")
+    suspend fun validateOtherDocuments(
         @Part file : MultipartBody.Part,
         @Part("number") number : RequestBody,
         @Part("type_id") type_id : RequestBody,
@@ -87,6 +96,11 @@ interface AllApi {
         @Part file : MultipartBody.Part, // Aadhar
         @Part file2 : MultipartBody.Part, // Pan/ID
         @Part profile : MultipartBody.Part, // Profile
+        @Part("tahsil") tahsil : RequestBody,
+        @Part("gender") gender : RequestBody,
+        @Part("marriage_age") marriage_age : RequestBody,
+        @Part("total_age") total_age : RequestBody,
+        @Part("marriage_date") marriage_date : RequestBody,
         @Part("nominee") nominee : RequestBody,
         @Part("nominee2") nominee2 : RequestBody,
         @Part("relationship") relationship : RequestBody,
@@ -121,6 +135,11 @@ interface AllApi {
         @Part file : MultipartBody.Part, // Aadhar
         @Part file2 : MultipartBody.Part, // Pan/ID
         @Part profile : MultipartBody.Part, // Profile
+        @Part("tahsil") tahsil : RequestBody,
+        @Part("gender") gender : RequestBody,
+        @Part("marriage_age") marriage_age : RequestBody,
+        @Part("total_age") total_age : RequestBody,
+        @Part("marriage_date") marriage_date : RequestBody,
         @Part("nominee") nominee : RequestBody,
         @Part("nominee2") nominee2 : RequestBody,
         @Part("relationship") relationship : RequestBody,
@@ -154,5 +173,8 @@ interface AllApi {
 
     @GET("rule")
     suspend fun getRules() : Response<List<RulesData>>
+
+    @GET("declearation")
+    suspend fun getDeclaration() : Response<List<DeclarationData>>
 
 }

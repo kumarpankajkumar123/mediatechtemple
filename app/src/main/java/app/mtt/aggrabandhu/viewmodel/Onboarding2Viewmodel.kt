@@ -22,12 +22,17 @@ class Onboarding2Viewmodel @Inject constructor(
 
     val validateID : StateFlow<Int>
         get() = repository.validateID
+    val validateOtherID : StateFlow<Int>
+        get() = repository.validateOtherID
 
     val rules : StateFlow<String>
         get() = repository.rules
+    val declaration : StateFlow<String>
+        get() = repository.declaration
 
     init {
         viewModelScope.launch {
+            repository.getDeclaration()
             repository.getRules()
         }
     }
@@ -79,6 +84,8 @@ class Onboarding2Viewmodel @Inject constructor(
         get() = savedStateHandle.get<String>("mother")!!
     val gotra : String
         get() = savedStateHandle.get<String>("gotra")!!
+    val gender : String
+        get() = savedStateHandle.get<String>("gender")!!
     private val maritalStatus : String
         get() = savedStateHandle.get<String>("maritalStatus")!!
     private val dob : String
@@ -117,7 +124,9 @@ class Onboarding2Viewmodel @Inject constructor(
     var relation2 : String? = ""
     var isDisease = false
     var isRuleAccepted = false
-    var isDocVerified = false
+    var isDeclaration = false
+    var isAdharVerified = false
+    var isOtherDocVerified = false
 
     fun cityTextChanged(text : String) {
         _city.value = text
@@ -135,6 +144,16 @@ class Onboarding2Viewmodel @Inject constructor(
         }
     }
 
+    fun validateOtherDoc(
+        idNumber : String,
+        idType : String,
+        multiPartBody : MultipartBody.Part
+    ){
+        viewModelScope.launch {
+            repository.validateOtherDocument(idNumber,idType,multiPartBody)
+        }
+    }
+
     fun signUp (idType: String, rulesAccepted : String) {
         viewModelScope.launch {
             Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
@@ -146,6 +165,7 @@ class Onboarding2Viewmodel @Inject constructor(
                 father,
                 mother,
                 dob,
+                email!!,
                 password,
                 maritalStatus,
                 spouseName,
@@ -158,6 +178,11 @@ class Onboarding2Viewmodel @Inject constructor(
                 adharNumber!!,
                 idType,
                 idNumber!!,
+                selectedTahsil.value,
+                gender,
+                ageYears,
+                marriageYears,
+                marriageDate,
                 nominee!!,
                 relation!!,
                 nominee2!!,
@@ -182,6 +207,7 @@ class Onboarding2Viewmodel @Inject constructor(
                 father,
                 mother,
                 dob,
+                email!!,
                 password,
                 maritalStatus,
                 spouseName,
@@ -194,6 +220,11 @@ class Onboarding2Viewmodel @Inject constructor(
                 adharNumber!!,
                 idType,
                 idNumber!!,
+                selectedTahsil.value,
+                gender,
+                ageYears,
+                marriageYears,
+                marriageDate,
                 nominee!!,
                 relation!!,
                 nominee2!!,

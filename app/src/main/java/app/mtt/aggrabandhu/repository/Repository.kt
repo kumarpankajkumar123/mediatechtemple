@@ -71,6 +71,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val validateID : StateFlow<Int>
         get() = _validateID
 
+    private val _validateOtherID = MutableStateFlow<Int>(0)
+    val validateOtherID : StateFlow<Int>
+        get() = _validateOtherID
+
     suspend fun getProfession() {
         val response = allApi.getProfession()
         if (response.isSuccessful && response.body() != null) {
@@ -148,6 +152,28 @@ class Repository @Inject constructor(private val allApi: AllApi){
             _validateID.emit(400)
         }
     }
+    suspend fun validateOtherDocument(idNumber : String, idType : String, multiPartBody : MultipartBody.Part){
+        try {
+            val response = allApi.validateDocuments(
+                multiPartBody,
+                idNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+                idType.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+            )
+            if (response.isSuccessful && response.body() != null) {
+                _validateOtherID.emit(response.code())
+                Log.d(
+                    "ValidationResponse",
+                    "${response.code()} ${response.message()} ${response.body()!!.valid} "
+                )
+            } else {
+                _validateOtherID.emit(response.code())
+                Log.d("ValidationError", "${response.code()} ${response.message()}")
+            }
+        } catch (e : Exception) {
+            e.printStackTrace()
+            _validateOtherID.emit(400)
+        }
+    }
 
     suspend fun login (mobileNumber: String, password: String) : Int {
         try {
@@ -182,6 +208,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         fatherName : String,
         motherName : String,
         dob : String,
+        email : String,
         password : String,
         maritalStatus : String,
         spouseName : String,
@@ -194,6 +221,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
         adharNumber : String,
         idType : String,
         idNumber : String,
+        tahsil : String,
+        gender : String,
+        total_age : String,
+        marriage_age : String,
+        marriage_date : String,
         nominee : String,
         relationShip : String,
         nominee2 : String,
@@ -229,7 +261,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "${getRandomString(4)}@gmail.com"),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), email),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
@@ -245,6 +277,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
             adharFile,
             panFile,
             profile,
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), tahsil),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gender),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_age),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), total_age),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
@@ -270,6 +307,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         fatherName : String,
         motherName : String,
         dob : String,
+        email : String,
         password : String,
         maritalStatus : String,
         spouseName : String,
@@ -282,6 +320,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
         adharNumber : String,
         idType : String,
         idNumber : String,
+        tahsil : String,
+        gender : String,
+        total_age : String,
+        marriage_age : String,
+        marriage_date : String,
         nominee : String,
         relationShip : String,
         nominee2 : String,
@@ -317,7 +360,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), dob),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "${getRandomString(4)}@gmail.com"),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), email),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), password),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
@@ -333,6 +376,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
             adharFile,
             panFile,
             profile,
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), tahsil),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gender),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_age),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), total_age),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
@@ -433,14 +481,39 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val rules : StateFlow<String>
         get() = _rules
 
-    suspend fun getRules(){
+    suspend fun getRules() {
         val response = allApi.getRules()
-        if (response.isSuccessful && response.body() != null){
-            _rules.emit(response.body()!![0].rule)
-            Log.d("Rules" ,"${response.body().toString()} ${response.code().toString()}")
-        } else {
+        try {
+            if (response.isSuccessful && response.body() != null) {
+                _rules.emit(response.body()!![0].rule)
+                Log.d("Rules", "${response.body().toString()} ${response.code().toString()}")
+            } else {
+                _rules.emit("Error")
+                Log.d("Rules", "${response.body().toString()} ${response.code()} ")
+            }
+        } catch (e : Exception) {
             _rules.emit("Error")
-            Log.d("Rules", "${response.body().toString()} ${response.code()} ")
+            e.printStackTrace()
+        }
+    }
+
+    private val _declaration = MutableStateFlow("wait")
+    val declaration : StateFlow<String>
+        get() = _declaration
+
+    suspend fun getDeclaration(){
+        val response = allApi.getDeclaration()
+        try {
+            if (response.isSuccessful && response.body() != null) {
+                _declaration.emit(response.body()!![0].declearation)
+                Log.d("Rules", "${response.body().toString()} ${response.code().toString()}")
+            } else {
+                _declaration.emit("Error")
+                Log.d("Rules", "${response.body().toString()} ${response.code()} ")
+            }
+        } catch (e : Exception) {
+            _declaration.emit("Error")
+            e.printStackTrace()
         }
     }
 

@@ -56,7 +56,7 @@ fun NavigationComponent(loginStatus : Boolean) {
             FirstOnboardingScreen(navController = navController)
         }
         composable(
-            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{marriageDate}/{marriageYears}/{dob}/{ageYears}/{profession}/{profileUri}",
+            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{gender}/{maritalStatus}/{spouse}/{marriageDate}/{marriageYears}/{dob}/{ageYears}/{profession}/{profileUri}",
             arguments = listOf(
                 navArgument("referenceID") {
                     type = NavType.StringType
@@ -77,6 +77,9 @@ fun NavigationComponent(loginStatus : Boolean) {
                     type = NavType.StringType
                 },
                 navArgument("gotra") {
+                    type = NavType.StringType
+                },
+                navArgument("gender") {
                     type = NavType.StringType
                 },
                 navArgument("maritalStatus") {
