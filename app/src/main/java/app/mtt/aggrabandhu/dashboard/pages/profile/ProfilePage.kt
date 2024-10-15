@@ -56,6 +56,7 @@ import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton2
 import app.mtt.aggrabandhu.utils.EditProfileButton
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
@@ -66,6 +67,12 @@ fun ProfilePage(navController: NavController?= null) {
     val profileViewModel : ProfileViewModel = hiltViewModel()
     val profileData = profileViewModel.profileData.collectAsState()
     val profileResponseCode = profileViewModel.profileResponseCode.collectAsState()
+
+
+    val sharedPref = SharedPrefManager(context)
+    val id = sharedPref.getMemberID()
+
+    profileViewModel.getProfile(id)
 
     val showProgress = remember { mutableStateOf(true) }
 

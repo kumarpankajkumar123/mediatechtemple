@@ -497,7 +497,8 @@ fun SecondOnboardingScreen(
                         showProgressDialog.value = true
                         onboarding2Viewmodel.signUpWith(
                             selectedDoc.value,
-                            "${onboarding2Viewmodel.isRuleAccepted}"
+                            "${onboarding2Viewmodel.isRuleAccepted}",
+                            context
                         )
                     } else {
                         Toasty.error(
@@ -510,7 +511,8 @@ fun SecondOnboardingScreen(
                     showProgressDialog.value = true
                     onboarding2Viewmodel.signUp(
                         selectedDoc.value,
-                        "${onboarding2Viewmodel.isRuleAccepted}"
+                        "${onboarding2Viewmodel.isRuleAccepted}",
+                        context
                     )
                 }
             }

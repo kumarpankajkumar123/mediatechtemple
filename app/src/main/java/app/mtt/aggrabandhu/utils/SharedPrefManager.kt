@@ -11,6 +11,15 @@ class SharedPrefManager(private val context : Context) {
     private val editor = sharedPreferences.edit()
 
     /*  ------------------------------------------------------------------*/
+    fun saveMemberID(memberId : Int){
+        editor.putInt("memberID",memberId)
+        editor.apply()
+    }
+    fun getMemberID(): Int {
+        return sharedPreferences.getInt("memberID", 0)
+    }
+
+    /*  ------------------------------------------------------------------*/
     fun saveReferenceID(referenceID : String){
         editor.putString("referenceID",referenceID)
         editor.apply()

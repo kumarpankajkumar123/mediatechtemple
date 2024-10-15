@@ -14,6 +14,7 @@ import app.mtt.aggrabandhu.dashboard.pages.profile.Nominees
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.getRandomString
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -241,6 +242,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         disease : String,
         rulesAccepted : String,
         declarationAccepted : String,
+        context: Context
     ) {
         var marriage_date1 = marriage_date
         if (marriage_date1 == "no"){
@@ -309,6 +311,8 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), declarationAccepted)
             )
             if (response.isSuccessful && response.body() != null) {
+                val sharedPref = SharedPrefManager(context)
+                sharedPref.saveMemberID(response.body()?.memberAdd?.id!!)
                 Log.d(
                     "CreateMember",
                     "Sent : ${response.code()} ${response.message()} ${response.body()?.message}"
@@ -360,6 +364,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         disease : String,
         rulesAccepted : String,
         declarationAccepted : String,
+        context: Context
     ) {
         Log.d("SignUP", "Sending Everything")
         Log.d("onViewModel2",
@@ -419,6 +424,8 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 diseaseFile
             )
             if (response.isSuccessful && response.body() != null) {
+                val sharedPref = SharedPrefManager(context)
+                sharedPref.saveMemberID(response.body()?.memberAdd?.id!!)
                 Log.d(
                     "CreateMember",
                     "Sent : ${response.code()} ${response.message()} ${response.body()?.message}"

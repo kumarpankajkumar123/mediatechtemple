@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.viewmodel
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -157,7 +158,7 @@ class Onboarding2Viewmodel @Inject constructor(
         }
     }
 
-    fun signUp (idType: String, rulesAccepted : String) {
+    fun signUp (idType: String, rulesAccepted : String, context: Context) {
         viewModelScope.launch {
             Log.d("onViewModel2 Without", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :${city.value} State : ${state.value}  Pin : $pincode idType : $idType-$idNumber ")
 
@@ -195,12 +196,13 @@ class Onboarding2Viewmodel @Inject constructor(
                 profileFile!!,
                 "$isDisease",
                 rulesAccepted,
-                isDeclaration.toString()
+                isDeclaration.toString(),
+                context
             )
         }
     }
 
-    fun signUpWith (idType: String, rulesAccepted : String) {
+    fun signUpWith (idType: String, rulesAccepted : String, context: Context) {
         viewModelScope.launch {
             Log.d("onViewModel2 With", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :${city.value} State : ${state.value}  Pin : $pincode idType : $idType-$idNumber ")
 
@@ -239,7 +241,8 @@ class Onboarding2Viewmodel @Inject constructor(
                 diseaseFile!!,
                 "$isDisease",
                 rulesAccepted,
-                isDeclaration.toString()
+                isDeclaration.toString(),
+                context
             )
         }
     }
