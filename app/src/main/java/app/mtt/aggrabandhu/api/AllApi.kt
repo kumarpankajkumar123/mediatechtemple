@@ -14,6 +14,7 @@ import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -108,6 +109,7 @@ interface AllApi {
         @Part("reference_id") reference_id : RequestBody,
         @Part("disease") disease : RequestBody, // True/False
         @Part("rulesAccepted") rulesAccepted : RequestBody,
+        @Part("declaration") declaration : RequestBody,
         @Part diseaseFile : MultipartBody.Part, // Pan/ID
     ) : Response<SignupResponse>
 
@@ -147,6 +149,7 @@ interface AllApi {
         @Part("reference_id") reference_id : RequestBody,
         @Part("disease") disease : RequestBody, // True/False
         @Part("rulesAccepted") rulesAccepted : RequestBody,
+        @Part("declaration") declaration : RequestBody,
     ) : Response<SignupResponse>
 
     @Multipart
@@ -176,5 +179,23 @@ interface AllApi {
 
     @GET("declearation")
     suspend fun getDeclaration() : Response<List<DeclarationData>>
+
+    @GET("member/check_referal/{reference_id}")
+    suspend fun checkReferenceCode(
+        @Path("reference_id") referenceId : String
+    ) : Response<String>
+
+    @Multipart
+    @POST("member/otp")
+    suspend fun sendOtp(
+        @Part("via") via : RequestBody
+    ) : Response<ResponseData>
+
+    @Multipart
+    @POST("member/verifyotp")
+    suspend fun verifyOtp(
+        @Part("via") via : RequestBody,
+        @Part("otp") otp : RequestBody,
+    ) : Response<ResponseData>
 
 }

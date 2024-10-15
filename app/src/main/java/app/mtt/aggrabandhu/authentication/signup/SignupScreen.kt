@@ -1,31 +1,31 @@
 package app.mtt.aggrabandhu.authentication.signup
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Textsms
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,12 +45,13 @@ import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
+import app.mtt.aggrabandhu.utils.CustomButton3
+import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
 import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsWithImePadding
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlin.math.sign
 
 @Composable
@@ -59,13 +60,37 @@ fun SignupScreen(navController: NavController) {
 
     val signUpViewmodel : SignUpViewmodel = hiltViewModel()
 
-    signUpViewmodel.initSharedPrefs(context)
+    val sharedPrefManager = SharedPrefManager(context)
+    signUpViewmodel.initSharedPrefs(sharedPrefManager)
 
-    var referenceID = signUpViewmodel.referenceIdFieldState.collectAsState()
-    var name = signUpViewmodel.fullNameFieldState.collectAsState()
-    var phone = signUpViewmodel.phoneTextState.collectAsState()
-    var password = signUpViewmodel.passwordTextState.collectAsState()
-    var confirmPassword: String? = ""
+    val showProgressDialog = remember { mutableStateOf(false) }
+
+    if (showProgressDialog.value) {
+        LoadingAlertDialog()  // Show progress dialog
+    }
+
+    val getOtp = (signUpViewmodel.getOtp.collectAsState())
+    val verifyOtp = (signUpViewmodel.verifyOtp.collectAsState())
+    val referenceCode = (signUpViewmodel.checkReference.collectAsState())
+
+    if (referenceCode.value != 0) {
+        if (!signUpViewmodel.isNext) {
+            if (referenceCode.value == 200) {
+                showProgressDialog.value = false
+                signUpViewmodel.isNext = true
+                navController.navigate("first_on_screen/${signUpViewmodel.referenceIDSP}/${signUpViewmodel.fullNameSP}/${signUpViewmodel.phoneSP}/${signUpViewmodel.passwordSP}")
+            } else {
+                showProgressDialog.value = false
+            }
+        }
+    }
+
+    if (verifyOtp.value == "verified"){
+        signUpViewmodel.isOtpVerified = true
+        showProgressDialog.value = false
+    } else {
+        showProgressDialog.value = false
+    }
 
     Box(
         modifier = Modifier
@@ -131,9 +156,10 @@ fun SignupScreen(navController: NavController) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.AccountBox,
-                value = referenceID.value
+                value = signUpViewmodel.referenceIDSP
             ) {
-                signUpViewmodel.onReferenceTextChanged(it)
+                signUpViewmodel.referenceIDSP = it
+                sharedPrefManager.saveReferenceID(it)
             }
             /* ------------------- Name ----------------------- */
             TextFieldWithIcons(
@@ -142,28 +168,87 @@ fun SignupScreen(navController: NavController) {
                 20,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                value = name.value
+                value = signUpViewmodel.fullNameSP
             ) {
-                signUpViewmodel.onNameTextChanged(it)
+                signUpViewmodel.fullNameSP = it
+                sharedPrefManager.saveFullName(it)
             }
             /* ------------------- Phone number ----------------------- */
-            TextFieldWithIcons(
-                "Phone Number",
-                "Enter your Phone Number",
-                10,
-                KeyboardType.Phone,
-                Icons.Filled.Call,
-                value = phone.value
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                signUpViewmodel.onPhoneTextChanged(it)
+                TextFieldWithIcons(
+                    "Phone Number",
+                    "Phone Number",
+                    10,
+                    KeyboardType.Phone,
+                    Icons.Filled.Call,
+                    value = signUpViewmodel.phoneSP,
+                    modifier = Modifier.fillMaxWidth(0.65f)
+                ) {
+                    signUpViewmodel.phoneSP = it
+                    sharedPrefManager.savePhone(it)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                CustomButton3(
+                    text = "Send OTP",
+                    background = colorResource(id = R.color.orange)
+                ) {
+                    if (signUpViewmodel.phoneSP.length == 10) {
+                        showProgressDialog.value = true
+                        signUpViewmodel.getOtp(signUpViewmodel.phoneSP, context)
+                        Log.d("Phone", signUpViewmodel.phoneSP)
+                    } else {
+                        Toasty.error(context, "Please Enter valid phone number", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            if (getOtp.value == "Otp sended") {
+                showProgressDialog.value = false
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TextFieldWithIcons(
+                        "OTP",
+                        "Enter your OTP",
+                        6,
+                        KeyboardType.Phone,
+                        Icons.Filled.Textsms,
+                        value = signUpViewmodel.otpTxt,
+                        modifier = Modifier.fillMaxWidth(0.65f)
+                    ) {
+                        signUpViewmodel.otpTxt = (it)
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    CustomButton3(
+                        text = "Verify OTP",
+                        background = colorResource(id = R.color.orange)
+                    ) {
+                        if (signUpViewmodel.otpTxt.length == 6) {
+                            showProgressDialog.value = true
+                            signUpViewmodel.verifyOtp(signUpViewmodel.phoneSP, signUpViewmodel.otpTxt, context)
+                        } else {
+                            Toasty.error(context, "Please Enter 6 digit OTP", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            } else if(getOtp.value == "Member Already Exist in this number"){
+                showProgressDialog.value = false
+            } else {
+                showProgressDialog.value = false
+//                Toasty.error(context, "Else", Toast.LENGTH_SHORT).show()
             }
             /* ------------------- Password ----------------------- */
-            PasswordTextFieldWithIcons("Password", "Create Password", value = password.value) {
-                signUpViewmodel.onPasswordTextChanged(it)
+            PasswordTextFieldWithIcons("Password", "Create Password", value = signUpViewmodel.passwordSP) {
+                sharedPrefManager.savePassword(it)
+                signUpViewmodel.passwordSP = it
             }
             /* ------------------- Confirm Password ----------------------- */
             PasswordTextFieldWithIcons("Confirm Password", "Re-Enter Password") {
-                confirmPassword = it
+                signUpViewmodel.confirmPassword = it
             }
 //            if (!password.equals(confirmPassword)) {
 //                Text(
@@ -176,25 +261,25 @@ fun SignupScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
 
             /* ---------- Sign up Button -------------- */
-            CustomButton("Sign up", colorResource(id = R.color.green)) {
-                if (referenceID.value.length < 8) {
-                    Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
-                } else if (name.value.length < 6) {
+            CustomButton("Next", colorResource(id = R.color.green)) {
+//                if (referenceID.value.length < 8) {
+//                    Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
+//                } else
+                if (signUpViewmodel.fullNameSP.length < 6) {
                     Toasty.error(context, "Please enter Full Name", Toast.LENGTH_SHORT).show()
-                } else if (phone.value.length < 10) {
+                } else if (signUpViewmodel.phoneSP.length < 10) {
                     Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-                } else if (password.value.length < 5) {
+//                } else if (!signUpViewmodel.isOtpVerified) {
+//                    Toasty.error(context, "Please Verify Your phone", Toast.LENGTH_SHORT).show()
+                } else if (signUpViewmodel.passwordSP.length < 5) {
                     Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
-                } else if (confirmPassword?.length!! < 5) {
+                } else if (signUpViewmodel.confirmPassword.length < 5) {
                     Toasty.error(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
                 } else {
 //                    if (confirmPassword.equals(password.value)) {
-                        val sharedPref = SharedPrefManager(context)
-                        sharedPref.saveReferenceID(referenceID.value)
-                        sharedPref.saveFullName(name.value)
-                        sharedPref.savePhone(phone.value)
-                        sharedPref.savePassword(password.value)
-                        navController.navigate("first_on_screen/${referenceID.value}/${name.value}/${phone.value}/${password.value}")
+                    showProgressDialog.value = true
+                    signUpViewmodel.checkReferenceCode(signUpViewmodel.referenceIDSP, context)
+//                    Toasty.success(context, signUpViewmodel.referenceIDSP, Toast.LENGTH_SHORT).show()
 //                    } else {
 //                        Toasty.error(context, "Password should be same").show()
 //                    }

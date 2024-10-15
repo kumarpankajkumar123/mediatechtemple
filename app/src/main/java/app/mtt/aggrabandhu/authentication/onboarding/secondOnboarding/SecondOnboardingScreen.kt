@@ -24,8 +24,11 @@ import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +52,7 @@ import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import app.mtt.aggrabandhu.utils.prepareFilePart
 import app.mtt.aggrabandhu.viewmodel.Onboarding2Viewmodel
 import es.dmoral.toasty.Toasty
+import kotlinx.coroutines.flow.StateFlow
 
 @Preview(showSystemUi = true)
 @Composable
@@ -58,8 +62,13 @@ fun SecondOnboardingScreen(
     val context = LocalContext.current
 
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
+
     val validation = onboarding2Viewmodel.validateID.collectAsState()
+    val validationAdha = remember { mutableIntStateOf(1) }
+
     val otherDocValidation = onboarding2Viewmodel.validateOtherID.collectAsState()
+    val validationOther = remember { mutableIntStateOf(1) }
+
     val rules = onboarding2Viewmodel.rules.collectAsState()
     val declaration = onboarding2Viewmodel.declaration.collectAsState()
 
@@ -94,32 +103,76 @@ fun SecondOnboardingScreen(
 
     if (validation.value != 0) {
         if (validation.value == 200) {
-            showProgressDialog.value = false
             onboarding2Viewmodel.isAdharVerified = true
-            Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+            if (validationAdha.intValue == 0) {
+                showProgressDialog.value = false
+                Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+                validationAdha.intValue = 1
+            }
         } else if (validation.value == 406) {
-            showProgressDialog.value = false
             onboarding2Viewmodel.isAdharVerified = false
-            Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+            if (validationAdha.intValue == 0) {
+                showProgressDialog.value = false
+                Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+                validationAdha.intValue = 1
+            }
         } else {
-            showProgressDialog.value = false
             onboarding2Viewmodel.isAdharVerified = false
-            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+            if (validationAdha.intValue == 0) {
+                showProgressDialog.value = false
+                Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+                validationAdha.intValue = 1
+            }
         }
     }
+
+//    if (validation.value != 0) {
+//        if (validation.value == 200) {
+//            onboarding2Viewmodel.isAdharVerified = true
+//            if (validationAdha.intValue == 0) {
+//                showProgressDialog.value = false
+//                Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+//                validationAdha.intValue = 1
+//            }
+//        } else if (validation.value == 406) {
+//            onboarding2Viewmodel.isAdharVerified = false
+//            if (validationAdha.intValue == 0) {
+//                showProgressDialog.value = false
+//                Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+//                validationAdha.intValue = 1
+//            }
+//        } else {
+//            onboarding2Viewmodel.isAdharVerified = false
+//            if (validationAdha.intValue == 0) {
+//                showProgressDialog.value = false
+//                Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+//                validationAdha.intValue = 1
+//            }
+//        }
+//    }
+
     if (otherDocValidation.value != 0) {
         if (otherDocValidation.value == 200) {
-            showProgressDialog.value = false
             onboarding2Viewmodel.isOtherDocVerified = true
-            Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+            if (validationOther.intValue == 0) {
+                showProgressDialog.value = false
+                validationOther.intValue = 1
+                Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+            }
         } else if (otherDocValidation.value == 406) {
-            showProgressDialog.value = false
             onboarding2Viewmodel.isOtherDocVerified = false
-            Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+            if (validationOther.intValue == 0) {
+                showProgressDialog.value = false
+                validationOther.intValue = 1
+                Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
+            }
         } else {
-            showProgressDialog.value = false
-            onboarding2Viewmodel.isOtherDocVerified= true
+            onboarding2Viewmodel.isOtherDocVerified = true
+            if (validationOther.intValue == 0) {
+                showProgressDialog.value = false
+                validationOther.intValue = 1
 //            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -282,6 +335,7 @@ fun SecondOnboardingScreen(
 
         SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
             onboarding2Viewmodel.adharUri = uri
+            validationAdha.intValue = 0
             showProgressDialog.value = true
             onboarding2Viewmodel.file = prepareFilePart(uri,"file",context)
             onboarding2Viewmodel.validateDoc(
@@ -333,6 +387,7 @@ fun SecondOnboardingScreen(
                     },
                     onboarding2Viewmodel.docFile!!
                 )
+                validationOther.intValue = 0
             }
         }
 
@@ -429,6 +484,10 @@ fun SecondOnboardingScreen(
                 Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
             } else if (!onboarding2Viewmodel.isRuleAccepted) {
                 Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
+            } else if (!onboarding2Viewmodel.isAdharVerified) {
+                Toasty.error(context, "Please select an valid adhar First", Toast.LENGTH_SHORT).show()
+            } else if (!onboarding2Viewmodel.isOtherDocVerified) {
+                Toasty.error(context, "Please select an valid Other Doc First", Toast.LENGTH_SHORT).show()
             } else if (!onboarding2Viewmodel.isDeclaration) {
                 Toasty.error(context, "Self Declaration is required", Toast.LENGTH_SHORT).show()
             } else {

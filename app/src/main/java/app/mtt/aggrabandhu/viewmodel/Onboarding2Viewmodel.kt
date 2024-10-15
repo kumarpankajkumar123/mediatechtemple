@@ -2,6 +2,9 @@ package app.mtt.aggrabandhu.viewmodel
 
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,7 +61,7 @@ class Onboarding2Viewmodel @Inject constructor(
     val signupResponseCode : StateFlow<Int>
         get() = repository.signUpResponseCode
 
-    var isSignUp = false
+    var isSignUp by mutableStateOf(false)
 
     var docFile : MultipartBody.Part ?= null
 
@@ -191,7 +194,8 @@ class Onboarding2Viewmodel @Inject constructor(
                 file2!!,
                 profileFile!!,
                 "$isDisease",
-                rulesAccepted
+                rulesAccepted,
+                declaration.value
             )
         }
     }
@@ -235,6 +239,7 @@ class Onboarding2Viewmodel @Inject constructor(
                 diseaseFile!!,
                 "$isDisease",
                 rulesAccepted,
+                declaration.value
             )
         }
     }
