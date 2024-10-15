@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -277,6 +278,7 @@ fun SignupScreen(navController: NavController) {
                     Toasty.error(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
                 } else {
 //                    if (confirmPassword.equals(password.value)) {
+                    signUpViewmodel.isNext = false
                     showProgressDialog.value = true
                     signUpViewmodel.checkReferenceCode(signUpViewmodel.referenceIDSP, context)
 //                    Toasty.success(context, signUpViewmodel.referenceIDSP, Toast.LENGTH_SHORT).show()

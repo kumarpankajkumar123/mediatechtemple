@@ -35,6 +35,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -73,7 +74,9 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val context = LocalContext.current
 
     val onboarding1Viewmodel : Onboarding1Viewmodel = hiltViewModel()
-    onboarding1Viewmodel.initSharedPrefs(context)
+
+    val sharedPref = SharedPrefManager(context)
+    onboarding1Viewmodel.initSharedPrefs(sharedPref)
 
     /* --------------------- Get Gender Data -------------------*/
     val genderList = onboarding1Viewmodel.genderList
@@ -87,9 +90,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val profession = onboarding1Viewmodel.profession.collectAsState()
     /* ----------------------- ------------- -----------------------*/
 
-    val imageUri = onboarding1Viewmodel.imageUri.collectAsState()
-    val father = onboarding1Viewmodel.fatherNameFieldState.collectAsState()
-    val mother = onboarding1Viewmodel.motherNameFieldState.collectAsState()
+    val imageUri by onboarding1Viewmodel.imageUri.collectAsState()
     val dob = onboarding1Viewmodel.dobTextFieldState.collectAsState()
     val marriageDate = onboarding1Viewmodel.marriageDateTextFieldState.collectAsState()
     val selectedGotra = onboarding1Viewmodel.selectedGotra.collectAsState()
@@ -151,8 +152,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     .clip(CircleShape)
                     .size(180.dp)
                     .border(BorderStroke(2.dp, Color.Black), CircleShape),
-                painter = if (imageUri.value != null) {
-                    rememberAsyncImagePainter(model = imageUri.value)
+                painter = if (imageUri != null) {
+                    rememberAsyncImagePainter(model = imageUri)
                 } else {
                     rememberVectorPainter(image = Icons.Default.PersonPin)
                 },
@@ -206,9 +207,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                father.value
+                onboarding1Viewmodel.fatherNameSP
             ) {
-                onboarding1Viewmodel.onFatherNameTextChanged(it)
+                sharedPref.saveFatherName(it)
+                onboarding1Viewmodel.fatherNameSP = it
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
@@ -219,9 +221,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 20,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                mother.value
+                onboarding1Viewmodel.motherNameSP
             ) {
-                onboarding1Viewmodel.onMotherNameTextChanged(it)
+                sharedPref.saveMotherName(it)
+                onboarding1Viewmodel.motherNameSP = it
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
@@ -355,11 +358,11 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             Spacer(modifier = Modifier.height(10.dp))
 
             CustomButton(text = "Next", background = colorResource(id = R.color.orange)) {
-                if (imageUri.value == null) {
+                if (imageUri == null) {
                     Toasty.error(context, "Please Select Image", Toast.LENGTH_SHORT).show()
-                } else if (father.value.length <= 3) {
+                } else if (onboarding1Viewmodel.fatherNameSP.length <= 3) {
                     Toasty.error(context, "Please Enter Father Name", Toast.LENGTH_SHORT).show()
-                } else if (mother.value.length <= 3) {
+                } else if (onboarding1Viewmodel.motherNameSP.length <= 3) {
                     Toasty.error(context, "Please Enter Mother Name", Toast.LENGTH_SHORT).show()
                 } else if (selectedGotra.value == "") {
                     Toasty.error(context, "Please Select Gotra", Toast.LENGTH_SHORT).show()
@@ -367,6 +370,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                     Toasty.error(context, "Please Select Gender", Toast.LENGTH_SHORT).show()
                 } else if (selectedMaritalStatus.value == "") {
                     Toasty.error(context, "Please Select Marital Status", Toast.LENGTH_SHORT).show()
+                } else if (dob.value == "") {
+                    Toasty.error(context, "Please Select DOB", Toast.LENGTH_SHORT).show()
+                } else if (onboarding1Viewmodel.ageYears <18 || onboarding1Viewmodel.ageYears > 70) {
+                    Toasty.error(context, "Only people of age group of 18 - 70 are allowed", Toast.LENGTH_SHORT).show()
                 } else if (selectedProfession.value == "") {
                     Toasty.error(context, "Please Select Profession", Toast.LENGTH_SHORT).show()
                 } else if (selectedMaritalStatus.value == "Married" && (spouseName.value == "" || marriageDate.value == "")) {
@@ -374,12 +381,12 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 } else {
                     onboarding1Viewmodel.spouseNameChanged("No")
                     onboarding1Viewmodel.onMarriageDateTextChanged("No")
-                        val enCodedUri1 = imageUri.value.toString()
+                        val enCodedUri1 = imageUri.toString()
                         val enCodedUri = (Uri.encode(imageUri.toString()))
                         val sp = SharedPrefManager(context)
                         sp.saveProfileImageUri(enCodedUri1)
-                        sp.saveFatherName(father.value)
-                        sp.saveMotherName(mother.value)
+                        sp.saveFatherName(onboarding1Viewmodel.fatherNameSP)
+                        sp.saveMotherName(onboarding1Viewmodel.motherNameSP)
                         sp.saveGotra(selectedGotra.value)
                         sp.saveMarital(selectedMaritalStatus.value)
                         sp.saveSpouseName(spouseName.value)
@@ -391,11 +398,10 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                             "Marriage",
                             "${onboarding1Viewmodel.marriageYears}, ${onboarding1Viewmodel.ageYears}"
                         )
-                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${father.value}/${mother.value}/${selectedGotra.value}/${selectedGender.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
+                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${onboarding1Viewmodel.fatherNameSP}/${onboarding1Viewmodel.motherNameSP}/${selectedGotra.value}/${selectedGender.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
                     }
                 }
             }
-
         }
     }
 

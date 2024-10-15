@@ -159,7 +159,7 @@ class Onboarding2Viewmodel @Inject constructor(
 
     fun signUp (idType: String, rulesAccepted : String) {
         viewModelScope.launch {
-            Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
+            Log.d("onViewModel2 Without", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :${city.value} State : ${state.value}  Pin : $pincode idType : $idType-$idNumber ")
 
             repository.signUp(
                 referenceID,
@@ -195,14 +195,14 @@ class Onboarding2Viewmodel @Inject constructor(
                 profileFile!!,
                 "$isDisease",
                 rulesAccepted,
-                declaration.value
+                isDeclaration.toString()
             )
         }
     }
 
     fun signUpWith (idType: String, rulesAccepted : String) {
         viewModelScope.launch {
-            Log.d("onViewModel2", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :$city State : $state  Pin : $pincode idType : $idType-$idNumber ")
+            Log.d("onViewModel2 With", "Gotra : $gotra DOB : $dob pass : $password Profession : $profession City :${city.value} State : ${state.value}  Pin : $pincode idType : $idType-$idNumber ")
 
             repository.signUp(
                 referenceID,
@@ -239,7 +239,7 @@ class Onboarding2Viewmodel @Inject constructor(
                 diseaseFile!!,
                 "$isDisease",
                 rulesAccepted,
-                declaration.value
+                isDeclaration.toString()
             )
         }
     }

@@ -3,6 +3,9 @@ package app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -41,13 +44,9 @@ class Onboarding1Viewmodel @Inject constructor(
     val password : String
         get() = savedStateHandle.get<String>("password")!!
 
-    // MutableLiveData to hold the current text state
-    private val _fatherNameState = MutableStateFlow("")
-    val fatherNameFieldState: StateFlow<String> = _fatherNameState
 
-    // MutableLiveData to hold the current text state
-    private val _motherNameState = MutableStateFlow("")
-    val motherNameFieldState: StateFlow<String> = _motherNameState
+    var fatherNameSP by mutableStateOf("")
+    var motherNameSP by mutableStateOf("")
 
     private val _selectedGotra = MutableStateFlow("")
     val selectedGotra: StateFlow<String> = _selectedGotra
@@ -87,18 +86,19 @@ class Onboarding1Viewmodel @Inject constructor(
 
     /* ----------------------- ------------- -----------------------*/
 
-    fun initSharedPrefs(context: Context) {
-        val sharedPref = SharedPrefManager(context)
-        if (_imageUri.value == null) {
-            val uri = sharedPref.getProfileImageUri()!!
-            Log.d("URI", "Retrieved URI : $uri")
-            _imageUri.value = Uri.parse(uri)
+    fun initSharedPrefs(sharedPref: SharedPrefManager) {
+//        if (sharedPref.getProfileImageUri()?.isNotEmpty()!!) {
+//            val uri = sharedPref.getProfileImageUri()!!
+//            Log.d("URI", "Retrieved URI : $uri")
+//            _imageUri.value = Uri.parse(uri)
+//        } else {
+//            Log.d("URI", "No URI found in shared preferences")
+//        }
+        if (sharedPref.getFatherName()!!.isNotEmpty()) {
+            fatherNameSP = sharedPref.getFatherName()!!
         }
-        if (_fatherNameState.value.isEmpty()) {
-            _fatherNameState.value = sharedPref.getFatherName()!!
-        }
-        if (_motherNameState.value.isEmpty()) {
-            _motherNameState.value = sharedPref.getMotherName()!!
+        if (sharedPref.getMotherName()!!.isNotEmpty()) {
+            motherNameSP = sharedPref.getMotherName()!!
         }
         if (_selectedGotra.value.isEmpty()) {
             _selectedGotra.value = sharedPref.getGotra()!!
@@ -131,14 +131,6 @@ class Onboarding1Viewmodel @Inject constructor(
         _imageUri.value = newUri
     }
 
-    // Function to update the text state
-    fun onFatherNameTextChanged(newText: String) {
-        _fatherNameState.value = newText
-    }
-    // Function to update the text state
-    fun onMotherNameTextChanged(newText: String) {
-        _motherNameState.value = newText
-    }
     // Function to update the text state
     fun onSelectedGotraTextChanged(newText: String) {
         _selectedGotra.value = newText

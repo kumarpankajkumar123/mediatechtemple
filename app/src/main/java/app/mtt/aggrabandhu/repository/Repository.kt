@@ -134,6 +134,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     }
 
     suspend fun validateDocument(idNumber : String, idType : String, multiPartBody : MultipartBody.Part) {
+        _validateID.emit(0)
         try {
             val response = allApi.validateDocuments(
                 multiPartBody,
@@ -156,6 +157,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
     suspend fun validateOtherDocument(idNumber : String, idType : String, multiPartBody : MultipartBody.Part){
+        _validateOtherID.emit(0)
         try {
             val response = allApi.validateDocuments(
                 multiPartBody,
@@ -240,22 +242,31 @@ class Repository @Inject constructor(private val allApi: AllApi){
         rulesAccepted : String,
         declarationAccepted : String,
     ) {
+        var marriage_date1 = marriage_date
+        if (marriage_date1 == "no"){
+            marriage_date1 = ""
+        }
         Log.d("SignUP", "Sending Without")
         Log.d("onViewModel2",
             "Gotra : $gotra, " +
+                    "marriageDate : $marriage_date1 " +
+                    "referenceID : $referenceID, " +
+                    "phone : $mobileNumber, " +
+                    "adhar : $adharNumber, " +
+                    "idNumber : $idNumber, " +
                     "DOB : $dob, " +
                     "declaration : $declarationAccepted, " +
-//                    "father : $fatherName, " +
-//                    "mother : $motherName, " +
-//                    "pass : $password, " +
-//                    "Profession : $profession, " +
-//                    "Marital : $maritalStatus, " +
-//                    "spouse : $spouseName, " +
-//                    "City :$district, " +
-//                    "State : $state,  " +
-//                    "Pin : $pincode, " +
-//                    "Rules : $rulesAccepted, " +
-//                    "referenceID : $referenceID, " +
+                    "father : $fatherName, " +
+                    "mother : $motherName, " +
+                    "pass : $password, " +
+                    "Profession : $profession, " +
+                    "Marital : $maritalStatus, " +
+                    "spouse : $spouseName, " +
+                    "City :$district, " +
+                    "State : $state,  " +
+                    "Pin : $pincode, " +
+                    "Rules : $rulesAccepted, " +
+                    "referenceID : $referenceID, " +
                     "idType : $idType-$idNumber, "
         )
         Log.d("Files", "$adharFile, \n$panFile, \n$profile")
@@ -287,7 +298,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), gender),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_age),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), total_age),
-                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date1),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
@@ -578,7 +589,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), via),
             RequestBody.create("multipart/form-data".toMediaTypeOrNull(), otp),
         )
-            if (response.isSuccessful && response.body() != null) {
+            if (response.isSuccessful) {
                 _otpVerification.emit(response.body()!!.message)
                 Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
                 Log.d("Rules", "${response.body().toString()} ${response.code()}")
