@@ -15,6 +15,7 @@ drawable ic_launcher_foreground
 drawable png_fb
 drawable png_ig
 drawable png_logo
+drawable png_yt
 drawable textured_bg
 font falling_sky_black
 font falling_sky_bold

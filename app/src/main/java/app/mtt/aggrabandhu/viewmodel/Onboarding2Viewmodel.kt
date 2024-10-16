@@ -3,6 +3,7 @@ package app.mtt.aggrabandhu.viewmodel
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
 import app.mtt.aggrabandhu.repository.Repository
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -86,16 +88,18 @@ class Onboarding2Viewmodel @Inject constructor(
         get() = savedStateHandle.get<String>("father")!!
     val mother : String
         get() = savedStateHandle.get<String>("mother")!!
-    val gotra : String
-        get() = savedStateHandle.get<String>("gotra")!!
+
+    var gotra by mutableStateOf("")
+
     val gender : String
         get() = savedStateHandle.get<String>("gender")!!
     private val maritalStatus : String
         get() = savedStateHandle.get<String>("maritalStatus")!!
     private val dob : String
         get() = savedStateHandle.get<String>("dob")!!
-    val profession : String
-        get() = savedStateHandle.get<String>("profession")!!
+
+    var profession by mutableStateOf("")
+
     private val spouseName : String
         get() = savedStateHandle.get<String>("spouse")!!
     private val marriageDate : String
@@ -114,6 +118,12 @@ class Onboarding2Viewmodel @Inject constructor(
     private val _state = MutableStateFlow("")
     val state: StateFlow<String>
         get() = _state
+
+    fun initSharedPref(context: Context) {
+        val sharedPref = SharedPrefManager(context)
+        profession = sharedPref.getProfession().toString()
+        gotra = sharedPref.getGotra().toString()
+    }
 
     var address : String? = ""
     var email : String? = ""

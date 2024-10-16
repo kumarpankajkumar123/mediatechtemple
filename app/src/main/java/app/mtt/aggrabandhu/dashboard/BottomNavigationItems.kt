@@ -23,17 +23,17 @@ data class BottomNavigationItems (
 
 ///List of Navigation Items that will be clicked
 val items = listOf(
-    BottomNavigationItems(
-        title = "Home",
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home
-    ),
-    BottomNavigationItems(
-        title = "Live Donations",
-        selectedIcon = Icons.Filled.Notifications,
-        unselectedIcon = Icons.Outlined.Notifications,
-        badgeAmount = 7
-    ),
+//    BottomNavigationItems(
+//        title = "Home",
+//        selectedIcon = Icons.Filled.Home,
+//        unselectedIcon = Icons.Outlined.Home,
+//    ),
+//    BottomNavigationItems(
+//        title = "Live Donations",
+//        selectedIcon = Icons.Filled.Notifications,
+//        unselectedIcon = Icons.Outlined.Notifications,
+//        badgeAmount = 7
+//    ),
     BottomNavigationItems(
         title = "Rules",
         selectedIcon = Icons.Filled.Rule,

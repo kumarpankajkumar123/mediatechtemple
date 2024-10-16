@@ -15,7 +15,6 @@ import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
 import app.mtt.aggrabandhu.utils.SharedPrefManager
-import app.mtt.aggrabandhu.utils.getRandomString
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -499,7 +498,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val profileResponseCode : StateFlow<Int>
         get() = _profileResponseCode
     private val _profileData = MutableStateFlow<ProfileData>(
-        ProfileData("","","","",false,"","","","","","",0,"","","","","","","","","","","","",false,"","","","","",
+        ProfileData("","","","",false,"","","","","","","","",0,"","","","","","","","","","","","",false,"","","","","","","",
             listOf(Nominees("","","","")))
     )
     val profileData : StateFlow<ProfileData>
@@ -639,6 +638,34 @@ class Repository @Inject constructor(private val allApi: AllApi){
             Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show()
             _sendOtp.emit("Error Catch")
             Log.d("OTP Error", e.message.toString())
+            e.printStackTrace()
+        }
+    }
+
+    private val _supportResponse = MutableStateFlow(0)
+    val supportResponse : StateFlow<Int>
+        get() = _supportResponse
+
+    suspend fun support(message : String, contact : String, name : String, context: Context) {
+        try {
+            val response = allApi.support(
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), message),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), contact),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name)
+            )
+            if (response.isSuccessful) {
+                _supportResponse.emit(response.code())
+                Toasty.success(context, "Query Sent", Toast.LENGTH_SHORT).show()
+                Log.d("supportResponse", "${response.body().toString()} ${response.code()}")
+            } else {
+                _supportResponse.emit(response.code())
+                Log.d("supportResponse", "${response.body().toString()} ${response.code()} ")
+                Toasty.error(context, "Try Again", Toast.LENGTH_SHORT).show()
+            }
+        } catch (e : Exception) {
+            Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+            _supportResponse.emit(400)
+            Log.d("supportResponse", e.message.toString())
             e.printStackTrace()
         }
     }

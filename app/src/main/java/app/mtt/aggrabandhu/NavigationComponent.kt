@@ -1,7 +1,6 @@
 package app.mtt.aggrabandhu
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,13 +14,12 @@ import app.mtt.aggrabandhu.dashboard.DashboardScreen
 import app.mtt.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
 import app.mtt.aggrabandhu.dashboard.pages.profile.EditProfileScreen
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
-import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mtt.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.PrivacyPolicyPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.RulesRegulationsPage
-import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.SupportPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.TermsAndConditionsPage
 
 @Composable
@@ -56,7 +54,7 @@ fun NavigationComponent(loginStatus : Boolean) {
             FirstOnboardingScreen(navController = navController)
         }
         composable(
-            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gotra}/{gender}/{maritalStatus}/{spouse}/{marriageDate}/{marriageYears}/{dob}/{ageYears}/{profession}/{profileUri}",
+            "second_on_screen/{referenceID}/{name}/{phone}/{password}/{father}/{mother}/{gender}/{maritalStatus}/{spouse}/{marriageDate}/{marriageYears}/{dob}/{ageYears}/{profileUri}",
             arguments = listOf(
                 navArgument("referenceID") {
                     type = NavType.StringType
@@ -74,9 +72,6 @@ fun NavigationComponent(loginStatus : Boolean) {
                     type = NavType.StringType
                 },
                 navArgument("mother") {
-                    type = NavType.StringType
-                },
-                navArgument("gotra") {
                     type = NavType.StringType
                 },
                 navArgument("gender") {
@@ -98,9 +93,6 @@ fun NavigationComponent(loginStatus : Boolean) {
                     type = NavType.StringType
                 },
                 navArgument("ageYears") {
-                    type = NavType.StringType
-                },
-                navArgument("profession") {
                     type = NavType.StringType
                 },
                 navArgument("profileUri") {

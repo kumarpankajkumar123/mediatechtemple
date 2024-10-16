@@ -63,6 +63,8 @@ fun SecondOnboardingScreen(
 
     val onboarding2Viewmodel : Onboarding2Viewmodel = hiltViewModel()
 
+    onboarding2Viewmodel.initSharedPref(context)
+
     val validation = onboarding2Viewmodel.validateID.collectAsState()
     val validationAdha = remember { mutableIntStateOf(1) }
 

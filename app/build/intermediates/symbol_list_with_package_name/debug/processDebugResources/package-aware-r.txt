@@ -749,6 +749,7 @@ drawable notify_panel_notification_icon_bg
 drawable png_fb
 drawable png_ig
 drawable png_logo
+drawable png_yt
 drawable test_level_drawable
 drawable textured_bg
 drawable toast_frame

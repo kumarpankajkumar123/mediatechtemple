@@ -263,28 +263,27 @@ fun SignupScreen(navController: NavController) {
 
             /* ---------- Sign up Button -------------- */
             CustomButton("Next", colorResource(id = R.color.green)) {
-//                if (referenceID.value.length < 8) {
-//                    Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
-//                } else
-                if (signUpViewmodel.fullNameSP.length < 6) {
+                if (signUpViewmodel.referenceIDSP.length < 8) {
+                    Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
+                } else if (signUpViewmodel.fullNameSP.length < 6) {
                     Toasty.error(context, "Please enter Full Name", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.phoneSP.length < 10) {
                     Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-//                } else if (!signUpViewmodel.isOtpVerified) {
-//                    Toasty.error(context, "Please Verify Your phone", Toast.LENGTH_SHORT).show()
+                } else if (!signUpViewmodel.isOtpVerified) {
+                    Toasty.error(context, "Please Verify Your phone", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.passwordSP.length < 5) {
                     Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.confirmPassword.length < 5) {
                     Toasty.error(context, "Please enter confirm password", Toast.LENGTH_SHORT).show()
                 } else {
-//                    if (confirmPassword.equals(password.value)) {
-                    signUpViewmodel.isNext = false
-                    showProgressDialog.value = true
-                    signUpViewmodel.checkReferenceCode(signUpViewmodel.referenceIDSP, context)
+                    if (signUpViewmodel.confirmPassword == signUpViewmodel.passwordSP) {
+                        signUpViewmodel.isNext = false
+                        showProgressDialog.value = true
+                        signUpViewmodel.checkReferenceCode(signUpViewmodel.referenceIDSP, context)
 //                    Toasty.success(context, signUpViewmodel.referenceIDSP, Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        Toasty.error(context, "Password should be same").show()
-//                    }
+                    } else {
+                        Toasty.error(context, "Password should be same").show()
+                    }
                 }
             }
 

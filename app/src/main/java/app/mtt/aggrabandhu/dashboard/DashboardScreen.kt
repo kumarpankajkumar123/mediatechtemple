@@ -22,14 +22,10 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ListAlt
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.PeopleAlt
 import androidx.compose.material.icons.filled.Policy
-import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.Badge
@@ -73,11 +69,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
-import app.mtt.aggrabandhu.dashboard.pages.liveDonation.DonationsPage
-import app.mtt.aggrabandhu.dashboard.pages.HomePage
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
-import app.mtt.aggrabandhu.dashboard.pages.RulesRegulationsPage
-import app.mtt.aggrabandhu.dashboard.sideNavigation.SupportPage
+import app.mtt.aggrabandhu.dashboard.pages.rules.RulesRegulationsPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.FB
+import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.IG
+import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.SupportPage
+import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.intentToWeb
 import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.LogoutDialog
 import app.mtt.aggrabandhu.utils.SharedPrefManager
@@ -86,6 +83,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(navController : NavController ?= null) {
+
+    val context = LocalContext.current
+
+    val sharedPref = SharedPrefManager(context)
+    val name = sharedPref.getFullName()
 
     val logoutDialog = remember { mutableStateOf(false) }
 
@@ -139,7 +141,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = "Suresh",
+                                    text = name.toString(),
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.padding(end = 6.dp)
@@ -204,11 +206,11 @@ fun DashboardScreen(navController : NavController ?= null) {
 fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, selectedIndex : Int) {
     Column( modifier = modifier ) {
         when(selectedIndex){
-            0-> HomePage()
-            1-> DonationsPage(navController)
-            2-> RulesRegulationsPage()
-            3-> SupportPage(fromDashboard = true)
-            4-> ProfilePage(navController)
+//            0-> HomePage()
+//            1-> DonationsPage(navController)
+            0-> RulesRegulationsPage()
+            1-> SupportPage(fromDashboard = true)
+            2-> ProfilePage(navController)
         }
     }
 }
@@ -242,16 +244,16 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
         )
         // Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
-        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
+//        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
         SideNavItem(text = "Members List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
-        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
+//        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}  //
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
-        SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") {}
-        SubNavItem(imageVector = R.drawable.png_ig, text = "Instagram") {}
+        SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") { intentToWeb(FB, context) }
+        SubNavItem(imageVector = R.drawable.png_ig, text = "Instagram") { intentToWeb(IG, context) }
         SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
         SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
-        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
+//        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
 
         Spacer(modifier = Modifier.height(20.dp))
         LogOut {

@@ -90,10 +90,14 @@ fun ProfilePage(navController: NavController?= null) {
     val fatherName = profileData.value.father_name
     val motherName = profileData.value.mother_name
     val gotra = profileData.value.gotra
+    val gender = profileData.value.gender
     val phone = profileData.value.mobile_no
     val dob = profileData.value.dob
+    val age = profileData.value.total_age
     val maritalStatus = profileData.value.marital_status
     val spouseName = profileData.value.spouse_name
+    val marriageDate = profileData.value.marriage_date
+    val marriageYears = profileData.value.marriage_date
     val profession = profileData.value.profession
     val district = profileData.value.district
     val state = profileData.value.state
@@ -150,7 +154,14 @@ fun ProfilePage(navController: NavController?= null) {
             ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gotra", text = gotra)
             ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = phone)
             ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = dob)
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "Age", text = age)
+            ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gender", text = gender)
             ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marital Status", text = maritalStatus)
+            if (maritalStatus == "Married") {
+                ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Spouse Name", text = spouseName)
+                ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marriage date", text = marriageDate)
+                ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marriage Years", text = marriageYears)
+            }
             ProfileInfoCard(Icons.Default.BusinessCenter, heading = "Profession", text = profession)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "Pin Code", text = pinCode)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "District", text = district)

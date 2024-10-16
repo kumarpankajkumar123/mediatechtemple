@@ -204,7 +204,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             TextFieldWithIcons(
                 "Father's / Husband's Name",
                 "Enter your Father's Name",
-                12,
+                24,
                 KeyboardType.Text,
                 Icons.Filled.Person,
                 onboarding1Viewmodel.fatherNameSP
@@ -218,7 +218,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             TextFieldWithIcons(
                 "Mother's Name",
                 "Enter your Mother's name",
-                20,
+                24,
                 KeyboardType.Text,
                 Icons.Filled.Person,
                 onboarding1Viewmodel.motherNameSP
@@ -381,9 +381,11 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 } else {
                     onboarding1Viewmodel.spouseNameChanged("No")
                     onboarding1Viewmodel.onMarriageDateTextChanged("No")
+                        val sp = SharedPrefManager(context)
+
                         val enCodedUri1 = imageUri.toString()
                         val enCodedUri = (Uri.encode(imageUri.toString()))
-                        val sp = SharedPrefManager(context)
+
                         sp.saveProfileImageUri(enCodedUri1)
                         sp.saveFatherName(onboarding1Viewmodel.fatherNameSP)
                         sp.saveMotherName(onboarding1Viewmodel.motherNameSP)
@@ -398,7 +400,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                             "Marriage",
                             "${onboarding1Viewmodel.marriageYears}, ${onboarding1Viewmodel.ageYears}"
                         )
-                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${onboarding1Viewmodel.fatherNameSP}/${onboarding1Viewmodel.motherNameSP}/${selectedGotra.value}/${selectedGender.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/${selectedProfession.value}/$enCodedUri")
+                        navController?.navigate("second_on_screen/$referenceID/$name/$phone/$password/${onboarding1Viewmodel.fatherNameSP}/${onboarding1Viewmodel.motherNameSP}/${selectedGender.value}/${selectedMaritalStatus.value}/${spouseName.value}/${marriageDate.value}/${onboarding1Viewmodel.marriageYears}/${dob.value}/${onboarding1Viewmodel.ageYears}/$enCodedUri")
                     }
                 }
             }

@@ -748,6 +748,7 @@ int drawable notify_panel_notification_icon_bg 0x7f070085
 int drawable png_fb 0x7f070086
 int drawable png_ig 0x7f070087
 int drawable png_logo 0x7f070088
+int drawable png_yt 0x7f07008e
 int drawable test_level_drawable 0x7f070089
 int drawable textured_bg 0x7f07008a
 int drawable toast_frame 0x7f07008b

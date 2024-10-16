@@ -198,4 +198,12 @@ interface AllApi {
         @Part("otp") otp : RequestBody,
     ) : Response<ResponseData>
 
+    @Multipart
+    @POST("support")
+    suspend fun support(
+        @Part("message") message : RequestBody,
+        @Part("contact") contact : RequestBody,
+        @Part("name") name : RequestBody,
+    ) : Response<ResponseData>
+
 }
