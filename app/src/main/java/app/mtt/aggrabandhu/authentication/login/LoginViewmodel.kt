@@ -23,7 +23,7 @@ class LoginViewmodel @Inject constructor(
     private val _loginResponseCode = MutableStateFlow(0)  // Default to 0
     val loginResponseCode: StateFlow<Int> get() = _loginResponseCode
 
-    var isLogin by mutableStateOf(false)
+    var isLogin = (false)
 
     // MutableLiveData to hold the current text state
     private val _mobileNumber = MutableStateFlow("")

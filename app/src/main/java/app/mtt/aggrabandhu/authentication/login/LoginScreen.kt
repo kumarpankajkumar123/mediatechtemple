@@ -1,6 +1,5 @@
 package app.mtt.aggrabandhu.authentication.login
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -22,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -47,11 +45,8 @@ import app.mtt.aggrabandhu.utils.CircularImage
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.PasswordTextFieldWithIcons
-import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun LoginScreen (navController: NavController?= null) {
@@ -75,9 +70,10 @@ fun LoginScreen (navController: NavController?= null) {
                 Log.d("Login", "Login ${loginResponse.userid}")
 
                 navController?.navigate("dashboard_screen") {
-                    popUpTo("dashboard_screen"){
+                    popUpTo(navController.graph.startDestinationId){
                         inclusive = true
                     }
+
                 }
             }
         } else {
