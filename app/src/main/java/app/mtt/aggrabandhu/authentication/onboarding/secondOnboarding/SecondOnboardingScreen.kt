@@ -193,7 +193,7 @@ fun SecondOnboardingScreen(
                 200 -> {
                     showProgressDialog.value = false
                     onboarding2Viewmodel.isSignUp = true
-                    sp.saveLoginStatus(signupResponse.value.memberAdd?.id.toString())
+                    sp.saveLoginStatus(true)
                     Log.d("userID", signupResponse.value.memberAdd?.id.toString())
                     Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
                         navController?.navigate("dashboard_screen"){

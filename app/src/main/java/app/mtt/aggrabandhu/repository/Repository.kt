@@ -54,7 +54,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val allMembers : StateFlow<List<AllMemberData>>
         get() = _allMembers
 
-    private val _loginResponse = MutableStateFlow<LoginResponse>(LoginResponse( "", 0))
+    private val _loginResponse = MutableStateFlow<LoginResponse>(LoginResponse( "", 0, ""))
     val loginResponse : StateFlow<LoginResponse>
         get() = _loginResponse
     private var _loginResponseCode = 0
@@ -180,20 +180,26 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
-    suspend fun login (mobileNumber: String, password: String) : Int {
+    suspend fun login (mobileNumber: String, password: String, context: Context) : Int {
+        _loginResponseCode = 0
         try {
-            _loginResponseCode = 1
+            val sp = SharedPrefManager(context)
             val response = allApi.login(
                 mobileNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                 password.toRequestBody("multipart/form-data".toMediaTypeOrNull())
             )
             if (response.isSuccessful && response.body() != null) {
-                _loginResponse.emit(response.body()!!)
-                _loginResponseCode = (response.code())
+                sp.saveMemberID(response.body()!!.userid)
+                sp.saveLoginStatus(true)
+                sp.savePhone(mobileNumber)
+                sp.saveFullName(response.body()!!.username)
+
                 Log.d(
                     "LoginResponse",
                     "${response.code()} ${response.message()} ${response.body()!!.userid} "
                 )
+                _loginResponse.emit(response.body()!!)
+                _loginResponseCode = (response.code())
             } else {
                 _loginResponseCode = (401)
                 Log.d("LoginError", "${response.code()} ${response.message()}")
@@ -504,7 +510,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val profileData : StateFlow<ProfileData>
         get() = _profileData
 
-    suspend fun getProfileDetails(memberID : Int){
+    suspend fun getProfileDetails(memberID : Int, context: Context){
         try {
             val response = allApi.getProfileInfo("id", memberID)
             if (response.isSuccessful && response.body() != null) {
@@ -515,9 +521,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 _profileResponseCode.emit(response.code())
                 Log.d("Profile", "${response.message()} ${response.code()} ")
             }
+//            Toast.makeText(context, response.code().toString(), Toast.LENGTH_SHORT).show()
         }catch (e:Exception){
             e.printStackTrace()
             _profileResponseCode.emit(400)
+            Log.d("Profile", e.message.toString())
         }
     }
 
@@ -530,7 +538,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         try {
             if (response.isSuccessful && response.body() != null) {
                 _rules.emit(response.body()!![0].rule)
-                Log.d("Rules", "${response.body().toString()} ${response.code().toString()}")
+                Log.d("Rules", " ${response.code().toString()}")
             } else {
                 _rules.emit("Error")
                 Log.d("Rules", "${response.body().toString()} ${response.code()} ")
@@ -550,7 +558,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             val response = allApi.getDeclaration()
             if (response.isSuccessful && response.body() != null) {
                 _declaration.emit(response.body()!![0].declearation)
-                Log.d("RulesDeclaration", "${response.body().toString()} ${response.code().toString()}")
+                Log.d("RulesDeclaration", " ${response.code().toString()}")
             } else {
                 _declaration.emit("Error")
                 Log.d("RulesDeclaration", "${response.body().toString()} ${response.code()} ")

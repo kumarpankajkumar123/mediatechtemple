@@ -1,5 +1,6 @@
 package app.mtt.aggrabandhu.dashboard.pages.profile
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.SavedStateHandle
@@ -20,6 +21,17 @@ class EditProfileViewModel @Inject constructor(
     val editProfileResponseCode : StateFlow<Int>
         get() = repository.editProfileResponseCode
 
+    val profileData : StateFlow<ProfileData>
+        get() = repository.profileData
+    val profileResponseCode : StateFlow<Int>
+        get() = repository.profileResponseCode
+
+    fun getProfile(id:Int, context: Context) {
+        viewModelScope.launch {
+            repository.getProfileDetails(id, context)
+        }
+    }
+
     var getName : String = savedStateHandle.get<String>("name")!!
     var phone : String = savedStateHandle.get<String>("phone")!!
 //    var profileUri : String = savedStateHandle.get<String>("profileUri")!!
@@ -38,43 +50,6 @@ class EditProfileViewModel @Inject constructor(
 //    var dob : String = savedStateHandle.get<String>("dob")!!
 //    var profession : String = savedStateHandle.get<String>("profession")!!
 //    var spouseName : String = savedStateHandle.get<String>("spouse")!!
-
-    // MutableLiveData to hold the current text state
-    private var _fullNameState = MutableStateFlow("")
-    val fullNameField: StateFlow<String>
-        get() = _fullNameState
-
-    // MutableLiveData to hold the current text state
-    private val _phoneTextState = MutableStateFlow("")
-    val phoneTextState: StateFlow<String> = _phoneTextState
-
-    // MutableLiveData to hold the current text state
-    private val _fatherNameState = MutableStateFlow("")
-    val fatherNameFieldState: StateFlow<String> = _fatherNameState
-
-    // MutableLiveData to hold the current text state
-    private val _motherNameState = MutableStateFlow("")
-    val motherNameFieldState: StateFlow<String> = _motherNameState
-
-    fun onNameTextChanged(newText: String) {
-        _fullNameState.value = newText
-    }
-    fun onPhoneTextChanged(newText: String) {
-        _phoneTextState.value = newText
-    }
-    fun onFatherNameTextChanged(newText: String) {
-        _fatherNameState.value = newText
-    }
-    fun onMotherNameTextChanged(newText: String) {
-        _motherNameState.value = newText
-    }
-
-    fun getFields(){
-        if(_fullNameState.value.isEmpty()){
-            _fullNameState.value = getName
-            Log.d("Name", getName)
-        }
-    }
 
     fun editProfile() {
         viewModelScope.launch {

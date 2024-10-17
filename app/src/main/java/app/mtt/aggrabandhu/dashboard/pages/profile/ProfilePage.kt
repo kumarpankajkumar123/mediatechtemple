@@ -72,7 +72,7 @@ fun ProfilePage(navController: NavController?= null) {
     val sharedPref = SharedPrefManager(context)
     val id = sharedPref.getMemberID()
 
-    profileViewModel.getProfile(id)
+    profileViewModel.getProfile(id, context)
 
     val showProgress = remember { mutableStateOf(true) }
 

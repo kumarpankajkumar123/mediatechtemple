@@ -46,6 +46,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -67,15 +68,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
 import app.mtt.aggrabandhu.dashboard.pages.profile.ProfilePage
+import app.mtt.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mtt.aggrabandhu.dashboard.pages.rules.RulesRegulationsPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.FB
 import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.IG
 import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.SupportPage
 import app.mtt.aggrabandhu.dashboard.sideNavigation.supportPage.intentToWeb
 import app.mtt.aggrabandhu.utils.CircularImage
+import app.mtt.aggrabandhu.utils.LoadingAlertDialog
 import app.mtt.aggrabandhu.utils.LogoutDialog
 import app.mtt.aggrabandhu.utils.SharedPrefManager
 import kotlinx.coroutines.launch
@@ -87,7 +91,9 @@ fun DashboardScreen(navController : NavController ?= null) {
     val context = LocalContext.current
 
     val sharedPref = SharedPrefManager(context)
-    val name = sharedPref.getFullName()
+    var name by remember { mutableStateOf("") }
+
+    name = sharedPref.getFullName().toString()
 
     val logoutDialog = remember { mutableStateOf(false) }
 
@@ -102,10 +108,13 @@ fun DashboardScreen(navController : NavController ?= null) {
     LogoutDialog(
         showDialog = logoutDialog.value,
         onConfirm = {
+            sharedPref.logOut()
+            logoutDialog.value = false
             navController?.navigate("login_screen") {
                 popUpTo("login_screen"){
                     inclusive = true
                 }
+                launchSingleTop = true
             }
         }) {
         logoutDialog.value = false
@@ -141,7 +150,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
-                                    text = name.toString(),
+                                    text = name,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.SemiBold,
                                     modifier = Modifier.padding(end = 6.dp)

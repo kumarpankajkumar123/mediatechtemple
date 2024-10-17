@@ -1,6 +1,7 @@
 package app.mtt.aggrabandhu.utils
 
 import android.content.Context
+import android.util.Log
 import app.mtt.aggrabandhu.dashboard.pages.profile.shareText
 
 class SharedPrefManager(private val context : Context) {
@@ -137,15 +138,16 @@ class SharedPrefManager(private val context : Context) {
     }
 
     /*  ------------------------------------------------------------------*/
-    fun saveLoginStatus(userid : String){
-        editor.putString("login",userid)
+    fun saveLoginStatus(isLogIn : Boolean){
+        editor.putBoolean("loginStatus",isLogIn)
         editor.apply()
     }
-    fun getLoginStatus(): String? {
-        return sharedPreferences.getString("login", "")
+    fun getLoginStatus(): Boolean {
+        return sharedPreferences.getBoolean("loginStatus", false)
     }
     fun logOut() {
-        editor.clear()
+        editor.clear()// Commit the changes
+        editor.apply()  // or editor.commit()
     }
 
 }

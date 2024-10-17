@@ -58,7 +58,7 @@ fun PrivacyPolicyPage(navController: NavController ?= null) {
             )
         }
 
-        val pp = "https://www.termsfeed.com/live/029acdd1-d2fa-4a66-aeb2-0dd2cf784b03"
+        val pp = "https://aggrabandhuss.org/privacy"
         AndroidView(
             modifier = Modifier.fillMaxSize(),
             factory = {

@@ -109,7 +109,6 @@ fun NavigationComponent(loginStatus : Boolean) {
             ProfilePage(navController = navController)
         }
         composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{pinCode}/{city}/{state}/{address}/{nominee}/{relation}/{nominee2}/{relation2}",
-//        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{gotra}/{maritalStatus}/{spouse}/{dob}/{profession}",
             arguments = listOf(
                 navArgument("name") {
                     type = NavType.StringType

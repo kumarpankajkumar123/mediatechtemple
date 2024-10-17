@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
+import app.mtt.aggrabandhu.utils.SharedPrefManager
 import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 
 
@@ -59,12 +60,14 @@ import app.mtt.aggrabandhu.utils.TextFieldWithIcons
 fun EditProfileScreen(navController: NavController?=null) {
 
     val context = LocalContext.current
+    val sharedPref = SharedPrefManager(context)
+    val id = sharedPref.getMemberID()
 
     val profileViewModel : EditProfileViewModel = hiltViewModel()
 
-    profileViewModel.getFields()
+    profileViewModel.getProfile(id, context)
 
-    val name = profileViewModel.fullNameField.collectAsState()
+    val name = ""
     val phone = profileViewModel.phone
     val father = profileViewModel.father
     val mother = profileViewModel.mother
@@ -178,9 +181,9 @@ fun EditProfileScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                name.value
+                name
             ) {
-                profileViewModel.onNameTextChanged(it)
+
             }
             /* ------------------- Phone number ----------------------- */
             TextFieldWithIcons(
@@ -191,7 +194,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 Icons.Filled.Person,
                 phone
             ) {
-                profileViewModel.onPhoneTextChanged(it)
+
             }
             /* ------------------- Reference ID ----------------------- */
             TextFieldWithIcons(
@@ -202,7 +205,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 Icons.Filled.Person,
                 father
             ) {
-                profileViewModel.onFatherNameTextChanged(it)
+
             }
 
             // Spacer(modifier = Modifier.height(10.dp))
@@ -215,7 +218,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 Icons.Filled.Person,
                 mother
             ) {
-                profileViewModel.onMotherNameTextChanged(it)
+
             }
 
             /*   ------------- Pin Code ---------------- */

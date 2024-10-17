@@ -17,9 +17,9 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
     val profileResponseCode : StateFlow<Int>
         get() = repository.profileResponseCode
 
-    fun getProfile(id:Int) {
+    fun getProfile(id:Int, context: Context) {
         viewModelScope.launch {
-            repository.getProfileDetails(id)
+            repository.getProfileDetails(id, context)
         }
     }
 

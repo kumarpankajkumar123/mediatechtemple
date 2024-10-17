@@ -20,10 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
 
             val sp = SharedPrefManager(this)
-            val uId = sp.getLoginStatus()
+            val logIn = sp.getLoginStatus()
 
-            val loginStatus = !uId?.isEmpty()!!
-            NavigationComponent(loginStatus)
+            NavigationComponent(logIn)
         }
     }
 }

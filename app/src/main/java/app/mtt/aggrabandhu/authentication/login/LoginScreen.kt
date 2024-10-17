@@ -62,17 +62,17 @@ fun LoginScreen (navController: NavController?= null) {
     val loginResponseCode = loginViewmodel.loginResponseCode.collectAsState()
     val loginResponse by loginViewmodel.loginResponse.collectAsState()
 
-    val sp = SharedPrefManager(context)
+    val phone = loginViewmodel.mobileNumber.collectAsState()
+    val password = loginViewmodel.password.collectAsState()
+
     val showProgress = remember { mutableStateOf(false) }
 
     if (loginResponseCode.value != 0) {
         if (loginResponseCode.value  == 200) {
             showProgress.value = false
             if (!loginViewmodel.isLogin) {
-                Toasty.success(context, "Login", Toast.LENGTH_SHORT).show()
                 loginViewmodel.isLogin = true
                 Log.d("Login", "Login ${loginResponse.userid}")
-                sp.saveLoginStatus(loginResponse.userid.toString())
 
                 navController?.navigate("dashboard_screen") {
                     popUpTo("dashboard_screen"){
@@ -170,16 +170,16 @@ fun LoginScreen (navController: NavController?= null) {
 
             /* ---------- Login Button -------------- */
             CustomButton("Login", colorResource(id = R.color.orange)) {
-//                if (phone?.length!! < 10) {
-//                    Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-//                } else if (password?.isEmpty()!!) {
-//                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
-//                } else {
-//                showProgress.value = true
-                navController?.navigate("dashboard_screen")
-//                loginViewmodel.login()
+                if (phone.value.length < 10) {
+                    Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
+                } else if (password.value.isEmpty()) {
+                    Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
+                } else {
+                    showProgress.value = true
+//                    navController?.navigate("dashboard_screen")
+                    loginViewmodel.login(context)
 //                    Toasty.success(context, "${phone.value} - ${password.value}", Toast.LENGTH_SHORT).show()
-//                }
+                }
             }
 
             Row (
@@ -189,7 +189,7 @@ fun LoginScreen (navController: NavController?= null) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
-                    text = "Forget Phone Number?",
+                    text = "",//Forget Phone Number?
                     modifier = Modifier
                         .padding(vertical = 8.dp),
                     textAlign = TextAlign.End,
