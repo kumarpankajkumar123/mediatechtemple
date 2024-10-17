@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mtt.aggrabandhu.R
+import app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
 import app.mtt.aggrabandhu.utils.CustomButton
 import app.mtt.aggrabandhu.utils.DatePickerField
 import app.mtt.aggrabandhu.utils.DropDownField
@@ -110,7 +111,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                onboarding1Viewmodel.onImageUriChanged(uri)
+                val compressed = compressImageToUri(uri, context)
+                onboarding1Viewmodel.onImageUriChanged(compressed!!)
             }
         }
     )

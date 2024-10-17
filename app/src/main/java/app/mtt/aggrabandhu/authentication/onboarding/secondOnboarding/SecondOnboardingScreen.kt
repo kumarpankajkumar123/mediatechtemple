@@ -1,6 +1,12 @@
 package app.mtt.aggrabandhu.authentication.onboarding.secondOnboarding
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -53,6 +59,9 @@ import app.mtt.aggrabandhu.utils.prepareFilePart
 import app.mtt.aggrabandhu.viewmodel.Onboarding2Viewmodel
 import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.StateFlow
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 @Preview(showSystemUi = true)
 @Composable
@@ -207,7 +216,12 @@ fun SecondOnboardingScreen(
                     onboarding2Viewmodel.isSignUp = false
                     Toasty.error(context, "Reference ID is wrong", Toast.LENGTH_SHORT).show()
                 }
-                else -> {
+                413 -> {
+                    showProgressDialog.value = false
+                    onboarding2Viewmodel.isSignUp = false
+                    Toasty.error(context, "Image size is too large", Toast.LENGTH_SHORT).show()
+                }
+                else-> {
                     showProgressDialog.value = false
                     onboarding2Viewmodel.isSignUp = false
                     Toasty.error(context, "Retry - Something went wrong", Toast.LENGTH_SHORT).show()
@@ -245,6 +259,26 @@ fun SecondOnboardingScreen(
         }
         // Spacer(modifier = Modifier.height(15.dp))
 
+        DropDownField(
+            selectedValue = selectedState.value,
+            options = emptyList(),
+            label = "State",
+            Icons.Default.LocationOn,
+//            Icons.Default.PermContactCalendar,
+            onValueChangedEvent = {
+
+            }
+        )
+        DropDownField(
+            selectedValue = selectedCity.value,
+            options = emptyList(),
+            label = "City",
+            Icons.Default.LocationCity,
+//            Icons.Default.PermContactCalendar,
+            onValueChangedEvent = {
+
+            }
+        )
         DropDownField (
             selectedValue = selectedPostal.value,
             options = postalData.value.PostOffice.map { it.Name },
@@ -258,26 +292,6 @@ fun SecondOnboardingScreen(
                 selectedCity.value = (postalData.value.PostOffice[0].District)
                 selectedState.value = (postalData.value.PostOffice[0].State)
                 Log.d("City", "${postalData.value.PostOffice[0].District}")
-            }
-        )
-        DropDownField(
-            selectedValue = selectedCity.value,
-            options = emptyList(),
-            label = "City",
-            Icons.Default.LocationCity,
-//            Icons.Default.PermContactCalendar,
-            onValueChangedEvent = {
-
-            }
-        )
-        DropDownField(
-            selectedValue = selectedState.value,
-            options = emptyList(),
-            label = "State",
-            Icons.Default.LocationOn,
-//            Icons.Default.PermContactCalendar,
-            onValueChangedEvent = {
-
             }
         )
         /* ------------- City ---------------- */
@@ -336,10 +350,11 @@ fun SecondOnboardingScreen(
         Spacer(modifier = Modifier.height(10.dp))
 
         SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
-            onboarding2Viewmodel.adharUri = uri
+            val compressed = compressImageToUri(uri, context)
+            onboarding2Viewmodel.adharUri = compressed
             validationAdha.intValue = 0
             showProgressDialog.value = true
-            onboarding2Viewmodel.file = prepareFilePart(uri,"file",context)
+            onboarding2Viewmodel.file = prepareFilePart(compressed!!,"file",context)
             onboarding2Viewmodel.validateDoc(
                 onboarding2Viewmodel.adharNumber!!,
                 "aadhar card",
@@ -374,11 +389,12 @@ fun SecondOnboardingScreen(
             }
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(selectedDoc.value){
-                onboarding2Viewmodel.panUri = it
-                onboarding2Viewmodel.file2 = prepareFilePart(it,"file2", context)
+                val compressed = compressImageToUri(it, context)
+                onboarding2Viewmodel.panUri = compressed
+                onboarding2Viewmodel.file2 = prepareFilePart(compressed!!,"file2", context)
 
                 showProgressDialog.value = true
-                onboarding2Viewmodel.docFile = prepareFilePart(it,"file", context)
+                onboarding2Viewmodel.docFile = prepareFilePart(compressed,"file", context)
 
                 onboarding2Viewmodel.validateOtherDoc(
                     onboarding2Viewmodel.idNumber!!,
@@ -564,4 +580,83 @@ fun RulesAndRegulationsCheck(
             fontWeight = FontWeight.SemiBold,
         )
     }
+}
+
+fun compressImageToUri(imageUri: Uri, context: Context): Uri? {
+    // Retrieve the image file path from the URI
+    val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+    val cursor = context.contentResolver.query(imageUri, filePathColumn, null, null, null)
+    cursor?.moveToFirst()
+
+    val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+    val picturePath = columnIndex?.let { cursor.getString(it) }
+    cursor?.close()
+
+    if (picturePath == null) {
+        return null // If picturePath is null, return
+    }
+
+    // Read the Exif data to get the original orientation of the image
+    val exif = ExifInterface(picturePath)
+    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+    // Decode the image into a bitmap
+    val options = BitmapFactory.Options().apply {
+        inJustDecodeBounds = true
+    }
+    BitmapFactory.decodeFile(picturePath, options)
+
+    options.inJustDecodeBounds = false
+    options.inSampleSize = calculateInSampleSize(options, 800, 800) // Resize the image
+
+    val originalBitmap = BitmapFactory.decodeFile(picturePath, options)
+
+    // Rotate the bitmap if necessary
+    val rotatedBitmap = rotateBitmapIfRequired(originalBitmap, orientation)
+
+    // Create a unique filename for each compressed image
+    val uniqueFileName = "compressed_image_${System.currentTimeMillis()}.jpg"
+    val compressedImageFile = File(context.cacheDir, uniqueFileName)
+
+    try {
+        // Compress the rotated bitmap and write it to the file
+        val outputStream = FileOutputStream(compressedImageFile)
+        rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 80, outputStream) // Compress with 80% quality
+        outputStream.flush()
+        outputStream.close()
+    } catch (e: IOException) {
+        e.printStackTrace()
+        return null
+    }
+
+    // Return the URI for the compressed image file
+    return Uri.fromFile(compressedImageFile)
+}
+
+// Function to rotate the bitmap if required
+fun rotateBitmapIfRequired(bitmap: Bitmap, orientation: Int): Bitmap {
+    val matrix = Matrix()
+    when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+        ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+        ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+        else -> return bitmap // No rotation needed
+    }
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+}
+
+
+fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+    val (height: Int, width: Int) = options.run { outHeight to outWidth }
+    var inSampleSize = 1
+
+    if (height > reqHeight || width > reqWidth) {
+        val halfHeight: Int = height / 2
+        val halfWidth: Int = width / 2
+
+        while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+            inSampleSize *= 2
+        }
+    }
+    return inSampleSize
 }
