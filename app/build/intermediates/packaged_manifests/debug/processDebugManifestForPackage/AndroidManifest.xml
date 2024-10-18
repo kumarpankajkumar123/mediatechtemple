@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.mtt.aggrabandhu"
+    package="app.mediatech.aggrabandhu"
     android:versionCode="2"
     android:versionName="1.0.1" >
 
@@ -23,13 +23,13 @@
     </queries>
 
     <permission
-        android:name="app.mtt.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="app.mediatech.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="app.mtt.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="app.mediatech.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
-        android:name="app.mtt.aggrabandhu.AggrabandhuApplication"
+        android:name="app.mediatech.aggrabandhu.AggrabandhuApplication"
         android:allowBackup="true"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -43,7 +43,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.Aggrabandhu" >
         <activity
-            android:name="app.mtt.aggrabandhu.MainActivity"
+            android:name="app.mediatech.aggrabandhu.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Aggrabandhu"
@@ -79,7 +79,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="app.mtt.aggrabandhu.androidx-startup"
+            android:authorities="app.mediatech.aggrabandhu.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.emoji2.text.EmojiCompatInitializer"

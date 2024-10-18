@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "app.mtt.aggrabandhu"
+    namespace = "app.mediatech.aggrabandhu"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "app.mtt.aggrabandhu"
+        applicationId = "app.mediatech.aggrabandhu"
         minSdk = 26
         targetSdk = 34
         versionCode = 2

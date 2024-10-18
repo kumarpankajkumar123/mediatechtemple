@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="app.mtt.aggrabandhu"
+3    package="app.mediatech.aggrabandhu"
 4    android:versionCode="2"
 5    android:versionName="1.0.1" >
 6
@@ -9,8 +9,8 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:5:5-66
-11-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:5:22-64
+11-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:6:5-66
+11-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:6:22-64
 12    <!-- Include required permissions for Google Maps API to run. -->
 13    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 13-->[com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:23:5-79
@@ -34,70 +34,70 @@
 24
 25    <permission
 25-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
-26        android:name="app.mtt.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+26        android:name="app.mediatech.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 26-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
 27        android:protectionLevel="signature" />
 27-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
 28
-29    <uses-permission android:name="app.mtt.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+29    <uses-permission android:name="app.mediatech.aggrabandhu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 29-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
 29-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
 30
 31    <application
-31-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:7:5-34:19
-32        android:name="app.mtt.aggrabandhu.AggrabandhuApplication"
-32-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:8:9-47
+31-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:8:5-35:19
+32        android:name="app.mediatech.aggrabandhu.AggrabandhuApplication"
+32-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:9:9-47
 33        android:allowBackup="true"
-33-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:9:9-35
+33-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:10:9-35
 34        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 34-->[androidx.core:core:1.13.1] C:\Users\MTT PC\.gradle\caches\transforms-4\7d772c38d4054ee7be920e05bc3b8ff2\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
 35        android:dataExtractionRules="@xml/data_extraction_rules"
-35-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:10:9-65
+35-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:11:9-65
 36        android:debuggable="true"
 37        android:extractNativeLibs="false"
 38        android:fullBackupContent="@xml/backup_rules"
-38-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:11:9-54
+38-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:12:9-54
 39        android:icon="@mipmap/ic_launcher"
-39-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:12:9-43
+39-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:13:9-43
 40        android:label="@string/app_name"
-40-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:13:9-41
+40-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:14:9-41
 41        android:roundIcon="@mipmap/ic_launcher_round"
-41-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:14:9-54
+41-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:15:9-54
 42        android:supportsRtl="true"
-42-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:15:9-35
+42-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:16:9-35
 43        android:testOnly="true"
 44        android:theme="@style/Theme.Aggrabandhu" >
-44-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:16:9-49
+44-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:17:9-49
 45        <activity
-45-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:18:9-29:20
-46            android:name="app.mtt.aggrabandhu.MainActivity"
-46-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:19:13-41
+45-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:19:9-30:20
+46            android:name="app.mediatech.aggrabandhu.MainActivity"
+46-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:20:13-41
 47            android:exported="true"
-47-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:20:13-36
+47-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:21:13-36
 48            android:label="@string/app_name"
-48-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:21:13-45
+48-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:22:13-45
 49            android:theme="@style/Theme.Aggrabandhu"
-49-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:23:13-53
+49-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:24:13-53
 50            android:windowSoftInputMode="adjustResize|stateVisible" >
-50-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:22:13-68
+50-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:23:13-68
 51            <intent-filter>
-51-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:24:13-28:29
+51-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:25:13-29:29
 52                <action android:name="android.intent.action.MAIN" />
-52-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:25:17-69
-52-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:25:25-66
+52-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:26:17-69
+52-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:26:25-66
 53
 54                <category android:name="android.intent.category.LAUNCHER" />
-54-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:27:17-77
-54-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:27:27-74
+54-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:28:17-77
+54-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:28:27-74
 55            </intent-filter>
 56        </activity>
 57
 58        <meta-data
-58-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:31:9-32:44
+58-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:32:9-33:44
 59            android:name="com.google.android.geo.API_KEY"
-59-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:31:20-65
+59-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:32:20-65
 60            android:value="YOUR_KEY_HERE" />
-60-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:32:13-42
+60-->D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:33:13-42
 61
 62        <!-- Needs to be explicitly declared on P+ -->
 63        <uses-library
@@ -134,7 +134,7 @@
 80-->[androidx.emoji2:emoji2:1.3.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4335a107a9ee3d4ca31eb0236084d3c9\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
 81            android:name="androidx.startup.InitializationProvider"
 81-->[androidx.emoji2:emoji2:1.3.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4335a107a9ee3d4ca31eb0236084d3c9\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
-82            android:authorities="app.mtt.aggrabandhu.androidx-startup"
+82            android:authorities="app.mediatech.aggrabandhu.androidx-startup"
 82-->[androidx.emoji2:emoji2:1.3.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4335a107a9ee3d4ca31eb0236084d3c9\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
 83            android:exported="false" >
 83-->[androidx.emoji2:emoji2:1.3.0] C:\Users\MTT PC\.gradle\caches\transforms-4\4335a107a9ee3d4ca31eb0236084d3c9\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37

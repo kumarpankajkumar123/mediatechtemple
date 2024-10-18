@@ -4,7 +4,7 @@
     "type": "COMPATIBLE_SCREEN_MANIFEST",
     "kind": "Directory"
   },
-  "applicationId": "app.mtt.aggrabandhu",
+  "applicationId": "app.mediatech.aggrabandhu",
   "variantName": "debug",
   "elements": []
 }

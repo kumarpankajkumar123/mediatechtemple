@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "app.mtt.aggrabandhu.app-mergeDebugResources-66:/values/values.xml",
+            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-66:/values/values.xml",
             "map": [
                 {
                     "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\f94276f7d6c5185393419ffd2f89b549\\transformed\\ui-release\\res\\values\\values.xml",
