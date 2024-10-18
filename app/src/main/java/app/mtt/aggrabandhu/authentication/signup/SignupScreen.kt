@@ -154,7 +154,7 @@ fun SignupScreen(navController: NavController) {
             TextFieldWithIcons(
                 "Reference ID ",
                 "Enter your Reference ID",
-                12,
+                18,
                 KeyboardType.Text,
                 Icons.Filled.AccountBox,
                 value = signUpViewmodel.referenceIDSP

@@ -111,10 +111,9 @@ fun DashboardScreen(navController : NavController ?= null) {
             sharedPref.logOut()
             logoutDialog.value = false
             navController?.navigate("login_screen") {
-                popUpTo(navController.graph.startDestinationId){
+                popUpTo("dashboard_screen"){
                     inclusive = true
                 }
-                launchSingleTop = true
             }
         }) {
         logoutDialog.value = false
