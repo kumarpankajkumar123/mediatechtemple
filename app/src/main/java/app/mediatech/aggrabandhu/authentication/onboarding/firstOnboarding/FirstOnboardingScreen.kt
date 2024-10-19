@@ -163,24 +163,26 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
+            Spacer(modifier = Modifier.height(10.dp))
+
             EditProfileButton(
                 text = "Upload your Profile",
                 Icons.Default.PhotoCamera,
                 background = colorResource(id = R.color.orange),
                 modifier = Modifier
-                    .fillMaxWidth(0.36f)
+                    .fillMaxWidth(0.43f)
             ){
                 galleryLauncher.launch("image/*")
             }
-            Icon (
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(30.dp)
-                    .clickable {},
-                imageVector = Icons.Default.PhotoCamera,
-                contentDescription = "",
-                tint = colorResource(id = R.color.orange)
-            )
+//            Icon (
+//                modifier = Modifier
+//                    .padding(4.dp)
+//                    .size(30.dp)
+//                    .clickable {},
+//                imageVector = Icons.Default.PhotoCamera,
+//                contentDescription = "",
+//                tint = colorResource(id = R.color.orange)
+//            )
 
             Spacer(modifier = Modifier.height(10.dp))
 

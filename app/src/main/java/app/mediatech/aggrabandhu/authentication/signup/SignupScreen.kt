@@ -265,8 +265,8 @@ fun SignupScreen(navController: NavController) {
                     Toasty.error(context, "Please enter Full Name", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.phoneSP.length < 10) {
                     Toasty.error(context, "Please enter Phone Number", Toast.LENGTH_SHORT).show()
-                } else if (!signUpViewmodel.isOtpVerified) {
-                    Toasty.error(context, "Please Verify Your phone", Toast.LENGTH_SHORT).show()
+//                } else if (!signUpViewmodel.isOtpVerified) {
+//                    Toasty.error(context, "Please Verify Your phone", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.passwordSP.length < 5) {
                     Toasty.error(context, "Please enter password", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.confirmPassword.length < 5) {
