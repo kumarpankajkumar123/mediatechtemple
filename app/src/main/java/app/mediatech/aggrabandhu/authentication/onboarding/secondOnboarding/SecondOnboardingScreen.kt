@@ -350,9 +350,10 @@ fun SecondOnboardingScreen(
             isAdharNumb = it
             onboarding2Viewmodel.adharNumber = it
         }
-        Spacer(modifier = Modifier.height(10.dp))
 
         if (isAdharNumb.length == 12) {
+            Spacer(modifier = Modifier.height(10.dp))
+
             SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
                 val compressed = compressImageToUri(uri, context)
                 onboarding2Viewmodel.adharUri = compressed
@@ -389,52 +390,55 @@ fun SecondOnboardingScreen(
                 keyboardType = KeyboardType.Password,
                 leadingIcon = Icons.Default.Newspaper
             ) {
+                isDocNumb = it
                 onboarding2Viewmodel.idNumber = it
             }
-        }
-        if ((selectedDoc.value == "Driving License" && isDocNumb.length == 16)) {
-            Spacer(modifier = Modifier.height(10.dp))
-            SelectImageCardWithButton(selectedDoc.value) {
-                val compressed = compressImageToUri(it, context)
-                onboarding2Viewmodel.panUri = compressed
-                onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
-                showProgressDialog.value = true
-                onboarding2Viewmodel.docFile = prepareFilePart(compressed, "file", context)
+            if ((selectedDoc.value == "Driving License" && isDocNumb.length == 16)) {
+                Spacer(modifier = Modifier.height(10.dp))
+                SelectImageCardWithButton(selectedDoc.value) {
+                    val compressed = compressImageToUri(it, context)
+                    onboarding2Viewmodel.panUri = compressed
+                    onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
-                onboarding2Viewmodel.validateOtherDoc(
-                    onboarding2Viewmodel.idNumber!!,
-                    if (selectedDoc.value == "PAN Card") {
-                        "Pan card"
-                    } else {
-                        selectedDoc.value
-                    },
-                    onboarding2Viewmodel.docFile!!
-                )
-                validationOther.intValue = 0
+                    showProgressDialog.value = true
+                    onboarding2Viewmodel.docFile = prepareFilePart(compressed, "file", context)
+
+                    onboarding2Viewmodel.validateOtherDoc(
+                        onboarding2Viewmodel.idNumber!!,
+                        if (selectedDoc.value == "PAN Card") {
+                            "Pan card"
+                        } else {
+                            selectedDoc.value
+                        },
+                        onboarding2Viewmodel.docFile!!
+                    )
+                    validationOther.intValue = 0
+                }
+            } else if ((selectedDoc.value == "Voter ID" || selectedDoc.value == "PAN Card") && isDocNumb.length == 10) {
+                Spacer(modifier = Modifier.height(10.dp))
+                SelectImageCardWithButton(selectedDoc.value) {
+                    val compressed = compressImageToUri(it, context)
+                    onboarding2Viewmodel.panUri = compressed
+                    onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
+
+                    showProgressDialog.value = true
+                    onboarding2Viewmodel.docFile = prepareFilePart(compressed, "file", context)
+
+                    onboarding2Viewmodel.validateOtherDoc(
+                        onboarding2Viewmodel.idNumber!!,
+                        if (selectedDoc.value == "PAN Card") {
+                            "Pan card"
+                        } else {
+                            selectedDoc.value
+                        },
+                        onboarding2Viewmodel.docFile!!
+                    )
+                    validationOther.intValue = 0
+                }
             }
-        } else if ((selectedDoc.value == "Voter ID" || selectedDoc.value == "PAN Card") && isDocNumb.length == 10) {
-            Spacer(modifier = Modifier.height(10.dp))
-            SelectImageCardWithButton(selectedDoc.value) {
-                val compressed = compressImageToUri(it, context)
-                onboarding2Viewmodel.panUri = compressed
-                onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
-
-                showProgressDialog.value = true
-                onboarding2Viewmodel.docFile = prepareFilePart(compressed, "file", context)
-
-                onboarding2Viewmodel.validateOtherDoc(
-                    onboarding2Viewmodel.idNumber!!,
-                    if (selectedDoc.value == "PAN Card") {
-                        "Pan card"
-                    } else {
-                        selectedDoc.value
-                    },
-                    onboarding2Viewmodel.docFile!!
-                )
-                validationOther.intValue = 0
-            }
         }
+
         /*   - ------------ Nominee 1 ---------------- */
         TextFieldWithIcons(
             label = "Nominee",

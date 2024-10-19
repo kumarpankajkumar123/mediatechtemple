@@ -7,6 +7,7 @@ import app.mediatech.aggrabandhu.authentication.onboarding.ResponseData
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.DeclarationData
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.RulesData
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
+import app.mediatech.aggrabandhu.dashboard.pages.home.NotificationData
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
@@ -172,6 +173,9 @@ interface AllApi {
 
     @GET("member")
     suspend fun getAllMembers() : Response<AllMembersData>
+
+    @GET("notification")
+    suspend fun getNotification() : Response<NotificationData>
 
     @GET("rule")
     suspend fun getRules() : Response<List<RulesData>>

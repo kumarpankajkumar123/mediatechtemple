@@ -69,6 +69,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.dashboard.pages.home.HomePage
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mediatech.aggrabandhu.dashboard.pages.rules.RulesRegulationsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.FB
@@ -210,11 +211,11 @@ fun DashboardScreen(navController : NavController ?= null) {
 fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, selectedIndex : Int) {
     Column( modifier = modifier ) {
         when(selectedIndex){
-//            0-> HomePage()
+            0-> HomePage()
 //            1-> DonationsPage(navController)
-            0-> RulesRegulationsPage()
-            1-> SupportPage(fromDashboard = true)
-            2-> ProfilePage(navController)
+            1-> RulesRegulationsPage()
+            2-> SupportPage(fromDashboard = true)
+            3-> ProfilePage(navController)
         }
     }
 }

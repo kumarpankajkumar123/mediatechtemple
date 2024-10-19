@@ -33,10 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
-import app.mediatech.aggrabandhu.viewmodel.AllMembersViewModel
 import coil.compose.rememberAsyncImagePainter
 
 data class DonorsData(
@@ -123,11 +123,11 @@ private fun DonorsCard (
                 painter = rememberAsyncImagePainter(baseUrl+allMemberData.profileUrl)
             )
             Column(modifier = Modifier
-                .fillMaxWidth(.55f)
+                .fillMaxWidth(.58f)
                 .padding(start = 5.dp)) {
                 Text(
                     text = allMemberData.name,
-                    fontSize = 18.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,
                 )
@@ -138,7 +138,7 @@ private fun DonorsCard (
                     color = Color.Black,
                 )
                 Text(
-                    text = allMemberData.address,
+                    text = "${allMemberData.district},${allMemberData.state}",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,
@@ -148,15 +148,27 @@ private fun DonorsCard (
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(start = 5.dp, end = 5.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
-                Text(
-                    text = "Member ID : ${allMemberData.id}",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
-                )
+                Column {
+                    Text(
+                        text = "Member ID : ${allMemberData.id}",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = "${
+                            convertDateFormat(
+                                allMemberData.createdAt
+                            )
+                        }",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Blue,
+                    )
+                }
             }
         }
     }

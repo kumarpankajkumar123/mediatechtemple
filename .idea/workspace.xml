@@ -9,13 +9,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Package name changed">
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
+    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Docs validation">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/pages/home/HomeViewModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/pages/home/NotificationData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Aggrabandhu.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/Aggrabandhu.app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/onboarding/firstOnboarding/FirstOnboardingScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/onboarding/firstOnboarding/FirstOnboardingScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/onboarding/secondOnboarding/SecondOnboardingScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/onboarding/secondOnboarding/SecondOnboardingScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/signup/SignupScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/authentication/signup/SignupScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/utils/CustomButtons.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/utils/CustomButtons.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/api/AllApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/api/AllApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/pages/HomePage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/pages/home/HomePage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/allMembers/MembersListPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/allMembers/MembersListPage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/repository/Repository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/repository/Repository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/viewmodel/AllMembersViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/allMembers/AllMembersViewModel.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,21 +114,22 @@
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\res\font" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\pages\home" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\sideNavigation\policy" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\sideNavigation\supporttPage" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\pages\rules" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\authentication\login" />
-      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\authentication\onboarding\secondOnboarding" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers" />
       <recent name="app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="app.mediatech.aggrabandhu.dashboard.pages.home" />
       <recent name="app.mediatech.aggrabandhu.dashboard.sideNavigation.policy" />
       <recent name="app.mtt.aggrabandhu.dashboard.sideNavigation.supporttPage" />
       <recent name="app.mtt.aggrabandhu.dashboard.pages" />
       <recent name="app.mtt.aggrabandhu.dashboard.pages.profile" />
-      <recent name="app.mtt.aggrabandhu.authentication.login" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -729,7 +733,15 @@
       <option name="project" value="LOCAL" />
       <updated>1729251286520</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Docs validation">
+      <option name="closed" value="true" />
+      <created>1729312454005</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1729312454005</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -747,7 +759,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Make Donations page" />
     <MESSAGE value="All Members API" />
     <MESSAGE value="Icon changed" />
     <MESSAGE value="State Manage" />
@@ -772,6 +783,7 @@
     <MESSAGE value="compressImage" />
     <MESSAGE value="Log out" />
     <MESSAGE value="Package name changed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Package name changed" />
+    <MESSAGE value="Docs validation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Docs validation" />
   </component>
 </project>

@@ -9,6 +9,7 @@ import app.mediatech.aggrabandhu.authentication.login.LoginResponse
 import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.ProfessionData
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.PostalData
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.SignupResponse
+import app.mediatech.aggrabandhu.dashboard.pages.home.Data
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mediatech.aggrabandhu.dashboard.pages.profile.Nominees
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileData
@@ -129,6 +130,32 @@ class Repository @Inject constructor(private val allApi: AllApi){
             }
         } catch (e : Exception) {
             _membersResponseCode.emit(400)
+            e.printStackTrace()
+        }
+    }
+
+    private val _notifications = MutableStateFlow<List<Data>>(emptyList())
+    val notificationData : StateFlow<List<Data>>
+        get() = _notifications
+
+    private val _notificationCode = MutableStateFlow<Int>(0)
+    val notificationCode : StateFlow<Int>
+        get() = _notificationCode
+
+    suspend fun getNotification() {
+        try {
+            _notificationCode.emit(0)
+            val response = allApi.getNotification()
+            if (response.isSuccessful && response.body() != null) {
+                _notifications.emit(response.body()!!.data)
+                _notificationCode.emit(response.code())
+                Log.d("All Members", "${response.code()}-> ${response.body()!!.data.toString()}")
+            } else {
+                Log.d("All Members", "${response.code()}-> {${response.message()}}")
+                _notificationCode.emit(response.code())
+            }
+        } catch (e : Exception) {
+            _notificationCode.emit(400)
             e.printStackTrace()
         }
     }

@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -51,6 +52,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 
@@ -59,35 +61,40 @@ import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 fun EditProfileScreen(navController: NavController?=null) {
 
     val context = LocalContext.current
+
+    val profileViewModel : ProfileViewModel = hiltViewModel()
+    val profileData = profileViewModel.profileData.collectAsState()
+    val profileResponseCode = profileViewModel.profileResponseCode.collectAsState()
+
+
     val sharedPref = SharedPrefManager(context)
     val id = sharedPref.getMemberID()
 
-    val profileViewModel : EditProfileViewModel = hiltViewModel()
-
     profileViewModel.getProfile(id, context)
 
-    val name = ""
-    val phone = profileViewModel.phone
-    val father = profileViewModel.father
-    val mother = profileViewModel.mother
-    val nominee = profileViewModel.nominee
-    val relation = profileViewModel.relation
-    val nominee2 = profileViewModel.nominee2
-    val relation2 = profileViewModel.relation2
-    val pinCode = profileViewModel.pinCode
-    val city = profileViewModel.city
-    val state = profileViewModel.state
-    val address = profileViewModel.address
+    val showProgress = remember { mutableStateOf(true) }
 
-    val showProgress = remember { mutableStateOf(false) }
+    if (profileResponseCode.value != 0) {
+        showProgress.value = false
+    }
 
-//    if (editProfileResponseCode.value != 0) {
-//        showProgress.value = false
-//    }
+    if (showProgress.value) {
+        LoadingAlertDialog()
+    }
 
-//    if (showProgress.value) {
-//        LoadingAlertDialog()
-//    }
+//    val name = ""
+//    val phone = profileViewModel.phone
+//    val father = profileViewModel.father
+//    val mother = profileViewModel.mother
+//    val nominee = profileViewModel.nominee
+//    val relation = profileViewModel.relation
+//    val nominee2 = profileViewModel.nominee2
+//    val relation2 = profileViewModel.relation2
+//    val pinCode = profileViewModel.pinCode
+//    val city = profileViewModel.city
+//    val state = profileViewModel.state
+//    val address = profileViewModel.address
+
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -180,7 +187,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                name
+//                name
             ) {
 
             }
@@ -191,7 +198,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 10,
                 KeyboardType.Phone,
                 Icons.Filled.Person,
-                phone
+//                phone
             ) {
 
             }
@@ -202,7 +209,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 12,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                father
+//                father
             ) {
 
             }
@@ -215,7 +222,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 20,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-                mother
+//                mother
             ) {
 
             }
@@ -227,7 +234,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 6,
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.PinDrop,
-                pinCode
+//                pinCode
             ) { text ->
 
             }
@@ -239,7 +246,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationCity,
-                city
+//                city
             ) { text ->
 
             }
@@ -251,7 +258,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationOn,
-                state
+//                state
             ) { text ->
 
             }
@@ -262,7 +269,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationOn,
-                address
+//                address
             ) { text ->
 
             }
@@ -285,7 +292,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
-                nominee
+//                nominee
             ) { text ->
             }
             /*   ------------- Relation 1 ---------------- */
@@ -295,7 +302,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
-                relation
+//                relation
             ) { text ->
 
             }
@@ -307,7 +314,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
-                nominee2
+//                nominee2
             ) { text ->
 
             }
@@ -319,7 +326,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
-                relation2
+//                relation2
             ) { text ->
 
             }

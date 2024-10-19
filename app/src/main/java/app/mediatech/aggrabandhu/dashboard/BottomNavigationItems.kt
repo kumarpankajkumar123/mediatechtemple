@@ -1,9 +1,11 @@
 package app.mediatech.aggrabandhu.dashboard
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
+import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Rule
 import androidx.compose.material.icons.outlined.SupportAgent
@@ -19,11 +21,11 @@ data class BottomNavigationItems (
 
 ///List of Navigation Items that will be clicked
 val items = listOf(
-//    BottomNavigationItems(
-//        title = "Home",
-//        selectedIcon = Icons.Filled.Home,
-//        unselectedIcon = Icons.Outlined.Home,
-//    ),
+    BottomNavigationItems(
+        title = "Home",
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+    ),
 //    BottomNavigationItems(
 //        title = "Live Donations",
 //        selectedIcon = Icons.Filled.Notifications,
