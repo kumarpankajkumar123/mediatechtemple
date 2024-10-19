@@ -140,8 +140,7 @@ fun ProfilePage(navController: NavController?= null) {
                 modifier = Modifier
                     .fillMaxWidth(0.36f)
             ){
-                Log.d("Click", "Click - $name/$phone/${fatherName}/${motherName}/${gotra}/${maritalStatus}/${spouseName}/${dob}/${profession}")
-                navController?.navigate("edit_profile_screen/$name/$phone/${fatherName}/${motherName}/$pinCode/$district/$state/$address/$nominee/$relation/${nominee2}/${relation2}")
+                navController?.navigate("edit_profile_screen")
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -170,7 +169,7 @@ fun ProfilePage(navController: NavController?= null) {
                 modifier = Modifier.padding(vertical = 6.dp)
             )
             ProfileInfoCard(Icons.Default.Person, heading = relation, text = nominee)
-            if (nominee2.isNotEmpty()) {
+            if (nominee2 != "") {
                 ProfileInfoCard(Icons.Default.Person, heading = relation2, text = nominee2)
             }
             Spacer(modifier = Modifier.height(30.dp))

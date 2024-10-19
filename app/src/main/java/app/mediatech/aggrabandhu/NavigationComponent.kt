@@ -108,65 +108,7 @@ fun NavigationComponent(loginStatus : Boolean) {
         composable("profile_screen") {
             ProfilePage(navController = navController)
         }
-        composable("edit_profile_screen/{name}/{phone}/{father}/{mother}/{pinCode}/{city}/{state}/{address}/{nominee}/{relation}/{nominee2}/{relation2}",
-            arguments = listOf(
-                navArgument("name") {
-                    type = NavType.StringType
-                },
-                navArgument("phone") {
-                    type = NavType.StringType
-                },
-                navArgument("father") {
-                    type = NavType.StringType
-                },
-                navArgument("mother") {
-                    type = NavType.StringType
-                },
-                navArgument("pinCode") {
-                    type = NavType.StringType
-                },
-                navArgument("city") {
-                    type = NavType.StringType
-                },
-                navArgument("state") {
-                    type = NavType.StringType
-                },
-                navArgument("address") {
-                    type = NavType.StringType
-                },
-                navArgument("nominee") {
-                    type = NavType.StringType
-                },
-                navArgument("relation") {
-                    type = NavType.StringType
-                },
-                navArgument("nominee2") {
-                    type = NavType.StringType
-                },
-                navArgument("relation2") {
-                    type = NavType.StringType
-                }
-//                ,
-//                navArgument("gotra") {
-//                    type = NavType.StringType
-//                },
-//                navArgument("maritalStatus") {
-//                    type = NavType.StringType
-//                },
-//                navArgument("spouse") {
-//                    type = NavType.StringType
-//                },
-//                navArgument("dob") {
-//                    type = NavType.StringType
-//                },
-//                navArgument("profession") {
-//                    type = NavType.StringType
-//                }
-//                ,
-//                navArgument("profileUri") {
-//                    type = NavType.StringType
-//                }
-            )) {
+        composable("edit_profile_screen") {
             EditProfileScreen(navController = navController)
         }
         composable("make_donation_screen") {

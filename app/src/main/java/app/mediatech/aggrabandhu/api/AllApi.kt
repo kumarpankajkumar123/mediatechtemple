@@ -159,12 +159,42 @@ interface AllApi {
         @Part("name") name : RequestBody,
         @Part("father_name") father_name : RequestBody,
         @Part("mother_name") mother_name : RequestBody,
-        @Part("mobile_no") mobile_no : RequestBody,
+        @Part("profession") profession : RequestBody,
+        @Part("marital_status") marital_status : RequestBody,
+        @Part("spouse_name") spouse_name : RequestBody,
+        @Part("marriage_date") marriage_date : RequestBody,
+        @Part("marriage_age") marriage_age : RequestBody,
         @Part("address") address : RequestBody,
         @Part("district") district : RequestBody,
         @Part("state") state : RequestBody,
+        @Part("tahsil") tahsil : RequestBody,
         @Part("pincode") pincode : RequestBody,
+        @Part("email") email : RequestBody,
         @Part profile : MultipartBody.Part, // Profile
+        @Part("nominee") nominee : RequestBody,
+        @Part("nominee2") nominee2 : RequestBody,
+        @Part("relationship") relationship : RequestBody,
+        @Part("relationship2") relationship2 : RequestBody
+    ) : Response<SignupResponse>
+
+    @Multipart
+    @PUT("member/{memberID}")
+    suspend fun editProfileWithoutImage(
+        @Path("memberID") memberID: String,
+        @Part("name") name : RequestBody,
+        @Part("father_name") father_name : RequestBody,
+        @Part("mother_name") mother_name : RequestBody,
+        @Part("profession") profession : RequestBody,
+        @Part("marital_status") marital_status : RequestBody,
+        @Part("spouse_name") spouse_name : RequestBody,
+        @Part("marriage_date") marriage_date : RequestBody,
+        @Part("marriage_age") marriage_age : RequestBody,
+        @Part("address") address : RequestBody,
+        @Part("district") district : RequestBody,
+        @Part("state") state : RequestBody,
+        @Part("tahsil") tahsil : RequestBody,
+        @Part("pincode") pincode : RequestBody,
+        @Part("email") email : RequestBody,
         @Part("nominee") nominee : RequestBody,
         @Part("nominee2") nominee2 : RequestBody,
         @Part("relationship") relationship : RequestBody,

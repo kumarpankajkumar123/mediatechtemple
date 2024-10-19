@@ -478,19 +478,26 @@ class Repository @Inject constructor(private val allApi: AllApi){
     }
 
     suspend fun editProfile (
+        meemberId : String,
         name : String,
         fatherName : String,
         motherName : String,
-        mobileNumber : String,
+        profession : String,
         address : String,
+        maritalStatus : String,
+        spouseName : String,
+        marriage_age : String,
+        marriage_date : String,
         district : String,
         state : String,
+        tahsil : String,
         pincode : String,
+        email : String,
         nominee : String,
         relationShip : String,
         nominee2 : String,
         relationShip2 : String,
-        profile : MultipartBody.Part,
+        profile : MultipartBody.Part ? = null,
     ) {
         Log.d("Edit Profile",
                     "father : $fatherName, " +
@@ -501,28 +508,83 @@ class Repository @Inject constructor(private val allApi: AllApi){
         )
         Log.d("Files","$profile")
 
-        val response = allApi.editProfile(
-            "2",
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), mobileNumber),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
-            profile,
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
-            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2)
-        )
-        if (response.isSuccessful && response.body() != null) {
-            Log.d("CreateMember", "Sent : ${response.code()} ${response.message()} ${response.body()?.message}")
-            _editProfileResponseCode.emit(response.code())
-        } else {
-            Log.d("CreateMember", "${response.code()} ${response.message()} ${response.body()?.message}")
-            _editProfileResponseCode.emit(response.code())
+        try {
+            if (profile != null) {
+                val response = allApi.editProfile(
+                    memberID = meemberId,
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), profession),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_age),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), tahsil),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), email),
+                    profile,
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2)
+                )
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d(
+                        "CreateMember",
+                        "Sent : ${response.code()} ${response.message()} ${response.body()?.message}"
+                    )
+                    _editProfileResponseCode.emit(response.code())
+                } else {
+                    Log.d(
+                        "CreateMember",
+                        "${response.code()} ${response.message()} ${response.body()?.message}"
+                    )
+                    _editProfileResponseCode.emit(response.code())
+                }
+            }else {
+                val response = allApi.editProfileWithoutImage(
+                    memberID = meemberId,
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), name),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fatherName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), motherName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), profession),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), maritalStatus),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), spouseName),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_date),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), marriage_age),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), address),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), district),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), state),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), tahsil),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), pincode),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), email),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), nominee2),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip),
+                    RequestBody.create("multipart/form-data".toMediaTypeOrNull(), relationShip2)
+                )
+                if (response.isSuccessful && response.body() != null) {
+                    Log.d(
+                        "CreateMember",
+                        "Sent : ${response.code()} ${response.message()} ${response.body()?.message}"
+                    )
+                    _editProfileResponseCode.emit(response.code())
+                } else {
+                    Log.d(
+                        "CreateMember",
+                        "${response.code()} ${response.message()} ${response.body()?.message}"
+                    )
+                    _editProfileResponseCode.emit(response.code())
+                }
+            }
+        } catch (e : Exception) {
+            Log.d("CreateMember", "Catch: ${e.message.toString()}")
+            _editProfileResponseCode.emit(400)
+            e.printStackTrace()
         }
     }
 

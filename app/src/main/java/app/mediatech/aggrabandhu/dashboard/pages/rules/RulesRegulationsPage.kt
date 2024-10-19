@@ -34,7 +34,7 @@ fun RulesRegulationsPage(modifier: Modifier = Modifier) {
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color.Black,
-            modifier = Modifier.padding(top=16.dp, start = 8.dp)
+            modifier = Modifier.padding(start = 16.dp)
         )
         HtmlText(html = rules.value, modifier = Modifier.padding(8.dp))
     }

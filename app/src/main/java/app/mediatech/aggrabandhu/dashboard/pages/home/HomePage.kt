@@ -49,7 +49,8 @@ fun HomePage() {
             text = "Notifications",
             fontSize = 20.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.Black
+            color = Color.Black,
+            modifier = Modifier.padding(start = 16.dp)
         )
         LazyColumn(content = {
             items(notificationData.value){

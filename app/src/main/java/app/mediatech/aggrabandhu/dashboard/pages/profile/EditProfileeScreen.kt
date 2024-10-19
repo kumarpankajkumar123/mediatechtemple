@@ -1,5 +1,7 @@
 package app.mediatech.aggrabandhu.dashboard.pages.profile
 
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -22,12 +24,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.FamilyRestroom
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.PeopleOutline
+import androidx.compose.material.icons.filled.PermContactCalendar
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Person2
-import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Icon
@@ -40,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -52,9 +54,16 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.calculateAge
+import app.mediatech.aggrabandhu.utils.CustomButton
+import app.mediatech.aggrabandhu.utils.DatePickerField
+import app.mediatech.aggrabandhu.utils.DropDownField
+import app.mediatech.aggrabandhu.utils.EditProfileButton
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
+import coil.compose.rememberAsyncImagePainter
+import es.dmoral.toasty.Toasty
 
 
 @Composable
@@ -63,9 +72,11 @@ fun EditProfileScreen(navController: NavController?=null) {
     val context = LocalContext.current
 
     val profileViewModel : ProfileViewModel = hiltViewModel()
-    val profileData = profileViewModel.profileData.collectAsState()
     val profileResponseCode = profileViewModel.profileResponseCode.collectAsState()
 
+    val editProfileResponseCode = profileViewModel.editProfileResponseCode.collectAsState()
+
+    val postalData = profileViewModel.tahsilList.collectAsState()
 
     val sharedPref = SharedPrefManager(context)
     val id = sharedPref.getMemberID()
@@ -74,33 +85,46 @@ fun EditProfileScreen(navController: NavController?=null) {
 
     val showProgress = remember { mutableStateOf(true) }
 
+    if (postalData.value.Status == "Success"){
+        profileViewModel.district = (postalData.value.PostOffice[0].District)
+        profileViewModel.state = (postalData.value.PostOffice[0].State)
+    } else if (postalData.value.Status == "Error"){
+        Toasty.error(context, "No records found", Toast.LENGTH_SHORT).show()
+    }
+
+    if (editProfileResponseCode.value != 0) {
+        if (editProfileResponseCode.value == 200) {
+            if (profileViewModel.isProfileEdited) {
+                showProgress.value = false
+                profileViewModel.isProfileEdited = false
+                navController?.navigate("dashboard_screen") {
+                    popUpTo(navController.graph.startDestinationId) {
+                        inclusive = true
+                    }
+                }
+            }
+            } else {
+            showProgress.value = false
+        }
+    }
+
     if (profileResponseCode.value != 0) {
-        showProgress.value = false
+        if (profileViewModel.isProfile) {
+            showProgress.value = false
+            profileViewModel.getProfile()
+            profileViewModel.isProfile = false
+        }
     }
 
     if (showProgress.value) {
         LoadingAlertDialog()
     }
 
-//    val name = ""
-//    val phone = profileViewModel.phone
-//    val father = profileViewModel.father
-//    val mother = profileViewModel.mother
-//    val nominee = profileViewModel.nominee
-//    val relation = profileViewModel.relation
-//    val nominee2 = profileViewModel.nominee2
-//    val relation2 = profileViewModel.relation2
-//    val pinCode = profileViewModel.pinCode
-//    val city = profileViewModel.city
-//    val state = profileViewModel.state
-//    val address = profileViewModel.address
-
-
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-
+                profileViewModel.imageUri = it
             }
         }
     )
@@ -157,26 +181,26 @@ fun EditProfileScreen(navController: NavController?=null) {
                     .clip(CircleShape)
                     .size(180.dp)
                     .border(BorderStroke(2.dp, Color.Black), CircleShape),
-                painter =
-//                if (imageUri.value != null) {
-//                    rememberAsyncImagePainter(model = imageUri.value)
-//                } else {
-                    rememberVectorPainter(image = Icons.Default.PersonPin)
-//                }
-            ,
+                painter = if (profileViewModel.imageUri != null) {
+                        rememberAsyncImagePainter(model = profileViewModel.imageUri)
+                    } else {
+                        rememberAsyncImagePainter(model = profileViewModel.profileUrl)
+                    },
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
 
-            Icon (
+            Spacer(modifier = Modifier.height(10.dp))
+
+            EditProfileButton(
+                text = "Upload your Profile",
+                Icons.Default.PhotoCamera,
+                background = colorResource(id = R.color.orange),
                 modifier = Modifier
-                    .padding(4.dp)
-                    .size(30.dp)
-                    .clickable { galleryLauncher.launch("image/*") },
-                imageVector = Icons.Default.PhotoCamera,
-                contentDescription = "",
-                tint = colorResource(id = R.color.orange)
-            )
+                    .fillMaxWidth(0.43f)
+            ){
+                galleryLauncher.launch("image/*")
+            }
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -184,47 +208,105 @@ fun EditProfileScreen(navController: NavController?=null) {
             TextFieldWithIcons(
                 "Full Name",
                 "Enter your Full Name",
-                12,
+                40,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                name
+                profileViewModel.name
             ) {
-
+                profileViewModel.name = it
             }
-            /* ------------------- Phone number ----------------------- */
-            TextFieldWithIcons(
-                "Phone Number",
-                "Enter your Phone Number",
-                10,
-                KeyboardType.Phone,
-                Icons.Filled.Person,
-//                phone
-            ) {
 
-            }
             /* ------------------- Reference ID ----------------------- */
             TextFieldWithIcons(
                 "Father's Name",
                 "Enter your Father's Name",
-                12,
+                40,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                father
+                profileViewModel.father
             ) {
-
+                profileViewModel.father = it
             }
 
-            // Spacer(modifier = Modifier.height(10.dp))
             /* ------------------- Mother Name ----------------------- */
             TextFieldWithIcons(
                 "Mother's Name",
                 "Enter your Mother's name",
-                20,
+                40,
                 KeyboardType.Text,
                 Icons.Filled.Person,
-//                mother
+                profileViewModel.motherName
             ) {
+                profileViewModel.motherName = it
+            }
 
+            TextFieldWithIcons(
+                label = "Email (OPTIONAL)",
+                placeholder = "Email (OPTIONAL)",
+                maxLength = 26,
+                keyboardType = KeyboardType.Email,
+                leadingIcon = Icons.Default.LocationOn,
+            ) { text ->
+                profileViewModel.email = text
+            }
+
+            /* ------------- Select Marital Status ------------ */
+            DropDownField(
+                selectedValue = profileViewModel.maritalStatus,
+                options = profileViewModel.maritalStatusList,
+                label = "Marital Status",
+                Icons.Default.FamilyRestroom,
+                onValueChangedEvent = {
+                    profileViewModel.maritalStatus = it
+                }
+            )
+
+            if(profileViewModel.maritalStatus == "Married"){
+                // Spacer(modifier = Modifier.height(10.dp))
+                /* ------------------- Name ----------------------- */
+                TextFieldWithIcons(
+                    "Spouse Name",
+                    "Enter your Spouse name",
+                    40,
+                    KeyboardType.Text,
+                    Icons.Filled.Person,
+                    profileViewModel.spouseName
+                ) {
+                    profileViewModel.spouseName = (it)
+                }
+                /* ------------- Select Date ------------ */
+                DatePickerField(
+                    label = "Date of Marriage",
+                    value = profileViewModel.marriageDate,
+                    onClick = { date ->
+                        if (date.isNotEmpty()) {
+                            profileViewModel.marriageDate = (date)
+                            profileViewModel.marriageYears = calculateAge(date).toString()
+                            Log.d("marriageDate", profileViewModel.marriageYears)
+                            Toasty.success(context, profileViewModel.marriageYears, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Log.d("marriageDate", "Empty marriageDate")
+                        }
+                    }
+                )
+            } else {
+                profileViewModel.spouseName = ""
+                profileViewModel.marriageDate = ""
+                profileViewModel.marriageYears = ""
+            }
+            if (profileViewModel.marriageDate.isNotEmpty() && profileViewModel.marriageDate != "No") {
+                if (calculateAge(profileViewModel.marriageDate) != 0) {
+                    Log.d("marriageDate", profileViewModel.marriageDate)
+                    DropDownField(
+                        selectedValue = profileViewModel.marriageYears,
+                        options = emptyList(),
+                        label = "Current Marriage Years",
+                        Icons.Default.PermContactCalendar,
+                        onValueChangedEvent = {
+
+                        }
+                    )
+                }
             }
 
             /*   ------------- Pin Code ---------------- */
@@ -234,56 +316,53 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 6,
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.PinDrop,
-//                pinCode
-            ) { text ->
-
+                profileViewModel.pinCode
+            ) {
+                profileViewModel.pinCode = it
+                if (it.length == 6) {
+                    profileViewModel.getPostalData(it)
+                }
             }
-            // Spacer(modifier = Modifier.height(15.dp))
-            /*   - ------------ City ---------------- */
-            TextFieldWithIcons(
-                label = "City",
-                placeholder = "City",
-                maxLength = 26,
-                keyboardType = KeyboardType.Text,
-                leadingIcon = Icons.Default.LocationCity,
-//                city
-            ) { text ->
 
-            }
-            // Spacer(modifier = Modifier.height(15.dp))
-            /*   - ------------ State ---------------- */
-            TextFieldWithIcons(
+            DropDownField(
+                selectedValue = profileViewModel.state,
+                options = emptyList(),
                 label = "State",
-                placeholder = "State",
-                maxLength = 26,
-                keyboardType = KeyboardType.Text,
-                leadingIcon = Icons.Default.LocationOn,
-//                state
-            ) { text ->
+                Icons.Default.LocationOn,
+                onValueChangedEvent = {
+                }
+            )
 
-            }
+            DropDownField(
+                selectedValue = profileViewModel.district,
+                options = emptyList(),
+                label = "City",
+                Icons.Default.LocationCity,
+                onValueChangedEvent = {
+                }
+            )
+            DropDownField (
+                selectedValue = profileViewModel.tahsil,
+                options = postalData.value.PostOffice.map { it.Name },
+                label = "Tahsil",
+                imageVector = Icons.Default.LocationCity,
+                onValueChangedEvent = {
+//                    profileViewModel.selectedTahsilChanged(it)
+                    profileViewModel.tahsil = it
+                    Log.d("City", "${postalData.value.PostOffice[0].District}")
+                }
+            )
             /* ------------- Address ---------------- */
             TextFieldWithIcons(
                 label = "Address",
                 placeholder = "Full Address",
-                maxLength = 26,
+                maxLength = 50,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.LocationOn,
-//                address
-            ) { text ->
-
+                profileViewModel.address
+            ) {
+                profileViewModel.address = it
             }
-
-//            TextFieldWithIcons(
-//                label = "Aadhar Card Number",
-//                placeholder = "Aadhar card Number",
-//                maxLength = 12,
-//                keyboardType = KeyboardType.Number,
-//                leadingIcon = Icons.Default.Newspaper
-//            ) {
-//
-//            }
-//            Spacer(modifier = Modifier.height(10.dp))
 
             /*   - ------------ Nominee 1 ---------------- */
             TextFieldWithIcons(
@@ -292,9 +371,8 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
-//                nominee
-            ) { text ->
-            }
+                profileViewModel.nominee
+            ) { profileViewModel.nominee = it }
             /*   ------------- Relation 1 ---------------- */
             TextFieldWithIcons(
                 label = "Relation",
@@ -302,11 +380,10 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
-//                relation
-            ) { text ->
-
+                profileViewModel.relation
+            ) {
+                profileViewModel.relation = it
             }
-            // Spacer(modifier = Modifier.height(15.dp))
             /*   - ------------ Nominee 2 ---------------- */
             TextFieldWithIcons(
                 label = "Nominee 2",
@@ -314,11 +391,10 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Person2,
-//                nominee2
-            ) { text ->
-
+                profileViewModel.nominee2
+            ) {
+                profileViewModel.nominee2 = it
             }
-            // Spacer(modifier = Modifier.height(15.dp))
             /*   - ------------ Relation ---------------- */
             TextFieldWithIcons(
                 label = "Relation",
@@ -326,11 +402,18 @@ fun EditProfileScreen(navController: NavController?=null) {
                 maxLength = 26,
                 keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.PeopleOutline,
-//                relation2
-            ) { text ->
-
+                profileViewModel.relation2
+            ) {
+                profileViewModel.relation2 = it
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            CustomButton(text = "SAVE", background = colorResource(id = R.color.orange)) {
+                showProgress.value = true
+                profileViewModel.editProfile(context)
+            }
         }
+
     }
 }

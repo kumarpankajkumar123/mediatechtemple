@@ -174,15 +174,6 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             ){
                 galleryLauncher.launch("image/*")
             }
-//            Icon (
-//                modifier = Modifier
-//                    .padding(4.dp)
-//                    .size(30.dp)
-//                    .clickable {},
-//                imageVector = Icons.Default.PhotoCamera,
-//                contentDescription = "",
-//                tint = colorResource(id = R.color.orange)
-//            )
 
             Spacer(modifier = Modifier.height(10.dp))
 
