@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             val sp = SharedPrefManager(this)
             val logIn = sp.getLoginStatus()
 
-            NavigationComponent(logIn)
+            NavigationComponent(true)
         }
     }
 }

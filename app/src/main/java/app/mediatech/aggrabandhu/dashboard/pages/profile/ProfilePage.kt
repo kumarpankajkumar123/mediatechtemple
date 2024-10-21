@@ -39,6 +39,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -52,6 +53,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.dashboard.LogOut
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.EditProfileButton
@@ -111,7 +113,8 @@ fun ProfilePage(navController: NavController?= null) {
     Box(
         modifier = Modifier
             .background(Color.White)
-            .fillMaxSize()
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
         // Background image
         Image(
@@ -125,6 +128,7 @@ fun ProfilePage(navController: NavController?= null) {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
+                .blur(if (sharedPref.getLoginStatus()){0.dp} else {30.dp})
                 .padding(vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -173,6 +177,20 @@ fun ProfilePage(navController: NavController?= null) {
                 ProfileInfoCard(Icons.Default.Person, heading = relation2, text = nominee2)
             }
             Spacer(modifier = Modifier.height(30.dp))
+        }
+
+        if (!sharedPref.getLoginStatus()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(vertical = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+                LogOut(text = "Log in") {
+                    navController?.navigate("login_screen")
+                }
+            }
         }
     }
 }

@@ -70,6 +70,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.dashboard.pages.home.HomePage
+import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.DonationsPage
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mediatech.aggrabandhu.dashboard.pages.rules.RulesRegulationsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.FB
@@ -119,7 +120,7 @@ fun DashboardScreen(navController : NavController ?= null) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerContent(
+            DrawerContent(sharedPref,
                 onItemClick = { route ->
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
@@ -213,7 +214,7 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
         when(selectedIndex){
             0-> HomePage()
 //            1-> DonationsPage(navController)
-            1-> RulesRegulationsPage()
+            1-> DonationsPage(navController)
             2-> SupportPage(fromDashboard = true)
             3-> ProfilePage(navController)
         }
@@ -221,9 +222,8 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
 }
 
 @Composable
-fun DrawerContent(onItemClick: (String) -> Unit) {
+fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) -> Unit) {
     val context = LocalContext.current
-    val sp = SharedPrefManager(context)
 
     Column(
         modifier = Modifier
@@ -261,9 +261,16 @@ fun DrawerContent(onItemClick: (String) -> Unit) {
 //        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
 
         Spacer(modifier = Modifier.height(20.dp))
-        LogOut {
-            sp.logOut()
-            onItemClick.invoke("login_screen")
+        if (sharedPrefManager.getLoginStatus()) {
+            LogOut("Log out") {
+                sharedPrefManager.logOut()
+                onItemClick.invoke("login_screen")
+            }
+        } else {
+            LogOut("Log in") {
+                sharedPrefManager.logOut()
+                onItemClick.invoke("login_screen")
+            }
         }
     }
 }
@@ -346,6 +353,7 @@ fun openSupport(context:Context, number : String){
 
 @Composable
 fun LogOut(
+    text : String,
     onClick: () -> Unit
 ) {
     Surface(
@@ -367,7 +375,7 @@ fun LogOut(
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Log out",
+                text = text,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
                 fontSize = 18.sp,
