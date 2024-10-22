@@ -14,6 +14,7 @@ import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mediatech.aggrabandhu.dashboard.pages.profile.Nominees
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonation
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationData
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import es.dmoral.toasty.Toasty
@@ -783,6 +784,83 @@ class Repository @Inject constructor(private val allApi: AllApi){
             Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show()
             _supportResponse.emit(400)
             Log.d("supportResponse", e.message.toString())
+            e.printStackTrace()
+        }
+    }
+
+    private val _makeDonationResponse = MutableStateFlow(0)
+    val makeDonationResponse : StateFlow<Int>
+        get() = _makeDonationResponse
+
+    suspend fun makeDonation(
+        member_id : String,
+        donation_id : String,
+        amount : String,
+        file:MultipartBody.Part,
+        transaction_id : String,
+        payment_method : String,
+        context: Context)
+    {
+        try {
+            Log.d("Fields", "$transaction_id, $amount")
+            _makeDonationResponse.emit(0)
+            val response = allApi.makeDonation(
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), member_id),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), donation_id),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), amount),
+                file,
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), transaction_id),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), payment_method)
+            )
+            if (response.isSuccessful) {
+                _makeDonationResponse.emit(response.code())
+                Toasty.success(context, "Query Sent", Toast.LENGTH_SHORT).show()
+                Log.d("supportResponse", "${response.body().toString()} ${response.code()}")
+            } else {
+                _makeDonationResponse.emit(response.code())
+                Log.d("supportResponse", "${response.body().toString()} ${response.code()} ")
+                if (response.code() == 404) {
+                    Toasty.error(context, "Invalid Tragtnsaction ID", Toast.LENGTH_SHORT).show()
+                } else if (response.code() == 400){
+                    Toasty.error(context, "Transaction ID must be UNIQUE", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toasty.error(context, "Try Again", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e : Exception) {
+            Toasty.error(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+            _makeDonationResponse.emit(400)
+            Log.d("supportResponse", e.message.toString())
+            e.printStackTrace()
+        }
+    }
+
+    private val _myDonationCode = MutableStateFlow(0)
+    val myDonationCode : StateFlow<Int>
+        get() = _myDonationCode
+
+    private val _myDonationData = MutableStateFlow<List<MyDonation>>(emptyList())
+    val myDonationData : StateFlow<List<MyDonation>>
+        get() = _myDonationData
+
+    suspend fun myDonation(memberID: String, context: Context){
+        _myDonationCode.emit(0)
+        try {
+            val response = allApi.myDonations(memberID)
+            if (response.isSuccessful && response.body() != null) {
+                _myDonationCode.emit(response.code())
+//                Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
+                _myDonationData.emit(response.body()!!.data)
+                Log.d("Reference Code", "${response.body().toString()} ${response.code().toString()}")
+            } else {
+                _myDonationCode.emit(response.code())
+                Toasty.error(context, "No Data", Toast.LENGTH_SHORT).show()
+                Log.d("Reference Code", "${response.body().toString()} ${response.code()} ")
+            }
+        } catch (e : Exception) {
+            _myDonationCode.emit(400)
+            Toasty.error(context, "Something Went Wrong", Toast.LENGTH_SHORT).show()
+            Log.d("Reference Code", e.message.toString())
             e.printStackTrace()
         }
     }

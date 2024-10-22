@@ -114,12 +114,9 @@ private fun DonationsDistributed (
             ) {
                 CircularImage(
                     size = 54.dp,
-                     painter = //if (receivedDonationData.member.profileUrl != null) {
-                      //   painterResource(id = R.drawable.png_logo)
-                    //} else
-                 rememberVectorPainter(
-                        Icons.Default.Person
-                    )
+                     painter = rememberVectorPainter(
+                         Icons.Default.Person
+                     )
                 )
                 Column(
                     modifier = Modifier

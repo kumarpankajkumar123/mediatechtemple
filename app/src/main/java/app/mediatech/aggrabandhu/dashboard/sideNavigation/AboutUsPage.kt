@@ -69,7 +69,7 @@ fun AboutUsPage(navController: NavController ?= null) {
             )
         }
 
-        val pp = "https://aggrabandhuss.org/about"
+        val pp = "https://aggrabandhuss.org/aboutus"
         AndroidView1(
             modifier = Modifier.fillMaxSize(),
             factory = {

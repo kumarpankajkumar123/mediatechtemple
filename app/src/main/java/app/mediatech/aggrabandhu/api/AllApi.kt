@@ -11,6 +11,7 @@ import app.mediatech.aggrabandhu.dashboard.pages.home.NotificationData
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.policy.PolicyData
 import okhttp3.MultipartBody
@@ -208,6 +209,11 @@ interface AllApi {
     @GET("declearation")
     suspend fun getDeclaration() : Response<List<DeclarationData>>
 
+    @GET("donation/mydonation/{memberID}")
+    suspend fun myDonations(
+        @Path("memberID") memberID : String
+    ) : Response<MyDonationData>
+
     @GET("member/check_referal/{reference_id}")
     suspend fun checkReferenceCode(
         @Path("reference_id") referenceId : String
@@ -232,6 +238,17 @@ interface AllApi {
         @Part("message") message : RequestBody,
         @Part("contact") contact : RequestBody,
         @Part("name") name : RequestBody,
+    ) : Response<ResponseData>
+
+    @Multipart
+    @POST("donation")
+    suspend fun makeDonation(
+        @Part("member_id") member_id : RequestBody,
+        @Part("donation_id") donation_id : RequestBody,
+        @Part("amount") amount : RequestBody,
+        @Part file : MultipartBody.Part,
+        @Part("transaction_id") transaction_id : RequestBody,
+        @Part("payment_method") payment_method : RequestBody,
     ) : Response<ResponseData>
 
 }

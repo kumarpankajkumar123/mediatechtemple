@@ -22,6 +22,8 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ListAlt
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Menu
@@ -250,9 +252,14 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         )
         // Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
-//        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
-        SideNavItem(text = "Members List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
+        SideNavItem(text = "Members List", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("donors_page")}
         SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
+        if (sharedPrefManager.getLoginStatus()) {
+            SideNavItem(
+                text = "My Donations",
+                imageVector = Icons.Default.AccountBalanceWallet
+            ) { onItemClick.invoke("my_donations_page") }
+        }
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}  //
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") { intentToWeb(FB, context) }

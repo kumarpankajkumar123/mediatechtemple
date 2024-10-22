@@ -2,7 +2,6 @@ package app.mediatech.aggrabandhu.dashboard.pages.liveDonation
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,8 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Surface
@@ -30,7 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.TextDetails
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.TextDetails
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.CustomButton3
@@ -134,7 +130,8 @@ private fun LiveDonations (
             )
         }
 
-        Row(modifier = Modifier
+        Row(
+            modifier = Modifier
             .padding(bottom = 6.dp)
         ) {
             Column(modifier = Modifier
@@ -145,7 +142,7 @@ private fun LiveDonations (
                 TextDetails(ques = "Address", ans = "${liveDonationData.Member.district}, ${liveDonationData.Member.state}")
                 TextDetails(ques = "Total donation received", ans = liveDonationData.total_donation_received)
                 TextDetails(ques = "Min Amount", ans = liveDonationData?.min_amount.toString())
-                TextDetails(ques = "Date", ans = liveDonationData?.death_date.toString())
+                TextDetails(ques = "Date", ans = convertDateFormat(liveDonationData?.death_date.toString()).toString())
                 TextDetails(ques = "Donation Start Date", ans = convertDateFormat(liveDonationData.start_date)!!)
                 TextDetails(ques = "Donation End Date", ans = convertDateFormat(liveDonationData.end_date)!!)
             }
@@ -198,7 +195,14 @@ private fun LiveDonations (
                 navController.navigate("login_screen")
             } else {
                 Log.d("Tag", bankDetail.toString())
-//            navController.navigate("make_donation_screen/${bankDetail?.bank_name}/${bankDetail?.ifsc_code}/${bankDetail?.account_number}")
+                navController.navigate(
+                    "make_donation_screen/${bankDetail?.bank_name ?: "Unknown Bank"}/" +
+                            "${bankDetail?.ifsc_code ?: "Unknown IFSC"}/" +
+                            "${bankDetail?.account_number ?: "Unknown Account"}/" +
+                            "${liveDonationData.upi_id ?: "Unknown UPI"}/" +
+                            "${liveDonationData.member_id ?: "Unknown Member"}/" +
+                            "${liveDonationData.id ?: "Unknown ID"}"
+                )
             }
         }
     }

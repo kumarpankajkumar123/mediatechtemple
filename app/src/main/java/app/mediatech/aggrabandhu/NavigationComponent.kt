@@ -16,7 +16,7 @@ import app.mediatech.aggrabandhu.dashboard.pages.profile.EditProfileScreen
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfilePage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.AboutUsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.policy.PrivacyPolicyPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.RulesRegulationsPage
@@ -112,7 +112,7 @@ fun NavigationComponent(loginStatus : Boolean) {
         composable("edit_profile_screen") {
             EditProfileScreen(navController = navController)
         }
-        composable("make_donation_screen/{bankName}/{ifsc}/{accountNumb}", arguments = listOf(
+        composable("make_donation_screen/{bankName}/{ifsc}/{accountNumb}/{upiId}/{memberId}/{id}", arguments = listOf(
             navArgument("bankName") {
                 type = NavType.StringType
             },
@@ -120,6 +120,15 @@ fun NavigationComponent(loginStatus : Boolean) {
                 type = NavType.StringType
             },
             navArgument("accountNumb") {
+                type = NavType.StringType
+            },
+            navArgument("upiId") {
+                type = NavType.StringType
+            },
+            navArgument("memberId") {
+                type = NavType.StringType
+            },
+            navArgument("id") {
                 type = NavType.StringType
             }
         )){

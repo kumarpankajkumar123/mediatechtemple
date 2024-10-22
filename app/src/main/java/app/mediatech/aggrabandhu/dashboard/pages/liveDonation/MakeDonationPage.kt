@@ -2,6 +2,7 @@ package app.mediatech.aggrabandhu.dashboard.pages.liveDonation
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,8 +15,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountBalance
@@ -27,12 +30,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,9 +47,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.TextDetails
+import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationViewmodel
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.TextDetails
+import app.mediatech.aggrabandhu.utils.CustomButton
+import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SelectImageCardWithButton
+import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
+import app.mediatech.aggrabandhu.utils.prepareFilePart
 import es.dmoral.toasty.Toasty
 
 data class BankDetails(
@@ -58,20 +72,43 @@ data class BankDetails(
 fun MakeDonationPage(
     navController: NavController ?= null
 ) {
+    val context = LocalContext.current
 
     val makeDonationViewmodel : MakeDonationViewmodel = hiltViewModel()
 
+    val sp = SharedPrefManager(context)
+
+    val mId = sp.getMemberID()
+
+    val showProgress = remember { mutableStateOf(false) }
+
+    val responseCode = makeDonationViewmodel.responseCode.collectAsState()
+
+    if (responseCode.value != 0) {
+        showProgress.value = false
+        if (responseCode.value == 200) {
+            makeDonationViewmodel.amount = ""
+            makeDonationViewmodel.transactionNumb = ""
+            makeDonationViewmodel.method = ""
+            navController?.popBackStack()
+        }
+    }
+
+    if (showProgress.value) {
+        LoadingAlertDialog()
+    }
 
     val bankDetails = BankDetails(
         makeDonationViewmodel.bankName,
         makeDonationViewmodel.accountNumb,
         makeDonationViewmodel.ifsc,
-        "12345@icici",
+        makeDonationViewmodel.upiId,
         "Ram Babu")
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(Color.White)
     ) {
         Row (
@@ -106,7 +143,8 @@ fun MakeDonationPage(
 
         TransactionMedium(
             Icons.Default.AccountBalance,
-            bankDetails
+            bankDetails,
+            context
         )
         TransactionMediumUPI(
             Icons.Default.Payments,
@@ -152,6 +190,17 @@ fun MakeDonationPage(
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.CurrencyRupee
             ) {
+                makeDonationViewmodel.amount = it
+            }
+
+            TextFieldWithIcons(
+                label = "Payment Method",
+                placeholder = "Payment Method",
+                maxLength = 27,
+                keyboardType = KeyboardType.Text,
+                leadingIcon = Icons.Default.Payment
+            ) {
+                makeDonationViewmodel.method = it
             }
 
             TextFieldWithIcons(
@@ -165,19 +214,27 @@ fun MakeDonationPage(
             }
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(docType = "Payment ScreenShot") {
-                makeDonationViewmodel.uri = it
+                val uri = compressImageToUri(it, context)
+                makeDonationViewmodel.uri = uri
+                makeDonationViewmodel.file = prepareFilePart(uri!!, "file", context)
             }
+            Spacer(modifier = Modifier.height(10.dp))
+            CustomButton(text = "Submit", background = colorResource(id = R.color.orange)) {
+                showProgress.value = true
+                makeDonationViewmodel.makeDonation(mId.toString(), context)
+            }
+
         }
     }
+
 }
 
 @Composable
 fun TransactionMedium(
     imageVector: ImageVector,
-    bankDetails: BankDetails
+    bankDetails: BankDetails,
+    context: Context
 ) {
-
-    val context = LocalContext.current
 
     Surface(
         shape = RoundedCornerShape(CornerSize(size = 10.dp)),
@@ -231,7 +288,7 @@ fun TransactionMediumUPI(
     imageVector: ImageVector,
     bankDetails: BankDetails
 ) {
-    val context =LocalContext.current
+    val context = LocalContext.current
     Surface(
         shape = RoundedCornerShape(CornerSize(size = 10.dp)),
         modifier = Modifier
