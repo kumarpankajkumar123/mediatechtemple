@@ -40,14 +40,6 @@ interface AllApi {
         @Part("type_id") type_id : RequestBody,
     ) : Response<DocValidationResponse>
 
-    @Multipart
-    @POST("validate-image")
-    suspend fun validateOtherDocuments(
-        @Part file : MultipartBody.Part,
-        @Part("number") number : RequestBody,
-        @Part("type_id") type_id : RequestBody,
-    ) : Response<DocValidationResponse>
-
     @GET("member/detail")
     suspend fun getProfileInfo(
         @Query("key") key : String,

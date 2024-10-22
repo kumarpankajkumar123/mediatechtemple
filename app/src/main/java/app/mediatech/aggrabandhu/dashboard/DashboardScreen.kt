@@ -25,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.PeopleAlt
 import androidx.compose.material.icons.filled.Policy
 import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
@@ -213,10 +214,10 @@ fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, s
     Column( modifier = modifier ) {
         when(selectedIndex){
             0-> HomePage()
-//            1-> DonationsPage(navController)
             1-> DonationsPage(navController)
-            2-> SupportPage(fromDashboard = true)
-            3-> ProfilePage(navController)
+            2-> RulesRegulationsPage()
+            3-> SupportPage(fromDashboard = true)
+            4-> ProfilePage(navController)
         }
     }
 }
@@ -251,13 +252,14 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         // Example items in the drawer
 //        SideNavItem(text = "My Donations", imageVector = Icons.Default.AccountBalanceWallet){onItemClick.invoke("my_donations_page")}
         SideNavItem(text = "Members List", imageVector = Icons.Default.ListAlt){onItemClick.invoke("donors_page")}
-//        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
+        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}  //
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") { intentToWeb(FB, context) }
         SubNavItem(imageVector = R.drawable.png_ig, text = "Instagram") { intentToWeb(IG, context) }
         SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
         SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
+        SideNavItem(text = "About Us", imageVector = Icons.Default.Policy){onItemClick.invoke("about_page")}
 //        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
 
         Spacer(modifier = Modifier.height(20.dp))

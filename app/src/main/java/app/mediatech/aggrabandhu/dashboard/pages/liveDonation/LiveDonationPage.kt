@@ -1,5 +1,8 @@
 package app.mediatech.aggrabandhu.dashboard.pages.liveDonation
 
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -36,16 +40,22 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.TextDetails
+import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.CustomButton3
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
+import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.viewmodel.LiveDonationsViewModel
+import coil.compose.rememberAsyncImagePainter
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 @Composable
 fun DonationsPage(navController: NavController) {
+
+    val context = LocalContext.current
 
     val liveDonationsViewModel : LiveDonationsViewModel = hiltViewModel()
     val liveDonationList = liveDonationsViewModel.liveDonationsData.collectAsState()
@@ -69,7 +79,7 @@ fun DonationsPage(navController: NavController) {
         )
         LazyColumn(content = {
             items(liveDonationList.value){
-                LiveDonations(it, navController)
+                LiveDonations(it, navController, context)
             }
         })
     }
@@ -78,12 +88,24 @@ fun DonationsPage(navController: NavController) {
 @Composable
 private fun LiveDonations (
     liveDonationData: LiveDonationData,
-    navController: NavController
+    navController: NavController,
+    context: Context
 ) {
+    val sharedPref = SharedPrefManager(context)
+
+    // Assuming you have the ApiResponse object from the API call
+    val gson = Gson()
+    val bankDetail: BankDetail ?= try {
+        gson.fromJson(liveDonationData.bank_detail, BankDetail::class.java)
+    } catch (e:Exception){
+        e.printStackTrace()
+        null
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp, vertical = 3.dp)
+            .padding(horizontal = 10.dp, vertical = 5.dp)
             .background(Color.White),
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
@@ -121,9 +143,11 @@ private fun LiveDonations (
                 TextDetails(ques = "Name", ans = liveDonationData.Member.name)
                 TextDetails(ques = "Member ID", ans = liveDonationData.member_id.toString())
                 TextDetails(ques = "Address", ans = "${liveDonationData.Member.district}, ${liveDonationData.Member.state}")
-                TextDetails(ques = "Bank", ans = "")
-                TextDetails(ques = "Start Date", ans = convertDateFormat(liveDonationData.start_date)!!)
-                TextDetails(ques = "End Date", ans = convertDateFormat(liveDonationData.end_date)!!)
+                TextDetails(ques = "Total donation received", ans = liveDonationData.total_donation_received)
+                TextDetails(ques = "Min Amount", ans = liveDonationData?.min_amount.toString())
+                TextDetails(ques = "Date", ans = liveDonationData?.death_date.toString())
+                TextDetails(ques = "Donation Start Date", ans = convertDateFormat(liveDonationData.start_date)!!)
+                TextDetails(ques = "Donation End Date", ans = convertDateFormat(liveDonationData.end_date)!!)
             }
             Box(
                 modifier = Modifier
@@ -134,12 +158,7 @@ private fun LiveDonations (
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     CircularImage(
                         size = 54.dp,
-                        painter = rememberVectorPainter(image = Icons.Default.PersonPin)
-//                        painter = if (liveDonationData.img != null) {
-//                            painterResource(id = donorsData.img)
-//                        } else rememberVectorPainter(
-//                            image = donorsData.imageVector!!
-//                        )
+                        painter = rememberAsyncImagePainter(model = "$baseUrl${liveDonationData.Member.profileUrl}")
                     )
                     Spacer(modifier = Modifier.height(10.dp))
                     Surface(
@@ -175,7 +194,12 @@ private fun LiveDonations (
             modifier = Modifier
                 .height(45.dp)
         ) {
-            navController.navigate("make_donation_screen")
+            if (!sharedPref.getLoginStatus()) {
+                navController.navigate("login_screen")
+            } else {
+                Log.d("Tag", bankDetail.toString())
+//            navController.navigate("make_donation_screen/${bankDetail?.bank_name}/${bankDetail?.ifsc_code}/${bankDetail?.account_number}")
+            }
         }
     }
 }

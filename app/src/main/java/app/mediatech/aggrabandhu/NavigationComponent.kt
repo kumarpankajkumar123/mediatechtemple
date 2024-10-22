@@ -14,6 +14,7 @@ import app.mediatech.aggrabandhu.dashboard.DashboardScreen
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
 import app.mediatech.aggrabandhu.dashboard.pages.profile.EditProfileScreen
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfilePage
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.AboutUsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.MyDonationsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsPage
@@ -111,7 +112,17 @@ fun NavigationComponent(loginStatus : Boolean) {
         composable("edit_profile_screen") {
             EditProfileScreen(navController = navController)
         }
-        composable("make_donation_screen") {
+        composable("make_donation_screen/{bankName}/{ifsc}/{accountNumb}", arguments = listOf(
+            navArgument("bankName") {
+                type = NavType.StringType
+            },
+            navArgument("ifsc") {
+                type = NavType.StringType
+            },
+            navArgument("accountNumb") {
+                type = NavType.StringType
+            }
+        )){
             MakeDonationPage(navController = navController)
         }
 
@@ -136,6 +147,9 @@ fun NavigationComponent(loginStatus : Boolean) {
         }
         composable("terms_page") {
             TermsAndConditionsPage(navController = navController)
+        }
+        composable("about_page") {
+            AboutUsPage(navController = navController)
         }
     }
 

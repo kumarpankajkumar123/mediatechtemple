@@ -12,6 +12,7 @@ data class ReceivedDonationData(
     val member_id : Int,
     val donation_id : Int,
     val amount : String,
+    val bank_detail: String,
     val donation_date : String,
     val transaction_id : String,
     val payment_method : String,

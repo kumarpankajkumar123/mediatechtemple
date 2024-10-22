@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.TextDetails
 import app.mediatech.aggrabandhu.utils.SelectImageCardWithButton
@@ -46,8 +47,7 @@ import es.dmoral.toasty.Toasty
 
 data class BankDetails(
     val bankName : String,
-    val accountNumber : Int,
-    val bankingName : String,
+    val accountNumber : String,
     val ifscCode : String,
     val upiID: String,
     val personNameOnUPI : String
@@ -58,12 +58,14 @@ data class BankDetails(
 fun MakeDonationPage(
     navController: NavController ?= null
 ) {
-    
+
+    val makeDonationViewmodel : MakeDonationViewmodel = hiltViewModel()
+
+
     val bankDetails = BankDetails(
-        "Ram Rahim",
-        12345678,
-        "Raam Rahim",
-        "ABCD1234",
+        makeDonationViewmodel.bankName,
+        makeDonationViewmodel.accountNumb,
+        makeDonationViewmodel.ifsc,
         "12345@icici",
         "Ram Babu")
 
@@ -150,7 +152,6 @@ fun MakeDonationPage(
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.CurrencyRupee
             ) {
-
             }
 
             TextFieldWithIcons(
@@ -160,11 +161,11 @@ fun MakeDonationPage(
                 keyboardType = KeyboardType.Number,
                 leadingIcon = Icons.Default.Payment
             ) {
-
+                makeDonationViewmodel.transactionNumb = it
             }
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(docType = "Payment ScreenShot") {
-                
+                makeDonationViewmodel.uri = it
             }
         }
     }
@@ -188,9 +189,11 @@ fun TransactionMedium(
             .clickable {
                 val clipboard: ClipboardManager? =
                     context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
-                val clip = ClipData.newPlainText("label", bankDetails.accountNumber.toString())
+                val clip = ClipData.newPlainText("label", bankDetails.accountNumber)
                 clipboard?.setPrimaryClip(clip)
-                Toasty.success(context, "Account No. Copied").show()
+                Toasty
+                    .success(context, "Account No. Copied")
+                    .show()
             },
         shadowElevation = 4.dp,
     ) {
@@ -209,8 +212,7 @@ fun TransactionMedium(
                     modifier = Modifier
                         .fillMaxWidth(0.9f)
                 ) {
-                    TextDetails(ques = "Bank account number", ans = bankDetails.accountNumber.toString())
-                    TextDetails(ques = "Banking Name", ans = bankDetails.bankingName)
+                    TextDetails(ques = "Bank account number", ans = bankDetails.accountNumber)
                     TextDetails(ques = "Bank Name", ans = bankDetails.bankName)
                     TextDetails(ques = "IFSC Code", ans = bankDetails.ifscCode)
                 }
@@ -242,11 +244,13 @@ fun TransactionMediumUPI(
                     context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager?
                 val clip = ClipData.newPlainText("Upi ID", bankDetails.upiID)
                 clipboard?.setPrimaryClip(clip)
-                Toasty.success(context, "UPI ID Copied : ${bankDetails.upiID}").show()
+                Toasty
+                    .success(context, "UPI ID Copied : ${bankDetails.upiID}")
+                    .show()
             },
         shadowElevation = 4.dp,
     ) {
-        Column() {
+        Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()

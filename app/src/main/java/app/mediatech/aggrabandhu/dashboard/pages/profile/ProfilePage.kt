@@ -144,11 +144,17 @@ fun ProfilePage(navController: NavController?= null) {
                 modifier = Modifier
                     .fillMaxWidth(0.36f)
             ){
-                navController?.navigate("edit_profile_screen")
+                if (!sharedPref.getLoginStatus()) {
+                    navController?.navigate("edit_profile_screen")
+                }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            ReferralInfoCard(referenceID, context)
+            ReferralInfoCard(referenceID, context) {
+                if (!sharedPref.getLoginStatus()) {
+                    shareText(context, referenceID)
+                }
+            }
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = name)
             ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = fatherName)
             ProfileInfoCard(Icons.Default.Person, heading = "Mother's Name", text = motherName)
@@ -241,16 +247,19 @@ fun ProfileInfoCard(
     }
 }
 
-@Preview
 @Composable
-fun ReferralInfoCard (referralCode : String?="123ABC123", context: Context ?= null) {
+fun ReferralInfoCard (
+    referralCode : String?="123ABC123",
+    context: Context ?= null,
+    onClick : () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 5.dp)
             .background(Color.White)
             .clickable {
-                shareText(context!!, referralCode!!)
+                onClick()
             },
         elevation = CardDefaults.cardElevation(3.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
