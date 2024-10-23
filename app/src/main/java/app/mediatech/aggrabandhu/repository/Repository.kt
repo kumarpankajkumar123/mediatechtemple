@@ -38,9 +38,13 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val gotra : StateFlow<List<ProfessionData>>
         get() = _gotra
 
-    private val _receivedDonations = MutableStateFlow<List<ReceivedDonationData>>(emptyList())
-    val receivedDonationData : StateFlow<List<ReceivedDonationData>>
+    private val _receivedDonations = MutableStateFlow<List<LiveDonationData>>(emptyList())
+    val receivedDonationData : StateFlow<List<LiveDonationData>>
         get() = _receivedDonations
+
+    private val _receivedDonationsCode = MutableStateFlow(0)
+    val receivedDonationDataCode : StateFlow<Int>
+        get() = _receivedDonationsCode
 
     private val _liveDonationResponseCode = MutableStateFlow(0)
     val liveDonationResponseCode : StateFlow<Int>
@@ -95,9 +99,17 @@ class Repository @Inject constructor(private val allApi: AllApi){
     }
 
     suspend fun getReceivedDonationsData(){
-        val response = allApi.receivedDonations()
-        if (response.isSuccessful && response.body() != null){
-            _receivedDonations.emit(response.body()!!.data)
+        _receivedDonationsCode.emit(0)
+        try {
+            val response = allApi.receivedDonations()
+            if (response.isSuccessful && response.body() != null) {
+                _receivedDonationsCode.emit(response.code())
+                _receivedDonations.emit(response.body()!!.data)
+            } else {
+                _receivedDonationsCode.emit(response.code())
+            }
+        } catch (e:Exception) {
+            _receivedDonationsCode.emit(400)
         }
     }
 

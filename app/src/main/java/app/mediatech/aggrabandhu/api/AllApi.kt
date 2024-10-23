@@ -53,11 +53,11 @@ interface AllApi {
         @Query("value") value : Int
     ) : Response<LiveDonationsData>
 
-    @GET("donationreceive")
+    @GET("donationreceive/activelist")
     suspend fun liveDonations() : Response<LiveDonationsData>
 
-    @GET("donation")
-    suspend fun receivedDonations() : Response<ReceivedDonationsData>
+    @GET("donationreceive")
+    suspend fun receivedDonations() : Response<LiveDonationsData>
 
     @Multipart
     @POST("member/login")

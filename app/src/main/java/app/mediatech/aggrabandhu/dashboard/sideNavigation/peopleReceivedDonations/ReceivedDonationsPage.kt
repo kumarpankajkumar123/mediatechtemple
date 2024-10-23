@@ -32,11 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.CustomButton3
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
-import app.mediatech.aggrabandhu.viewmodel.ReceivedDonationsViewModel
 
 @Preview
 @Composable
@@ -46,7 +46,9 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
 
     val mList = receivedDonationsViewModel.receivedDonationsData.collectAsState()
 
-    if (mList.value.isEmpty()){
+    val code = receivedDonationsViewModel.code.collectAsState()
+
+    if (code.value == 0){
         LoadingAlertDialog()
     }
 
@@ -91,7 +93,7 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
 
 @Composable
 private fun DonationsDistributed (
-    receivedDonationData: ReceivedDonationData,
+    receivedDonationData: LiveDonationData,
     onClick : () -> Unit
 ) {
     Card(
@@ -156,14 +158,14 @@ private fun DonationsDistributed (
                                 modifier = Modifier.size(20.dp)
                             )
                             Text(
-                                text = receivedDonationData.amount,
+                                text = receivedDonationData.total_donation_received,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
                             )
                         }
                         Text(
-                            text = convertDateFormat(receivedDonationData.donation_date)!!,
+                            text = convertDateFormat(receivedDonationData.updatedAt)!!,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
                             color = Color.Black,

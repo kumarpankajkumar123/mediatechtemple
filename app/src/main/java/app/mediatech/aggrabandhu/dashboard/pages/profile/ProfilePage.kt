@@ -144,14 +144,14 @@ fun ProfilePage(navController: NavController?= null) {
                 modifier = Modifier
                     .fillMaxWidth(0.36f)
             ){
-                if (!sharedPref.getLoginStatus()) {
+                if (sharedPref.getLoginStatus()) {
                     navController?.navigate("edit_profile_screen")
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
             ReferralInfoCard(referenceID, context) {
-                if (!sharedPref.getLoginStatus()) {
+                if (sharedPref.getLoginStatus()) {
                     shareText(context, referenceID)
                 }
             }
