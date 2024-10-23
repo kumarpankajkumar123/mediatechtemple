@@ -34,9 +34,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationData
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
+import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.CustomButton3
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
+import coil.compose.rememberAsyncImagePainter
 
 @Preview
 @Composable
@@ -116,9 +118,7 @@ private fun DonationsDistributed (
             ) {
                 CircularImage(
                     size = 54.dp,
-                     painter = rememberVectorPainter(
-                         Icons.Default.Person
-                     )
+                     painter = rememberAsyncImagePainter(model = "$baseUrl${receivedDonationData.Member.profileUrl}")
                 )
                 Column(
                     modifier = Modifier

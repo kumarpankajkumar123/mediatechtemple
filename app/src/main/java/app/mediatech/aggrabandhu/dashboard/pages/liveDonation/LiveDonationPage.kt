@@ -49,12 +49,11 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun DonationsPage(navController: NavController) {
+fun DonationsPage(navController: NavController, liveDonationsViewModel: LiveDonationsViewModel?=null) {
 
     val context = LocalContext.current
 
-    val liveDonationsViewModel : LiveDonationsViewModel = hiltViewModel()
-    val liveDonationList = liveDonationsViewModel.liveDonationsData.collectAsState()
+    val liveDonationList = liveDonationsViewModel!!.liveDonationsData.collectAsState()
     val responseCode = liveDonationsViewModel.responseCode.collectAsState()
 
     if (responseCode.value == 0){

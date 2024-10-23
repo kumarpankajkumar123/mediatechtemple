@@ -56,7 +56,7 @@ interface AllApi {
     @GET("donationreceive/activelist")
     suspend fun liveDonations() : Response<LiveDonationsData>
 
-    @GET("donationreceive")
+    @GET("donationreceive/endlist")
     suspend fun receivedDonations() : Response<LiveDonationsData>
 
     @Multipart

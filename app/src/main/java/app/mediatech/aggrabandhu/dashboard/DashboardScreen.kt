@@ -49,6 +49,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -70,6 +71,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.dashboard.pages.home.HomePage
@@ -83,6 +85,7 @@ import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.intentToWe
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LogoutDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
+import app.mediatech.aggrabandhu.viewmodel.LiveDonationsViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,6 +93,9 @@ import kotlinx.coroutines.launch
 fun DashboardScreen(navController : NavController ?= null) {
 
     val context = LocalContext.current
+
+    val liveDonationsViewModel : LiveDonationsViewModel = hiltViewModel()
+    val size = liveDonationsViewModel.liveDonationsData.collectAsState()
 
     val sharedPref = SharedPrefManager(context)
     var name by remember { mutableStateOf("") }
@@ -186,7 +192,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 BadgedBox(badge = {
                                     if (navItem.badgeAmount != null)
                                         Badge {
-                                            Text(text = navItem.badgeAmount.toString())
+                                            Text(text = size.value.size.toString())
                                         }
                                 }) {
                                     Icon(
@@ -206,17 +212,17 @@ fun DashboardScreen(navController : NavController ?= null) {
                 }
             }
         ) { innerPadding ->
-            ContentScreen(navController!!, modifier = Modifier.padding(innerPadding), selectedIndex)
+            ContentScreen(navController!!, liveDonationsViewModel, modifier = Modifier.padding(innerPadding), selectedIndex)
         }
     }
 }
 
 @Composable
-fun ContentScreen(navController: NavController, modifier: Modifier = Modifier, selectedIndex : Int) {
+fun ContentScreen(navController: NavController, liveDonationsViewModel: LiveDonationsViewModel, modifier: Modifier = Modifier, selectedIndex : Int) {
     Column( modifier = modifier ) {
         when(selectedIndex){
             0-> HomePage()
-            1-> DonationsPage(navController)
+            1-> DonationsPage(navController, liveDonationsViewModel)
             2-> RulesRegulationsPage()
             3-> SupportPage(fromDashboard = true)
             4-> ProfilePage(navController)

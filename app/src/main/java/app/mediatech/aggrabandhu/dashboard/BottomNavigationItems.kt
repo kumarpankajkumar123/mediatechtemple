@@ -3,11 +3,13 @@ package app.mediatech.aggrabandhu.dashboard
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Rule
 import androidx.compose.material.icons.automirrored.outlined.Rule
+import androidx.compose.material.icons.filled.CoPresent
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
+import androidx.compose.material.icons.outlined.CoPresent
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Person
@@ -32,8 +34,8 @@ val items = listOf(
     ),
     BottomNavigationItems(
         title = "Live Donations",
-        selectedIcon = Icons.Filled.Notifications,
-        unselectedIcon = Icons.Outlined.Notifications,
+        selectedIcon = Icons.Filled.CoPresent,
+        unselectedIcon = Icons.Outlined.CoPresent,
         badgeAmount = 7
     ),
     BottomNavigationItems(
