@@ -71,7 +71,11 @@ fun MyDonationsPage(navController: NavController?=null) {
     val data = myDonationViewmodel.responseData.collectAsState()
 
     val sp = SharedPrefManager(context)
-    myDonationViewmodel.myDonation(sp.getMemberID().toString(), context)
+
+    if (!myDonationViewmodel.isGot) {
+        myDonationViewmodel.isGot = true
+        myDonationViewmodel.myDonation(sp.getMemberID().toString(), context)
+    }
 
     if (code.value != 0) {
         showProgress.value = false

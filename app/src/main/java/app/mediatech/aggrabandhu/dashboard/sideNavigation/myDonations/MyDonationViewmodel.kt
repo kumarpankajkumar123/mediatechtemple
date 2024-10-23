@@ -1,6 +1,9 @@
 package app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations
 
 import android.content.Context
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.mediatech.aggrabandhu.repository.Repository
@@ -18,6 +21,8 @@ class MyDonationViewmodel @Inject constructor(
 
         val responseData : StateFlow<List<MyDonation>>
             get() = repository.myDonationData
+
+    var isGot by mutableStateOf(false)
 
         fun myDonation(memberId:String, context: Context) {
             viewModelScope.launch {

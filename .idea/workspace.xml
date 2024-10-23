@@ -9,8 +9,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Login-Logout Txt">
+    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="My Donation">
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/Aggrabandhu.app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationViewmodel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationViewmodel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationsPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationsPage.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +88,7 @@
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/MTT Project/Aggrabandhu/app/src/main/res/drawable&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/MTT Project/Aggrabandhu/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   },
@@ -99,29 +103,29 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\sideNavigation" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\res\drawable" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\sideNavigation\allMembers" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\pages" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\sideNavigation" />
-      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\res\font" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\sideNavigation\myDonations" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\pages\home" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mediatech\aggrabandhu\dashboard\sideNavigation\policy" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\sideNavigation\supporttPage" />
       <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\dashboard\pages\rules" />
-      <recent name="D:\MTT Project\Aggrabandhu\app\src\main\java\app\mtt\aggrabandhu\authentication\login" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers" />
       <recent name="app.mtt.aggrabandhu.authentication.onboarding.firstOnboarding" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations" />
+      <recent name="app.mediatech.aggrabandhu.dashboard.pages.liveDonation" />
       <recent name="app.mediatech.aggrabandhu.dashboard.pages.home" />
       <recent name="app.mediatech.aggrabandhu.dashboard.sideNavigation.policy" />
       <recent name="app.mtt.aggrabandhu.dashboard.sideNavigation.supporttPage" />
-      <recent name="app.mtt.aggrabandhu.dashboard.pages" />
-      <recent name="app.mtt.aggrabandhu.dashboard.pages.profile" />
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
@@ -340,22 +344,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1725856390155</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Login and CustomTextInputs.kt">
-      <option name="closed" value="true" />
-      <created>1725972940001</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1725972940001</updated>
-    </task>
-    <task id="LOCAL-00005" summary="SignupScreen and NavigationItems">
-      <option name="closed" value="true" />
-      <created>1725973007469</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1725973007469</updated>
     </task>
     <task id="LOCAL-00006" summary="DashboardScreen Setup done">
       <option name="closed" value="true" />
@@ -733,7 +721,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729487812152</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="Live Donation">
+      <option name="closed" value="true" />
+      <created>1729568963375</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1729568963375</updated>
+    </task>
+    <task id="LOCAL-00054" summary="My Donation">
+      <option name="closed" value="true" />
+      <created>1729600897084</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1729600897084</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -751,7 +755,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="State Manage in onboarding" />
     <MESSAGE value="Support Page designed" />
     <MESSAGE value="ProfilePage API implemented" />
     <MESSAGE value="Adhar verification API" />
@@ -776,6 +779,7 @@
     <MESSAGE value="Notification Page" />
     <MESSAGE value="EditProfileScreen" />
     <MESSAGE value="Login-Logout Txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="Login-Logout Txt" />
+    <MESSAGE value="My Donation" />
+    <option name="LAST_COMMIT_MESSAGE" value="My Donation" />
   </component>
 </project>
