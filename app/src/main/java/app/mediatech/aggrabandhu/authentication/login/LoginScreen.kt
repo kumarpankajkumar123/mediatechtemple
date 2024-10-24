@@ -108,11 +108,11 @@ fun LoginScreen (navController: NavController?= null) {
                 .padding(10.dp),
         ) {
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(60.dp))
 
             // below is the composable for image.
             CircularImage(
-                size = 300.dp,
+                size = 250.dp,
                 painter = painterResource(id = R.drawable.png_logo)
             )
 
@@ -120,7 +120,7 @@ fun LoginScreen (navController: NavController?= null) {
 
             // Heading Login
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.title),
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
@@ -132,6 +132,7 @@ fun LoginScreen (navController: NavController?= null) {
             )
 
             Spacer(modifier = Modifier.height(5.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = stringResource(id = R.string.login_to_continue),
                 modifier = Modifier
@@ -144,7 +145,7 @@ fun LoginScreen (navController: NavController?= null) {
                 )
             )
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             /* ------------------- Login Username ----------------------- */
             TextFieldWithIcons(

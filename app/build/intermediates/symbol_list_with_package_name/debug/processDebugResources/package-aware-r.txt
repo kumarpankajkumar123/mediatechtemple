@@ -1156,6 +1156,7 @@ string status_bar_notification_info_overflow
 string switch_role
 string tab
 string template_percent
+string title
 string toast_message
 string tooltip_description
 string tooltip_label

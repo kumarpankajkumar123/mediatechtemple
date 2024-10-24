@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,14 +13,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Textsms
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -66,7 +74,7 @@ fun SignupScreen(navController: NavController) {
         LoadingAlertDialog()  // Show progress dialog
     }
 
-    val getOtp = (signUpViewmodel.getOtp.collectAsState())
+    val getOtp = signUpViewmodel.getOtp.collectAsState()
     val verifyOtp = (signUpViewmodel.verifyOtp.collectAsState())
     val referenceCode = (signUpViewmodel.checkReference.collectAsState())
 
@@ -94,6 +102,7 @@ fun SignupScreen(navController: NavController) {
             .background(Color.White)
             .fillMaxSize()
     ) {
+
         // Background image
         Image(
             painter = painterResource(id = R.drawable.textured_bg), // Replace with your image resource
@@ -102,7 +111,6 @@ fun SignupScreen(navController: NavController) {
             modifier = Modifier.fillMaxSize(), // Ensure the image fills the entire screen
             alpha = 0.3f
         )
-
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -111,7 +119,19 @@ fun SignupScreen(navController: NavController) {
 //            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .size(28.dp)
+                        .align(Alignment.TopStart)
+                        .clickable {
+                            navController.popBackStack()
+                        }
+                )
+            }
             Spacer(modifier = Modifier.height(40.dp))
 
             // below is the composable for image.
@@ -121,7 +141,7 @@ fun SignupScreen(navController: NavController) {
 
             // Heading Login
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.title),
                 modifier = Modifier
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
@@ -144,6 +164,8 @@ fun SignupScreen(navController: NavController) {
                 )
             )
 
+            Spacer(modifier = Modifier.height(10.dp))
+            DocumentInstructionsScreen()
             Spacer(modifier = Modifier.height(10.dp))
 
             /* ------------------- Reference ID ----------------------- */
@@ -292,6 +314,62 @@ fun SignupScreen(navController: NavController) {
                 navController.popBackStack()
             }
 
+        }
+    }
+}
+@Composable
+fun DocumentInstructionsScreen() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .padding(16.dp)
+    ) {
+        // Surface for structured layout
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shadowElevation = 4.dp, // Shadow effect for the surface
+            shape = RoundedCornerShape(8.dp), // Rounded corners for the surface
+            color = Color(0xFFF5F5F5) // Light background color for contrast
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp) // Padding inside the surface
+            ) {
+                // Title
+                Text(
+                    text = "Please make Ready these documents Before Sharing or Submitting the Form",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = Color.Black,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                // Instruction List
+                Text(
+                    text = "1. Your Mobile No. (Your account will be created using this number)",
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                Text(
+                    text = "2. Self Clear Image for Profile Image",
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                Text(
+                    text = "3. Latest Aadhar Copy (.JPG image with Aadhar Monogram must be printed)",
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                Text(
+                    text = "4. Pan Card/Voter Card/Driving License/Any Other Certified Document\n   (Any One document in .JPG image format)",
+                    style = MaterialTheme.typography.labelMedium,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
         }
     }
 }

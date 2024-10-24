@@ -86,6 +86,7 @@ fun SupportPage(navController: NavController?=null, fromDashboard : Boolean?=fal
 
     if (supportResponse.value != 0) {
         if (supportResponse.value == 200) {
+            supportViewmodel.enquiryDescription = ""
             showProgressDialog.value = false
         } else {
             showProgressDialog.value = false

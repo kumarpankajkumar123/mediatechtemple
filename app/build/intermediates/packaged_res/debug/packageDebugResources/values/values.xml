@@ -13,5 +13,6 @@
     <string name="app_name">Aggrabandhu</string>
     <string name="login_to_continue">Login to continue</string>
     <string name="signup_to_continue">Please fill in your details to begin</string>
+    <string name="title">" आज का सहयोग, कल की सुरक्षा "</string>
     <style name="Theme.Aggrabandhu" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

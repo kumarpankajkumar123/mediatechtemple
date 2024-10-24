@@ -52,6 +52,7 @@ fun TextFieldWithIcons(
     keyboardType: KeyboardType,
     leadingIcon: ImageVector,
     value : String?= "",
+    isRequired : Boolean?= true,
     modifier: Modifier = Modifier,
     onValueChanged : (String) -> Unit
 ) {
@@ -63,6 +64,9 @@ fun TextFieldWithIcons(
             text = TextFieldValue(value!!)
         }
     }
+    // Concatenate the star (*) if the field is required
+    val labelText = if (isRequired!!) "$label *" else label
+
     return OutlinedTextField(
         value = text,
         leadingIcon = { Icon( leadingIcon, contentDescription = "emailIcon",
@@ -94,7 +98,7 @@ fun TextFieldWithIcons(
             }
         },
         maxLines = 1,
-        label = { Text(text = label) },
+        label = { Text(text = labelText) },
         placeholder = { Text(text = placeholder) },
         singleLine = true,
         modifier = modifier
@@ -145,7 +149,7 @@ fun PasswordTextFieldWithIcons(
             onValueChanged.invoke(text.text)
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-        label = { Text(text = label) },
+        label = { Text(text = "$label *") },
         placeholder = { Text(text = placeholder) },
         singleLine = true,
         modifier = Modifier.fillMaxWidth()
@@ -174,7 +178,7 @@ fun DropDownField(
             readOnly = true,
             value = selectedValue,
             onValueChange = {},
-            label = { Text(text = label) },
+            label = { Text(text = "$label *") },
             leadingIcon = {
                 Icon(imageVector = imageVector, contentDescription = "Leading Icon")
             },
@@ -223,7 +227,7 @@ fun DatePickerField(
                 .focusable(false),
             value = date.value!!,
             onValueChange = {},
-            label = { Text(text = label) },
+            label = { Text(text = "$label *") },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.CalendarMonth, contentDescription = "Calendar Icon")
             },

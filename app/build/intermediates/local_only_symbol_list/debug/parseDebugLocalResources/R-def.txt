@@ -28,6 +28,7 @@ mipmap ic_launcher_round
 string app_name
 string login_to_continue
 string signup_to_continue
+string title
 style Theme.Aggrabandhu
 xml backup_rules
 xml data_extraction_rules

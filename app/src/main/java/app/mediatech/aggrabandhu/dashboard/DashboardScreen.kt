@@ -134,7 +134,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
                     // You can navigate here if needed
-                    if (route == "login_screen") {
+                    if (route == "login_screen" && sharedPref.getLoginStatus()) {
                         logoutDialog.value = true
                     } else {
                         navController?.navigate(route)

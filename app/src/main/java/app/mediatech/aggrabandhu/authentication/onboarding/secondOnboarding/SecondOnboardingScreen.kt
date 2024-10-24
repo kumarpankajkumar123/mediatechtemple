@@ -10,15 +10,20 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Newspaper
@@ -27,6 +32,7 @@ import androidx.compose.material.icons.filled.Person2
 import androidx.compose.material.icons.filled.PinDrop
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -246,6 +252,20 @@ fun SecondOnboardingScreen(
             .background(Color.White)
     ) {
 
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Back",
+                modifier = Modifier
+                    .padding(10.dp)
+                    .size(28.dp)
+                    .align(Alignment.TopStart)
+                    .clickable {
+                        navController?.popBackStack()
+                    }
+            )
+        }
+
         /*   ------------- Pin Code ---------------- */
         TextFieldWithIcons(
             label = "Pin Code",
@@ -335,6 +355,7 @@ fun SecondOnboardingScreen(
             placeholder = "Email (OPTIONAL)",
             maxLength = 26,
             keyboardType = KeyboardType.Email,
+            isRequired = false,
             leadingIcon = Icons.Default.LocationOn,
         ) { text ->
             onboarding2Viewmodel.email = text

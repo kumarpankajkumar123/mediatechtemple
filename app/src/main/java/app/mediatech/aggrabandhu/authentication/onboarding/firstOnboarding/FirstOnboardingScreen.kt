@@ -23,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArtTrack
 import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.FamilyRestroom
@@ -139,6 +140,20 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+
+            Box(modifier = Modifier.fillMaxWidth()) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .size(28.dp)
+                        .align(Alignment.TopStart)
+                        .clickable {
+                            navController?.popBackStack()
+                        }
+                )
+            }
 
             Spacer(modifier = Modifier.height(20.dp))
 
