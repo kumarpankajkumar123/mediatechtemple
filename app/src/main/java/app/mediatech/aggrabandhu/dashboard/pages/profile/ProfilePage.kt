@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.ArtTrack
 import androidx.compose.material.icons.filled.BusinessCenter
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.FamilyRestroom
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
@@ -88,12 +89,14 @@ fun ProfilePage(navController: NavController?= null) {
 
     val profileUrl = "$baseUrl${profileData.value.profileUrl}"
     val referenceID = profileData.value.reference_id
+    val memberID = profileData.value.id.toString()
     val name = profileData.value.name
     val fatherName = profileData.value.father_name
     val motherName = profileData.value.mother_name
     val gotra = profileData.value.gotra
     val gender = profileData.value.gender
     val phone = profileData.value.mobile_no
+    val email = profileData.value.email
     val dob = profileData.value.dob
     val age = profileData.value.total_age
     val maritalStatus = profileData.value.marital_status
@@ -155,11 +158,15 @@ fun ProfilePage(navController: NavController?= null) {
                     shareText(context, referenceID)
                 }
             }
+            ProfileInfoCard(Icons.Default.Person, heading = "Member ID", text = memberID)
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = name)
             ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = fatherName)
             ProfileInfoCard(Icons.Default.Person, heading = "Mother's Name", text = motherName)
             ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gotra", text = gotra)
             ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = phone)
+            if (email.isNotEmpty()) {
+                ProfileInfoCard(Icons.Default.Email, heading = "Phone", text = email)
+            }
             ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = dob)
             ProfileInfoCard(Icons.Default.CalendarMonth, heading = "Age", text = age)
             ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gender", text = gender)

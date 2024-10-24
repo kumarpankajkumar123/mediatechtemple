@@ -245,7 +245,9 @@ fun EditProfileScreen(navController: NavController?=null) {
                 placeholder = "Email (OPTIONAL)",
                 maxLength = 26,
                 keyboardType = KeyboardType.Email,
+                isRequired = false,
                 leadingIcon = Icons.Default.LocationOn,
+                value = profileViewModel.email
             ) { text ->
                 profileViewModel.email = text
             }

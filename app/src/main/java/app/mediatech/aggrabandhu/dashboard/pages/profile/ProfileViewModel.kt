@@ -115,7 +115,7 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
             if (imageUri != null) {
                 profilePart = prepareFilePart(imageUri!!, "profile", context)
             }
-           // Toast.makeText(context, "$maritalStatus, $imageUri", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "$email", Toast.LENGTH_SHORT).show()
             repository.editProfile(
                 memberId,
                 name,

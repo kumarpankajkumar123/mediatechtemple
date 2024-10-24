@@ -75,7 +75,7 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
                     .size(28.dp)
             )
             Text(
-                text = "People Receiving Donations",
+                text = "Donation Receivers List",
                 fontSize = 22.sp,
                 modifier = Modifier.padding(start = 10.dp),
                 fontWeight = FontWeight.SemiBold,
@@ -165,7 +165,7 @@ private fun DonationsDistributed (
                             )
                         }
                         Text(
-                            text = convertDateFormat(receivedDonationData.updatedAt)!!,
+                            text = convertDateFormat(receivedDonationData.death_date)!!,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Light,
                             color = Color.Black,
@@ -174,18 +174,18 @@ private fun DonationsDistributed (
                 }
             }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 10.dp)
-            ) {
-                CustomButton3(
-                    text = "View Contributors",
-                    background = Color.Black
-                ) {
-                    onClick.invoke()
-                }
-            }
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(vertical = 10.dp, horizontal = 10.dp)
+//            ) {
+//                CustomButton3(
+//                    text = "View Contributors",
+//                    background = Color.Black
+//                ) {
+//                    onClick.invoke()
+//                }
+//            }
         }
     }
 }
