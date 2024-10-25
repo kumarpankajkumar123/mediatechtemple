@@ -15,19 +15,23 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.PersonPin
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +41,7 @@ import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
+import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 import coil.compose.rememberAsyncImagePainter
 
 data class DonorsData(
@@ -52,6 +57,7 @@ fun DonorsPage(navController: NavController ?= null) {
 
     val allMembersViewModel : AllMembersViewModel = hiltViewModel()
     val allMembers = allMembersViewModel.allMembers.collectAsState()
+    var searchTxt by remember { mutableStateOf("") }
     val membersResponseCode = allMembersViewModel.allMembersResponseCode.collectAsState()
 
     val showProgress = remember { mutableStateOf(true) }
@@ -92,8 +98,25 @@ fun DonorsPage(navController: NavController ?= null) {
                 color = Color.Black
             )
         }
+
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+                TextFieldWithIcons(
+                label = "Search...",
+                placeholder = "Search",
+                maxLength = 30,
+                keyboardType = KeyboardType.Text,
+                leadingIcon = Icons.Default.Search,
+                value = searchTxt,
+                isRequired = false
+            ) {
+                searchTxt = it
+            }
+        }
+        val filteredList = allMembers.value.filter {
+            it.name.contains(searchTxt, ignoreCase = true)
+        }
         LazyColumn(content = {
-            items(allMembers.value) {
+            items(filteredList) {
                 DonorsCard(allMemberData = it)
             }
         })
@@ -172,15 +195,4 @@ private fun DonorsCard (
             }
         }
     }
-}
-
-fun getDonorsList() : MutableList<DonorsData> {
-    val list = mutableListOf<DonorsData>()
-
-    list.add(DonorsData("New Peron", "Jaipur, Rajasthan"))
-    list.add(DonorsData("Old Peron", "Kota, Rajasthan"))
-    list.add(DonorsData("Mark", "New, Rajasthan"))
-    list.add(DonorsData("Henry", "From, Rajasthan"))
-
-    return list
 }

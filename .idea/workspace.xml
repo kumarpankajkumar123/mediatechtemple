@@ -9,7 +9,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Live donation count" />
+    <list default="true" id="74e918d3-5b65-43be-a226-9e010edcafb1" name="Changes" comment="Bug fixing">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/allMembers/MembersListPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/allMembers/MembersListPage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationsPage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/app/mediatech/aggrabandhu/dashboard/sideNavigation/myDonations/MyDonationsPage.kt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -339,22 +343,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1725856390155</updated>
-    </task>
-    <task id="LOCAL-00009" summary="SideNavigation Setup done">
-      <option name="closed" value="true" />
-      <created>1726059395617</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1726059395617</updated>
-    </task>
-    <task id="LOCAL-00010" summary="TopAppBar Setup done">
-      <option name="closed" value="true" />
-      <created>1726121926917</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1726121926917</updated>
     </task>
     <task id="LOCAL-00011" summary="ProfilePage Setup done">
       <option name="closed" value="true" />
@@ -732,7 +720,23 @@
       <option name="project" value="LOCAL" />
       <updated>1729686670865</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Bug fixing">
+      <option name="closed" value="true" />
+      <created>1729756053878</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1729756053878</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Bug fixing">
+      <option name="closed" value="true" />
+      <created>1729769898713</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1729769898713</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -750,7 +754,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="Adhar verification API" />
     <MESSAGE value="Login API" />
     <MESSAGE value="Signup API" />
     <MESSAGE value="Auto Fetch Current Age,&#10;Rule API" />
@@ -775,6 +778,7 @@
     <MESSAGE value="My Donation" />
     <MESSAGE value="Donation Receive" />
     <MESSAGE value="Live donation count" />
-    <option name="LAST_COMMIT_MESSAGE" value="Live donation count" />
+    <MESSAGE value="Bug fixing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixing" />
   </component>
 </project>

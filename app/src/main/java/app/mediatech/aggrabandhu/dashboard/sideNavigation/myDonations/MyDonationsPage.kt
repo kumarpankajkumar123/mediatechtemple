@@ -39,24 +39,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsData
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.getDonorsList
 import app.mediatech.aggrabandhu.di.baseUrl
-import app.mediatech.aggrabandhu.di.baseUrl1
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import coil.compose.rememberAsyncImagePainter
-
-data class MyDonationsData(
-    val name: String,
-    val address : String,
-    val amount : String,
-    val img : Int ?= null,
-    val imageVector: ImageVector?= Icons.Default.PersonPin
-)
 
 @Preview
 @Composable
