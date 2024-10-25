@@ -100,6 +100,25 @@ fun MyDonationsPage(navController: NavController?=null) {
                 color = Color.Black
             )
         }
+
+        if (data.value.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "Empty",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
         LazyColumn(content = {
             items(data.value) {
                 AllDonations(donorsData = it)

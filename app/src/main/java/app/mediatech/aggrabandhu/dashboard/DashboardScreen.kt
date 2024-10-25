@@ -23,13 +23,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ListAlt
+import androidx.compose.material.icons.automirrored.filled.Rule
 import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PeopleAlt
 import androidx.compose.material.icons.filled.Policy
-import androidx.compose.material.icons.filled.Rule
 import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -118,9 +117,9 @@ fun DashboardScreen(navController : NavController ?= null) {
             sharedPref.logOut()
             logoutDialog.value = false
             navController?.navigate("login_screen") {
-                popUpTo("dashboard_screen"){
-                    inclusive = true
-                }
+//                popUpTo("dashboard_screen"){
+//                    inclusive = true
+//                }
             }
         }) {
         logoutDialog.value = false
@@ -134,8 +133,12 @@ fun DashboardScreen(navController : NavController ?= null) {
                     // Handle navigation item click
                     scope.launch { drawerState.close() }
                     // You can navigate here if needed
-                    if (route == "login_screen" && sharedPref.getLoginStatus()) {
-                        logoutDialog.value = true
+                    if (route == "login_screen") {
+                        if (sharedPref.getLoginStatus()) {
+                            logoutDialog.value = true
+                        } else {
+                            navController?.navigate(route)
+                        }
                     } else {
                         navController?.navigate(route)
                     }
@@ -270,7 +273,7 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") { intentToWeb(FB, context) }
         SubNavItem(imageVector = R.drawable.png_ig, text = "Instagram") { intentToWeb(IG, context) }
-        SideNavItem(text = "Rules & Regulations", imageVector = Icons.Default.Rule){onItemClick.invoke("rules_page")}
+        SideNavItem(text = "Rules & Regulations", imageVector = Icons.AutoMirrored.Filled.Rule){onItemClick.invoke("rules_page")}
         SideNavItem(text = "Privacy & Policy", imageVector = Icons.Default.Policy){onItemClick.invoke("privacy_policy_page")}
         SideNavItem(text = "About Us", imageVector = Icons.Default.Policy){onItemClick.invoke("about_page")}
 //        SideNavItem(text = "Terms & Conditions", imageVector = Icons.Default.PrivacyTip){onItemClick.invoke("terms_page")}
@@ -278,12 +281,10 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         Spacer(modifier = Modifier.height(20.dp))
         if (sharedPrefManager.getLoginStatus()) {
             LogOut("Log out") {
-                sharedPrefManager.logOut()
                 onItemClick.invoke("login_screen")
             }
         } else {
             LogOut("Log in") {
-                sharedPrefManager.logOut()
                 onItemClick.invoke("login_screen")
             }
         }

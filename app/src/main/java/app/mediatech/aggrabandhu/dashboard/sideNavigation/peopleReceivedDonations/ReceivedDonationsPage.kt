@@ -2,6 +2,7 @@ package app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonatio
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -83,6 +84,24 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
             )
         }
 
+        if (mList.value.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "Empty",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
         LazyColumn(content = {
             items(mList.value){
                 DonationsDistributed(receivedDonationData = it){

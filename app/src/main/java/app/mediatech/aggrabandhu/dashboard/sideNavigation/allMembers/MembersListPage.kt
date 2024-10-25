@@ -2,6 +2,7 @@ package app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -108,6 +109,25 @@ fun DonorsPage(navController: NavController ?= null) {
         }
         val filteredList = allMembers.value.filter {
             it.name.contains(searchTxt, ignoreCase = true)
+        }
+
+        if (filteredList.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "No Data",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
         }
         LazyColumn(content = {
             items(filteredList) {

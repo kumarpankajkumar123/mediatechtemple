@@ -72,6 +72,25 @@ fun DonationsPage(navController: NavController, liveDonationsViewModel: LiveDona
             fontWeight = FontWeight.SemiBold,
             color = Color.Black
         )
+
+        if (liveDonationList.value.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "No Data",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
         LazyColumn(content = {
             items(liveDonationList.value){
                 LiveDonations(it, navController, context)

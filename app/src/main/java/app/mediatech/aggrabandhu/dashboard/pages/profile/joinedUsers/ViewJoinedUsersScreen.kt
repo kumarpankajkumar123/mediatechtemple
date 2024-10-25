@@ -2,6 +2,7 @@ package app.mediatech.aggrabandhu.dashboard.pages.profile.joinedUsers
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,6 +57,7 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
         showProgress.value = false
     }
 
+
     if (showProgress.value) {
         LoadingAlertDialog()
     }
@@ -89,6 +91,25 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
             )
         }
 
+
+        if (allMembers.value.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "Empty",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
         LazyColumn(content = {
             items(allMembers.value) {
                 DonorsCard(allMemberData = it)
