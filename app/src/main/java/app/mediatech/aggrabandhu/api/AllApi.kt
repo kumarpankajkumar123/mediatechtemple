@@ -10,6 +10,7 @@ import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.Sign
 import app.mediatech.aggrabandhu.dashboard.pages.home.NotificationData
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.LiveDonationsData
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileData
+import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.AllMemberData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.AllMembersData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationData
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.peopleReceivedDonations.ReceivedDonationsData
@@ -250,5 +251,10 @@ interface AllApi {
         @Part("transaction_id") transaction_id : RequestBody,
         @Part("payment_method") payment_method : RequestBody,
     ) : Response<ResponseData>
+
+    @GET("member/referal/{memberID}")
+    suspend fun getViewJoined(
+        @Path("memberID") memberId : String
+    ) : Response<List<AllMemberData>>
 
 }

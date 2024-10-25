@@ -12,8 +12,9 @@ import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.Seco
 import app.mediatech.aggrabandhu.authentication.signup.SignupScreen
 import app.mediatech.aggrabandhu.dashboard.DashboardScreen
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.MakeDonationPage
-import app.mediatech.aggrabandhu.dashboard.pages.profile.EditProfileScreen
+import app.mediatech.aggrabandhu.dashboard.pages.profile.editProfile.EditProfileScreen
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfilePage
+import app.mediatech.aggrabandhu.dashboard.pages.profile.joinedUsers.ViewJoinedUsersScreen
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.AboutUsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers.DonorsPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationsPage
@@ -159,6 +160,9 @@ fun NavigationComponent(loginStatus : Boolean) {
         }
         composable("about_page") {
             AboutUsPage(navController = navController)
+        }
+        composable("joined_users_page") {
+            ViewJoinedUsersScreen(navController = navController)
         }
     }
 

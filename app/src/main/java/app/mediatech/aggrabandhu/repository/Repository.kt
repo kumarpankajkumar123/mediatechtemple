@@ -147,6 +147,23 @@ class Repository @Inject constructor(private val allApi: AllApi){
         }
     }
 
+    suspend fun getViewJoined(id : String) {
+        try {
+            val response = allApi.getViewJoined(id)
+            if (response.isSuccessful && response.body() != null) {
+                _membersResponseCode.emit(response.code())
+                _allMembers.emit(response.body()!!)
+                Log.d("Joined Members", "${response.code()}-> ${response.body()!!.toString()}")
+            } else {
+                Log.d("Joined Members", "${response.code()}-> {${response.message()}}")
+                _membersResponseCode.emit(response.code())
+            }
+        } catch (e : Exception) {
+            _membersResponseCode.emit(400)
+            e.printStackTrace()
+        }
+    }
+
     private val _notifications = MutableStateFlow<List<Data>>(emptyList())
     val notificationData : StateFlow<List<Data>>
         get() = _notifications

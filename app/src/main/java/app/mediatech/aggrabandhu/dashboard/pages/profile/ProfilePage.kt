@@ -2,7 +2,6 @@ package app.mediatech.aggrabandhu.dashboard.pages.profile
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -63,7 +62,7 @@ import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun ProfilePage(navController: NavController?= null) {
+fun ProfilePage (navController: NavController?= null) {
 
     val context = LocalContext.current
 
@@ -146,18 +145,22 @@ fun ProfilePage(navController: NavController?= null) {
                 background = colorResource(id = R.color.orange),
                 modifier = Modifier
                     .fillMaxWidth(0.36f)
-            ){
+            ) {
                 if (sharedPref.getLoginStatus()) {
                     navController?.navigate("edit_profile_screen")
                 }
             }
 
             Spacer(modifier = Modifier.height(20.dp))
-            ReferralInfoCard(referenceID, context) {
+
+            ReferralInfoCard(referenceID, onClick = {
                 if (sharedPref.getLoginStatus()) {
                     shareText(context, referenceID)
                 }
+            }) {
+                navController?.navigate("joined_users_page")
             }
+
             ProfileInfoCard(Icons.Default.Person, heading = "Member ID", text = memberID)
             ProfileInfoCard(Icons.Default.Person, heading = "Name", text = name)
             ProfileInfoCard(Icons.Default.Person, heading = "Father's Name", text = fatherName)
@@ -257,8 +260,8 @@ fun ProfileInfoCard(
 @Composable
 fun ReferralInfoCard (
     referralCode : String?="123ABC123",
-    context: Context ?= null,
-    onClick : () -> Unit
+    onClick : () -> Unit,
+    onView : () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -310,20 +313,15 @@ fun ReferralInfoCard (
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(25.dp)
-                    .background(Color.Black),
+                    .height(30.dp)
+                    .background(Color.Black)
+                    .clickable {onView()},
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Total users Joined : ",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Light,
-                    color = Color.White
-                )
-                Text(
-                    text = "9",
-                    fontSize = 16.sp,
+                    text = "View Joined Users",
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.White
                 )

@@ -17,9 +17,15 @@ class AllMembersViewModel @Inject constructor(private val repository: Repository
     val allMembersResponseCode : StateFlow<Int>
     get() = repository.membersResponseCode
 
-    init {
+    fun initMembers() {
         viewModelScope.launch {
             repository.getAllMembers()
+        }
+    }
+
+    fun getViewJoined(id : String){
+        viewModelScope.launch {
+            repository.getViewJoined(id)
         }
     }
 

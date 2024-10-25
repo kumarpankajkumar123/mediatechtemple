@@ -44,18 +44,12 @@ import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 import coil.compose.rememberAsyncImagePainter
 
-data class DonorsData(
-    val name: String,
-    val address : String,
-    val img : Int ?= null,
-    val imageVector: ImageVector ?= Icons.Default.PersonPin
-)
-
 @Preview
 @Composable
 fun DonorsPage(navController: NavController ?= null) {
 
     val allMembersViewModel : AllMembersViewModel = hiltViewModel()
+    allMembersViewModel.initMembers()
     val allMembers = allMembersViewModel.allMembers.collectAsState()
     var searchTxt by remember { mutableStateOf("") }
     val membersResponseCode = allMembersViewModel.allMembersResponseCode.collectAsState()
@@ -124,7 +118,7 @@ fun DonorsPage(navController: NavController ?= null) {
 }
 
 @Composable
-private fun DonorsCard (
+fun DonorsCard (
     allMemberData: AllMemberData
 ) {
     Card(
