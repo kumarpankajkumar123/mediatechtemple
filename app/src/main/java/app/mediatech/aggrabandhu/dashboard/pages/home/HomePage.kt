@@ -1,6 +1,7 @@
 package app.mediatech.aggrabandhu.dashboard.pages.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -52,6 +53,24 @@ fun HomePage() {
             color = Color.Black,
             modifier = Modifier.padding(start = 16.dp)
         )
+        if (notificationData.value.isEmpty()){
+            Row (
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, top = 10.dp)
+                    .height(50.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ){
+                Text(
+                    text = "No Data",
+                    fontSize = 22.sp,
+                    modifier = Modifier.padding(start = 10.dp),
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
         LazyColumn(content = {
             items(notificationData.value){
                 NotificationCard(notificationData = it)

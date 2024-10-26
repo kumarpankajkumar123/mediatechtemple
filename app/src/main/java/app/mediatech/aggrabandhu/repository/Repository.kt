@@ -529,16 +529,10 @@ class Repository @Inject constructor(private val allApi: AllApi){
         relationShip2 : String,
         profile : MultipartBody.Part ? = null,
     ) {
-        Log.d("Edit Profile",
-                    "father : $fatherName, " +
-                    "mother : $motherName, " +
-                    "City :$district, " +
-                    "State : $state,  " +
-                    "Pin : $pincode, "
-        )
         Log.d("Files","$profile")
 
         try {
+            _editProfileResponseCode.emit(0)
             if (profile != null) {
                 val response = allApi.editProfile(
                     memberID = meemberId,
@@ -828,10 +822,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
         file:MultipartBody.Part,
         transaction_id : String,
         payment_method : String,
+        donation_date : String,
         context: Context)
     {
         try {
-            Log.d("Fields", "$transaction_id, $amount")
+            Log.d("Fields", "$transaction_id, $amount, $donation_date, $payment_method, $member_id, $donation_id, $file")
             _makeDonationResponse.emit(0)
             val response = allApi.makeDonation(
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), member_id),
@@ -839,6 +834,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), amount),
                 file,
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), transaction_id),
+                RequestBody.create("multipart/form-data".toMediaTypeOrNull(), donation_date),
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), payment_method)
             )
             if (response.isSuccessful) {

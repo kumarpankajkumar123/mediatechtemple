@@ -73,15 +73,18 @@ fun AboutUsPage(navController: NavController ?= null) {
         AndroidView1(
             modifier = Modifier.fillMaxSize(),
             factory = {
-            WebView(it).apply {
-                layoutParams = ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT
-                )
+                WebView(it).apply {
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                    settings.javaScriptEnabled = true // Enable JavaScript
+                }
+            },
+            update = {
+                it.loadUrl(pp)
             }
-        }, update = {
-            it.loadUrl(pp)
-        })
+        )
 
 //        HtmlText(html = rules.value, modifier = Modifier.padding(8.dp))
     }

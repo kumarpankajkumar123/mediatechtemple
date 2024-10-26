@@ -4,6 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -49,9 +51,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
-import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.MyDonationViewmodel
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.TextDetails
 import app.mediatech.aggrabandhu.utils.CustomButton
+import app.mediatech.aggrabandhu.utils.DatePickerField
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SelectImageCardWithButton
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
@@ -141,15 +143,19 @@ fun MakeDonationPage(
                 .padding(start = 20.dp)
             )
 
-        TransactionMedium(
-            Icons.Default.AccountBalance,
-            bankDetails,
-            context
-        )
-        TransactionMediumUPI(
-            Icons.Default.Payments,
-            bankDetails
-        )
+        if (bankDetails.accountNumber != "null" && bankDetails.accountNumber != "Unknown Account") {
+            TransactionMedium(
+                Icons.Default.AccountBalance,
+                bankDetails,
+                context
+            )
+        }
+        if (bankDetails.upiID !== "null") {
+            TransactionMediumUPI(
+                Icons.Default.Payments,
+                bankDetails
+            )
+        }
 
         Row (
             modifier = Modifier
@@ -212,6 +218,15 @@ fun MakeDonationPage(
             ) {
                 makeDonationViewmodel.transactionNumb = it
             }
+            /* ------------- Select Date ------------ */
+            DatePickerField(
+                label = "Transaction Date",
+                value = makeDonationViewmodel.transactionDate,
+                onClick = { date ->
+                    makeDonationViewmodel.transactionDate = date
+                }
+            )
+
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(docType = "Payment ScreenShot") {
                 val uri = compressImageToUri(it, context)
@@ -223,10 +238,8 @@ fun MakeDonationPage(
                 showProgress.value = true
                 makeDonationViewmodel.makeDonation(mId.toString(), context)
             }
-
         }
     }
-
 }
 
 @Composable
@@ -321,7 +334,7 @@ fun TransactionMediumUPI(
                 )
                 Column(modifier = Modifier.fillMaxWidth(0.9f)) {
                     TextDetails(ques = "UPI ID", ans = bankDetails.upiID)
-                    TextDetails(ques = "Name", ans = bankDetails.personNameOnUPI)
+                    // TextDetails(ques = "Name", ans = bankDetails.personNameOnUPI)
                 }
 
                 Box(

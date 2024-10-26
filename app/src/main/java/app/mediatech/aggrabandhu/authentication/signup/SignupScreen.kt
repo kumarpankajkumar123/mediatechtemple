@@ -41,10 +41,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -313,7 +316,9 @@ fun SignupScreen(navController: NavController) {
             ) {
                 navController.popBackStack()
             }
-
+            PrivacyPolicyTxt {
+                navController.navigate("privacy_policy_page")
+            }
         }
     }
 }
@@ -371,5 +376,37 @@ fun DocumentInstructionsScreen() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun PrivacyPolicyTxt(
+    onPrivacyPolicyClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Privacy Policy Text
+        Text(
+            text = buildAnnotatedString {
+                append("By signing up, you agree to our ")
+                withStyle(
+                    style = SpanStyle(
+                        color = Color.Blue,
+                        fontWeight = FontWeight.Bold
+                    )
+                ) {
+                    append("Privacy Policy")
+                }
+            },
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .clickable { onPrivacyPolicyClick() } // Trigger privacy policy click
+        )
     }
 }

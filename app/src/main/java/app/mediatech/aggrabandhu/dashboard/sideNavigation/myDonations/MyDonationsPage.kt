@@ -111,7 +111,7 @@ fun MyDonationsPage(navController: NavController?=null) {
                 horizontalArrangement = Arrangement.Center
             ){
                 Text(
-                    text = "Empty",
+                    text = "No Data",
                     fontSize = 22.sp,
                     modifier = Modifier.padding(start = 10.dp),
                     fontWeight = FontWeight.SemiBold,

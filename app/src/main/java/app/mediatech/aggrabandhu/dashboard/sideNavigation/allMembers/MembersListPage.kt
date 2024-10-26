@@ -139,7 +139,8 @@ fun DonorsPage(navController: NavController ?= null) {
 
 @Composable
 fun DonorsCard (
-    allMemberData: AllMemberData
+    allMemberData: AllMemberData,
+    isReferred : Boolean = false
 ) {
     Card(
         modifier = Modifier
@@ -174,6 +175,14 @@ fun DonorsCard (
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,
                 )
+                if (isReferred) {
+                    Text(
+                        text = allMemberData.mobile_no,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                }
                 Text(
                     text = "${allMemberData.district},${allMemberData.state}",
                     fontSize = 12.sp,

@@ -55,6 +55,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.calculateAge
+import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mediatech.aggrabandhu.utils.CustomButton
 import app.mediatech.aggrabandhu.utils.DatePickerField
@@ -125,7 +126,7 @@ fun EditProfileScreen(navController: NavController?=null) {
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                profileViewModel.imageUri = it
+                profileViewModel.imageUri = compressImageToUri(it, context)
             }
         }
     )

@@ -37,6 +37,7 @@ class MakeDonationViewmodel @Inject constructor(
     var method by mutableStateOf("")
     var amount by mutableStateOf("")
     var transactionNumb by mutableStateOf("")
+    var transactionDate by mutableStateOf("")
     var uri by mutableStateOf<Uri?>(null)
     var file by mutableStateOf<MultipartBody.Part?>(null)
 
@@ -49,6 +50,7 @@ class MakeDonationViewmodel @Inject constructor(
                     file!!,
                     transactionNumb,
                     method,
+                    transactionDate,
                     context
                 )
             }

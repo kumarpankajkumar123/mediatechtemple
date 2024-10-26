@@ -83,7 +83,7 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
                     .size(28.dp)
             )
             Text(
-                text = "All Members",
+                text = "All Referred Members",
                 fontSize = 22.sp,
                 modifier = Modifier.padding(start = 10.dp),
                 fontWeight = FontWeight.SemiBold,
@@ -102,7 +102,7 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
                 horizontalArrangement = Arrangement.Center
             ){
                 Text(
-                    text = "Empty",
+                    text = "No Data",
                     fontSize = 22.sp,
                     modifier = Modifier.padding(start = 10.dp),
                     fontWeight = FontWeight.SemiBold,
@@ -112,7 +112,7 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
         }
         LazyColumn(content = {
             items(allMembers.value) {
-                DonorsCard(allMemberData = it)
+                DonorsCard(allMemberData = it, true)
             }
         })
     }

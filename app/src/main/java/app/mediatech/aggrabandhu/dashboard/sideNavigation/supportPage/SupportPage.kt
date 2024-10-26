@@ -63,7 +63,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 
 const val FB = "https://www.facebook.com/aggrabandhusevarthsansthan/"
-const val IG = "https://www.instagram.com/"
+const val IG = "https://www.instagram.com/agrabandhusevarthsansthan"
 const val YT = "https://www.youtube.com/@AggrabandhuSewaSansthan"
 
 @Preview

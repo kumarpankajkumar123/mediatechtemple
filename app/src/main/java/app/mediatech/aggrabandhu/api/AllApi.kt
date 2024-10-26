@@ -249,6 +249,7 @@ interface AllApi {
         @Part("amount") amount : RequestBody,
         @Part file : MultipartBody.Part,
         @Part("transaction_id") transaction_id : RequestBody,
+        @Part("donation_date") donation_date : RequestBody,
         @Part("payment_method") payment_method : RequestBody,
     ) : Response<ResponseData>
 

@@ -33,7 +33,7 @@ val items = listOf(
         unselectedIcon = Icons.Outlined.Home,
     ),
     BottomNavigationItems(
-        title = "Live Donations",
+        title = "Sahyog",
         selectedIcon = Icons.Filled.CoPresent,
         unselectedIcon = Icons.Outlined.CoPresent,
         badgeAmount = 7

@@ -76,7 +76,7 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
                     .size(28.dp)
             )
             Text(
-                text = "Donation Receivers List",
+                text = "Sahyog Receivers List",
                 fontSize = 22.sp,
                 modifier = Modifier.padding(start = 10.dp),
                 fontWeight = FontWeight.SemiBold,
@@ -94,7 +94,7 @@ fun ReceivedDonationsPage(navController: NavController ?= null) {
                 horizontalArrangement = Arrangement.Center
             ){
                 Text(
-                    text = "Empty",
+                    text = "No Data",
                     fontSize = 22.sp,
                     modifier = Modifier.padding(start = 10.dp),
                     fontWeight = FontWeight.SemiBold,

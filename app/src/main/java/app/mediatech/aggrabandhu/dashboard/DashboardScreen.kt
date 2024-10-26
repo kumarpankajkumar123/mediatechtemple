@@ -261,14 +261,15 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         )
         // Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
-        SideNavItem(text = "Members List", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("donors_page")}
-        SideNavItem(text = "Donations", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
+        SideNavItem(text = "My Referrals", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("joined_users_page")}
         if (sharedPrefManager.getLoginStatus()) {
             SideNavItem(
                 text = "My Donations",
                 imageVector = Icons.Default.AccountBalanceWallet
             ) { onItemClick.invoke("my_donations_page") }
         }
+        SideNavItem(text = "Members List", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("donors_page")}
+        SideNavItem(text = "Sahyog List", imageVector = Icons.Default.PeopleAlt){onItemClick.invoke("received_donations_page")}
         SideNavItem(text = "Support", imageVector = Icons.Default.SupportAgent){onItemClick.invoke("support_page")}  //
         SideNavItem(text = "Follow us -", imageVector = Icons.Default.AccountCircle){}
         SubNavItem(imageVector = R.drawable.png_fb, text = "Facebook") { intentToWeb(FB, context) }
@@ -288,6 +289,7 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
                 onItemClick.invoke("login_screen")
             }
         }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 
