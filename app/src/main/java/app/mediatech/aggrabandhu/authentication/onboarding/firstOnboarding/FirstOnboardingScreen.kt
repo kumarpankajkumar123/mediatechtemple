@@ -67,9 +67,11 @@ import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 import coil.compose.rememberAsyncImagePainter
 import es.dmoral.toasty.Toasty
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.Period
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun FirstOnboardingScreen(navController: NavController?=null) {
@@ -325,7 +327,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             /* ------------- Select Date ------------ */
             DatePickerField(
                 label = "Date of Birth",
-                value = dob.value,
+                value = convertDateFormatFromYYtoDD(dob.value),
                 onClick = { date ->
                     if (date.isNotEmpty()) {
                         if (calculateAge(date) in 18..70) {
@@ -436,6 +438,19 @@ fun calculateAge(dob: String?="1940-08-23", dateFormat: String = "yyyy-MM-dd"): 
 
     // Calculate the period between the date of birth and today
     return Period.between(parsedDob, today).years
+}
+
+fun convertDateFormatFromYYtoDD(dateString: String): String {
+    // Define the original date format (YY-MM-DD)
+    val originalFormat = SimpleDateFormat("yy-MM-dd", Locale.getDefault())
+    // Define the desired date format (DD-MM-YY)
+    val desiredFormat = SimpleDateFormat("dd-MM-yy", Locale.getDefault())
+
+    // Parse the original date string to a Date object
+    val date = originalFormat.parse(dateString)
+
+    // Format the date to the desired format and return it
+    return desiredFormat.format(date)
 }
 
 @Preview(showSystemUi = true)

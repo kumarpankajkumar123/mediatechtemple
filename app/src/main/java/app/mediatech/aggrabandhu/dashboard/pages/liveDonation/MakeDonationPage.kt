@@ -92,7 +92,6 @@ fun MakeDonationPage(
             makeDonationViewmodel.amount = ""
             makeDonationViewmodel.transactionNumb = ""
             makeDonationViewmodel.method = ""
-            navController?.popBackStack()
         }
     }
 
@@ -213,7 +212,7 @@ fun MakeDonationPage(
                 label = "Transaction ID",
                 placeholder = "Transaction ID",
                 maxLength = 30,
-                keyboardType = KeyboardType.Number,
+                keyboardType = KeyboardType.Text,
                 leadingIcon = Icons.Default.Payment
             ) {
                 makeDonationViewmodel.transactionNumb = it

@@ -160,7 +160,7 @@ private fun LiveDonations (
                 TextDetails(ques = "Address", ans = "${liveDonationData.Member.district}, ${liveDonationData.Member.state}")
                 TextDetails(ques = "Total donation received", ans = liveDonationData.total_donation_received)
                 TextDetails(ques = "Min Amount", ans = liveDonationData?.min_amount.toString())
-                TextDetails(ques = "Date", ans = convertDateFormat(liveDonationData?.death_date.toString()).toString())
+//                TextDetails(ques = "Date", ans = convertDateFormat(liveDonationData?.death_date.toString()).toString())
                 TextDetails(ques = "Donation Start Date", ans = convertDateFormat(liveDonationData.start_date)!!)
                 TextDetails(ques = "Donation End Date", ans = convertDateFormat(liveDonationData.end_date)!!)
             }

@@ -242,7 +242,7 @@ interface AllApi {
     ) : Response<ResponseData>
 
     @Multipart
-    @POST("donation")
+    @POST("donation/post")
     suspend fun makeDonation(
         @Part("member_id") member_id : RequestBody,
         @Part("donation_id") donation_id : RequestBody,

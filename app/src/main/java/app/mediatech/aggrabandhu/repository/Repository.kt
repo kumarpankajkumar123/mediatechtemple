@@ -826,7 +826,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
         context: Context)
     {
         try {
-            Log.d("Fields", "$transaction_id, $amount, $donation_date, $payment_method, $member_id, $donation_id, $file")
+            Log.d("Fields", "transaction - $transaction_id, amount - $amount, donation_date - $donation_date, $payment_method, memberID - $member_id, DonationID - $donation_id, $file")
             _makeDonationResponse.emit(0)
             val response = allApi.makeDonation(
                 RequestBody.create("multipart/form-data".toMediaTypeOrNull(), member_id),
@@ -844,7 +844,11 @@ class Repository @Inject constructor(private val allApi: AllApi){
             } else {
                 _makeDonationResponse.emit(response.code())
                 Log.d("supportResponse", "${response.body().toString()} ${response.code()} ")
-                if (response.code() == 404) {
+                if (response.code() == 200) {
+                    _makeDonationResponse.emit(response.code())
+                    Toasty.success(context, "Query Sent", Toast.LENGTH_SHORT).show()
+                    Log.d("supportResponse", "${response.body().toString()} ${response.code()}")
+                } else if (response.code() == 404) {
                     Toasty.error(context, "Invalid Tragtnsaction ID", Toast.LENGTH_SHORT).show()
                 } else if (response.code() == 400){
                     Toasty.error(context, "Transaction ID must be UNIQUE", Toast.LENGTH_SHORT).show()
