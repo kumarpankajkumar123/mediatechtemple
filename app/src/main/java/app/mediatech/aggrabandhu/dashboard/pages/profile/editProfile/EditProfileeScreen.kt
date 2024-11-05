@@ -55,6 +55,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.calculateAge
+import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.convertDateFormatFromYYtoDD
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mediatech.aggrabandhu.utils.CustomButton
@@ -281,7 +282,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 /* ------------- Select Date ------------ */
                 DatePickerField(
                     label = "Date of Marriage",
-                    value = profileViewModel.marriageDate,
+                    value = if (profileViewModel.marriageDate.isNotEmpty()) { convertDateFormatFromYYtoDD(profileViewModel.marriageDate)} else {profileViewModel.marriageDate},
                     onClick = { date ->
                         if (date.isNotEmpty()) {
                             profileViewModel.marriageDate = (date)

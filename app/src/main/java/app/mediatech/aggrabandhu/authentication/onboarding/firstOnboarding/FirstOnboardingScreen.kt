@@ -327,7 +327,7 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
             /* ------------- Select Date ------------ */
             DatePickerField(
                 label = "Date of Birth",
-                value = convertDateFormatFromYYtoDD(dob.value),
+                value = if (dob.value.isNotEmpty()) {convertDateFormatFromYYtoDD(dob.value) } else {dob.value},
                 onClick = { date ->
                     if (date.isNotEmpty()) {
                         if (calculateAge(date) in 18..70) {

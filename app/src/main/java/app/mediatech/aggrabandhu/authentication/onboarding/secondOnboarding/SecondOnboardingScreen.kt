@@ -403,14 +403,14 @@ fun SecondOnboardingScreen(
             text = validationMessage.value,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            fontSize = 14.sp,
+            fontSize = 12.sp,
             style = TextStyle(
-                color = Color.White,
+                color = Color.Black,
                 fontWeight = FontWeight.SemiBold
             ),
             modifier = Modifier
                 .background(Color.White)
-                .padding(5.dp, 5.dp)
+                .padding(5.dp)
         )
 
         /* ------------- Select Document Type ------------ */
@@ -488,9 +488,9 @@ fun SecondOnboardingScreen(
             text = validationOtherMessage.value,
             textAlign = TextAlign.Center,
             maxLines = 1,
-            fontSize = 14.sp,
+            fontSize = 12.sp,
             style = TextStyle(
-                color = Color.White,
+                color = Color.Black,
                 fontWeight = FontWeight.SemiBold
             ),
             modifier = Modifier
@@ -505,9 +505,9 @@ fun SecondOnboardingScreen(
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2
-            ) { text ->
-                onboarding2Viewmodel.nominee = text
-            }
+        ) { text ->
+            onboarding2Viewmodel.nominee = text
+        }
         /*   ------------- Relation 1 ---------------- */
         TextFieldWithIcons(
             label = "Relation",
@@ -521,11 +521,12 @@ fun SecondOnboardingScreen(
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ Nominee 2 ---------------- */
         TextFieldWithIcons(
-            label = "Nominee 2",
+            label = "Nominee 2 (OPTIONAL)",
             placeholder = "Nominee 2 Name (OPTIONAL)",
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
+            isRequired = false
         ) { text ->
             onboarding2Viewmodel.nominee2 = text
         }
@@ -537,6 +538,7 @@ fun SecondOnboardingScreen(
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
+            isRequired = false
         ) { text ->
             onboarding2Viewmodel.relation2 = text
         }
