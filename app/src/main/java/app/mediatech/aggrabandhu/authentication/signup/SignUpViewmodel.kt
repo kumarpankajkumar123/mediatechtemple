@@ -46,7 +46,7 @@ class SignUpViewmodel @Inject constructor(
         }
     }
 
-    var referenceIDSP by mutableStateOf("")
+    var referenceIDSP by mutableStateOf("ABSSRAJBHA50")
     var fullNameSP by mutableStateOf("")
     var phoneSP by mutableStateOf("")
     var passwordSP by mutableStateOf("")

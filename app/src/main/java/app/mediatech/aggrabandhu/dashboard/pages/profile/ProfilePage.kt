@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,9 +14,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArtTrack
@@ -40,6 +44,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -53,6 +58,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.convertDateFormatFromYYtoDD
 import app.mediatech.aggrabandhu.dashboard.LogOut
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
@@ -107,6 +113,11 @@ fun ProfilePage (navController: NavController?= null) {
     val state = profileData.value.state
     val pinCode = profileData.value.pincode
     val address = profileData.value.address
+    val adharNummber = profileData.value.aadhar_no
+    val adharUrl = "$baseUrl${profileData.value.aadharUrl}"
+    val docNummber = profileData.value.id_no
+    val docType = profileData.value.id_type
+    val docImg = "$baseUrl${profileData.value.id_file}"
     val nominee = profileData.value.nominees[0].nominee
     val relation = profileData.value.nominees[0].relationship
     val nominee2 = profileData.value.nominees[0].nominee2
@@ -130,7 +141,13 @@ fun ProfilePage (navController: NavController?= null) {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .blur(if (sharedPref.getLoginStatus()){0.dp} else {30.dp})
+                .blur(
+                    if (sharedPref.getLoginStatus()) {
+                        0.dp
+                    } else {
+                        30.dp
+                    }
+                )
                 .padding(vertical = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -168,15 +185,15 @@ fun ProfilePage (navController: NavController?= null) {
             ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gotra", text = gotra)
             ProfileInfoCard(Icons.Default.PhoneAndroid, heading = "Phone", text = phone)
             if (email.isNotEmpty()) {
-                ProfileInfoCard(Icons.Default.Email, heading = "Phone", text = email)
+                ProfileInfoCard(Icons.Default.Email, heading = "Email ID", text = email)
             }
-            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = dob)
+            ProfileInfoCard(Icons.Default.CalendarMonth, heading = "DOB", text = if (dob.isNotEmpty()) {convertDateFormatFromYYtoDD(dob) }else {dob})
             ProfileInfoCard(Icons.Default.CalendarMonth, heading = "Age", text = age)
             ProfileInfoCard(Icons.Default.ArtTrack, heading = "Gender", text = gender)
             ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marital Status", text = maritalStatus)
             if (maritalStatus == "Married") {
                 ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Spouse Name", text = spouseName)
-                ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marriage date", text = marriageDate)
+                ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marriage date", text = if (dob.isNotEmpty()) {convertDateFormatFromYYtoDD(marriageDate) }else {marriageDate})
                 ProfileInfoCard(Icons.Default.FamilyRestroom, heading = "Marriage Years", text = marriageYears)
             }
             ProfileInfoCard(Icons.Default.BusinessCenter, heading = "Profession", text = profession)
@@ -184,6 +201,16 @@ fun ProfilePage (navController: NavController?= null) {
             ProfileInfoCard(Icons.Default.LocationOn, heading = "District", text = district)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "State", text = state)
             ProfileInfoCard(Icons.Default.LocationOn, heading = "Address", text = address)
+            DocInfoCard(
+                imageUrl = adharUrl,
+                heading = "Aadhar Number",
+                text = adharNummber
+            )
+            DocInfoCard(
+                imageUrl = docImg,
+                heading = docType,
+                text = docNummber
+            )
             Text (
                 text = "Nominee Details",
                 modifier = Modifier.padding(vertical = 6.dp)
@@ -235,6 +262,56 @@ fun ProfileInfoCard(
                 imageVector = imageVector,
                 contentDescription = "",
                 modifier = Modifier.size(34.dp)
+            )
+            Column(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+            ) {
+                Text(
+                    text = heading,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color.Black
+                )
+                Text(
+                    text = text,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DocInfoCard(
+    imageUrl: String,
+    heading : String,
+    text : String
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 5.dp)
+            .background(Color.White),
+        elevation = CardDefaults.cardElevation(3.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = rememberAsyncImagePainter(model = imageUrl),
+                contentDescription = "",
+                modifier = Modifier
+                    .widthIn(80.dp, 140.dp)
+                    .heightIn(80.dp, 120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .border(2.dp, Color.Black, RoundedCornerShape(10.dp)),
             )
             Column(
                 modifier = Modifier
@@ -315,7 +392,7 @@ fun ReferralInfoCard (
                     .fillMaxWidth()
                     .height(30.dp)
                     .background(Color.Black)
-                    .clickable {onView()},
+                    .clickable { onView() },
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {

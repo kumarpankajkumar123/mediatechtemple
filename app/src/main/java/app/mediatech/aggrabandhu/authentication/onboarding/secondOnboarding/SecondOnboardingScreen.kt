@@ -46,10 +46,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
@@ -80,10 +83,12 @@ fun SecondOnboardingScreen(
     onboarding2Viewmodel.initSharedPref(context)
 
     val validation = onboarding2Viewmodel.validateID.collectAsState()
+    val validationMessage = remember { mutableStateOf("") }
     val validationAdha = remember { mutableIntStateOf(1) }
 
     val otherDocValidation = onboarding2Viewmodel.validateOtherID.collectAsState()
     val validationOther = remember { mutableIntStateOf(1) }
+    val validationOtherMessage = remember { mutableStateOf("") }
 
     val rules = onboarding2Viewmodel.rules.collectAsState()
     val declaration = onboarding2Viewmodel.declaration.collectAsState()
@@ -124,6 +129,7 @@ fun SecondOnboardingScreen(
             onboarding2Viewmodel.isAdharVerified = true
             if (validationAdha.intValue == 0) {
                 showProgressDialog.value = false
+                validationMessage.value = "Verified"
                 Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
                 validationAdha.intValue = 1
             }
@@ -131,6 +137,7 @@ fun SecondOnboardingScreen(
             onboarding2Viewmodel.isAdharVerified = false
             if (validationAdha.intValue == 0) {
                 showProgressDialog.value = false
+                validationMessage.value = "This id already exist"
                 Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
                 validationAdha.intValue = 1
             }
@@ -138,6 +145,7 @@ fun SecondOnboardingScreen(
             onboarding2Viewmodel.isAdharVerified = false
             if (validationAdha.intValue == 0) {
                 showProgressDialog.value = false
+                validationMessage.value = "Reselect Image"
                 Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
                 validationAdha.intValue = 1
             }
@@ -176,6 +184,7 @@ fun SecondOnboardingScreen(
             if (validationOther.intValue == 0) {
                 showProgressDialog.value = false
                 validationOther.intValue = 1
+                validationOtherMessage.value = "Verified"
                 Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
             }
         } else if (otherDocValidation.value == 406) {
@@ -183,6 +192,7 @@ fun SecondOnboardingScreen(
             if (validationOther.intValue == 0) {
                 showProgressDialog.value = false
                 validationOther.intValue = 1
+                validationOtherMessage.value = "This id already exist"
                 Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
             }
         } else {
@@ -190,6 +200,7 @@ fun SecondOnboardingScreen(
             if (validationOther.intValue == 0) {
                 showProgressDialog.value = false
                 validationOther.intValue = 1
+                validationOtherMessage.value = "Verified"
 //            Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
             }
         }
@@ -388,6 +399,20 @@ fun SecondOnboardingScreen(
                 )
             }
         }
+        Text(
+            text = validationMessage.value,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            fontSize = 14.sp,
+            style = TextStyle(
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier
+                .background(Color.White)
+                .padding(5.dp, 5.dp)
+        )
+
         /* ------------- Select Document Type ------------ */
         DropDownField(
             selectedValue = selectedDoc.value,
@@ -459,6 +484,19 @@ fun SecondOnboardingScreen(
                 }
             }
         }
+        Text(
+            text = validationOtherMessage.value,
+            textAlign = TextAlign.Center,
+            maxLines = 1,
+            fontSize = 14.sp,
+            style = TextStyle(
+                color = Color.White,
+                fontWeight = FontWeight.SemiBold
+            ),
+            modifier = Modifier
+                .background(Color.White)
+                .padding(5.dp, 5.dp)
+        )
 
         /*   - ------------ Nominee 1 ---------------- */
         TextFieldWithIcons(
@@ -468,8 +506,8 @@ fun SecondOnboardingScreen(
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2
             ) { text ->
-            onboarding2Viewmodel.nominee = text
-        }
+                onboarding2Viewmodel.nominee = text
+            }
         /*   ------------- Relation 1 ---------------- */
         TextFieldWithIcons(
             label = "Relation",
@@ -484,7 +522,7 @@ fun SecondOnboardingScreen(
         /*   - ------------ Nominee 2 ---------------- */
         TextFieldWithIcons(
             label = "Nominee 2",
-            placeholder = "Nominee 2 Name",
+            placeholder = "Nominee 2 Name (OPTIONAL)",
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
@@ -495,7 +533,7 @@ fun SecondOnboardingScreen(
         /*   - ------------ Relation ---------------- */
         TextFieldWithIcons(
             label = "Relation",
-            placeholder = "Relation with Nominee 2",
+            placeholder = "Relation with Nominee 2 (OPTIONAL)",
             maxLength = 26,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
@@ -547,10 +585,10 @@ fun SecondOnboardingScreen(
                 Toasty.error(context, "Please enter nominee name", Toast.LENGTH_SHORT).show()
             } else if (onboarding2Viewmodel.relation!!.isEmpty()){
                 Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
-            } else if (onboarding2Viewmodel.nominee2!!.isEmpty()){
-                Toasty.error(context, "Please enter nominee name", Toast.LENGTH_SHORT).show()
-            } else if (onboarding2Viewmodel.relation2!!.isEmpty()){
-                Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
+//            } else if (onboarding2Viewmodel.nominee2!!.isEmpty()){
+//                Toasty.error(context, "Please enter nominee name", Toast.LENGTH_SHORT).show()
+//            } else if (onboarding2Viewmodel.relation2!!.isEmpty()){
+//                Toasty.error(context, "Please enter relation with nominee", Toast.LENGTH_SHORT).show()
             } else if (!onboarding2Viewmodel.isRuleAccepted) {
                 Toasty.error(context, "Please Accept Rules  First", Toast.LENGTH_SHORT).show()
             } else if (!onboarding2Viewmodel.isAdharVerified) {
