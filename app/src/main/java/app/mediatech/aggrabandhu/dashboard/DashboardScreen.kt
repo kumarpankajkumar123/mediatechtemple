@@ -261,8 +261,8 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         )
         // Spacer(modifier = Modifier.height(10.dp))
         // Example items in the drawer
-        SideNavItem(text = "My Referrals", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("joined_users_page")}
         if (sharedPrefManager.getLoginStatus()) {
+            SideNavItem(text = "My Referrals", imageVector = Icons.AutoMirrored.Filled.ListAlt){onItemClick.invoke("joined_users_page")}
             SideNavItem(
                 text = "My Donations",
                 imageVector = Icons.Default.AccountBalanceWallet
@@ -289,6 +289,17 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
                 onItemClick.invoke("login_screen")
             }
         }
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = try {
+                "Version : ${context.packageManager.getPackageInfo(context.packageName,0).versionName}"}
+            catch (e:Exception) {
+                "Version : Not found"
+            },
+            style = MaterialTheme.typography.titleSmall,
+            color = Color.Black,
+            fontSize = 18.sp,
+        )
         Spacer(modifier = Modifier.height(20.dp))
     }
 }
