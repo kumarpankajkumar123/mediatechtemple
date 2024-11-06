@@ -410,7 +410,8 @@ fun ReferralInfoCard (
 fun shareText(context: Context, textToShare: String) {
     val sendIntent: Intent = Intent().apply {
         action = Intent.ACTION_SEND
-        putExtra(Intent.EXTRA_TEXT, textToShare)
+        putExtra(Intent.EXTRA_TEXT, "Create account with My Reference ID : $textToShare \n" +
+                "Download the app now and Signups: https://play.google.com/store/apps/details?id=app.mediatech.aggrabandhu")
         type = "text/plain"
     }
     val shareIntent = Intent.createChooser(sendIntent, "Share your Reference ID")

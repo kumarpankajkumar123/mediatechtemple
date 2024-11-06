@@ -110,7 +110,6 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
     val password : String = onboarding1Viewmodel.password
 
 //    Toasty.success(context,"$referenceID, $name, $phone, $password").show()
-
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
