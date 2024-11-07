@@ -284,6 +284,8 @@ fun SignupScreen(navController: NavController) {
 
             /* ---------- Sign up Button -------------- */
             CustomButton("Next", colorResource(id = R.color.green)) {
+//                navController.navigate("first_on_screen/ABSSUTTFIR40/Test/0987654329/12345}")
+
                 if (signUpViewmodel.referenceIDSP.length < 8) {
                     Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
                 } else if (signUpViewmodel.fullNameSP.length < 6) {
@@ -301,7 +303,7 @@ fun SignupScreen(navController: NavController) {
                         signUpViewmodel.isNext = false
                         showProgressDialog.value = true
                         signUpViewmodel.checkReferenceCode(signUpViewmodel.referenceIDSP, context)
-//                    Toasty.success(context, signUpViewmodel.referenceIDSP, Toast.LENGTH_SHORT).show()
+                    Toasty.success(context, signUpViewmodel.referenceIDSP, Toast.LENGTH_SHORT).show()
                     } else {
                         Toasty.error(context, "Password should be same").show()
                     }

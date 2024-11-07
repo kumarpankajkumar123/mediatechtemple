@@ -67,9 +67,11 @@ import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 import app.mediatech.aggrabandhu.utils.prepareFilePart
 import app.mediatech.aggrabandhu.viewmodel.Onboarding2Viewmodel
 import es.dmoral.toasty.Toasty
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 
 @Preview(showSystemUi = true)
 @Composable
@@ -387,7 +389,7 @@ fun SecondOnboardingScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
-                val compressed = compressImageToUri(uri, context)
+                val compressed = compressImageToUri2(uri, context)
                 onboarding2Viewmodel.adharUri = compressed
                 validationAdha.intValue = 0
                 showProgressDialog.value = true
@@ -443,7 +445,7 @@ fun SecondOnboardingScreen(
             if ((selectedDoc.value == "Driving License" && isDocNumb.length == 16)) {
                 Spacer(modifier = Modifier.height(10.dp))
                 SelectImageCardWithButton(selectedDoc.value) {
-                    val compressed = compressImageToUri(it, context)
+                    val compressed = compressImageToUri2(it, context)
                     onboarding2Viewmodel.panUri = compressed
                     onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
@@ -464,7 +466,7 @@ fun SecondOnboardingScreen(
             } else if ((selectedDoc.value == "Voter ID" || selectedDoc.value == "PAN Card") && isDocNumb.length == 10) {
                 Spacer(modifier = Modifier.height(10.dp))
                 SelectImageCardWithButton(selectedDoc.value) {
-                    val compressed = compressImageToUri(it, context)
+                    val compressed = compressImageToUri2(it, context)
                     onboarding2Viewmodel.panUri = compressed
                     onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
@@ -724,6 +726,35 @@ fun compressImageToUri(imageUri: Uri, context: Context): Uri? {
     return Uri.fromFile(compressedImageFile)
 }
 
+fun compressImageToUri2(uri: Uri, context: Context): Uri? {
+    return try {
+        val contentResolver = context.contentResolver
+        val inputStream: InputStream? = contentResolver.openInputStream(uri)
+
+        inputStream?.use {
+            val bitmap = BitmapFactory.decodeStream(it)
+            val compressedBitmap = compressBitmap(bitmap)
+
+            // Save compressed bitmap to cache directory
+            val cacheDir = context.cacheDir
+            val compressedFile = File(cacheDir, "compressed_image_${System.currentTimeMillis()}.jpg")
+            compressedFile.outputStream().use { fileOutputStream ->
+                compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileOutputStream)
+            }
+            Uri.fromFile(compressedFile)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+private fun compressBitmap(bitmap: Bitmap): Bitmap {
+    val outputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+    return BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size())
+}
+
 // Function to rotate the bitmap if required
 fun rotateBitmapIfRequired(bitmap: Bitmap, orientation: Int): Bitmap {
     val matrix = Matrix()
@@ -735,7 +766,6 @@ fun rotateBitmapIfRequired(bitmap: Bitmap, orientation: Int): Bitmap {
     }
     return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
 }
-
 
 fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
     val (height: Int, width: Int) = options.run { outHeight to outWidth }

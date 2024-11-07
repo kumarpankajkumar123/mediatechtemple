@@ -51,6 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
+import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri2
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.myDonations.TextDetails
 import app.mediatech.aggrabandhu.utils.CustomButton
 import app.mediatech.aggrabandhu.utils.DatePickerField
@@ -228,7 +229,7 @@ fun MakeDonationPage(
 
             Spacer(modifier = Modifier.height(10.dp))
             SelectImageCardWithButton(docType = "Payment ScreenShot") {
-                val uri = compressImageToUri(it, context)
+                val uri = compressImageToUri2(it, context)
                 makeDonationViewmodel.uri = uri
                 makeDonationViewmodel.file = prepareFilePart(uri!!, "file", context)
             }

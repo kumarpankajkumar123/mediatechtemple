@@ -61,7 +61,7 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
     val maritalStatusList = arrayListOf("Married", "Single", "Divorced", "Widow", "Widower")
     var maritalStatus by mutableStateOf( "")
     var spouseName by mutableStateOf( "")
-    var marriageDate by mutableStateOf( "")
+    var marriageDate by mutableStateOf<String?>( "")
     var marriageYears by mutableStateOf( "")
     var profession by mutableStateOf( "")
     var district by mutableStateOf( "")
@@ -124,9 +124,9 @@ class ProfileViewModel @Inject constructor(private val repository : Repository) 
                 profession,
                 address,
                 maritalStatus,
-                spouseName,
+                spouseName.toString(),
                 marriageYears,
-                marriageDate,
+                marriageDate.toString(),
                 district,
                 state,
                 tahsil,

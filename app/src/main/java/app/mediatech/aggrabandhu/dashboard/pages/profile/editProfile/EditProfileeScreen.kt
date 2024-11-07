@@ -57,6 +57,7 @@ import app.mediatech.aggrabandhu.R
 import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.calculateAge
 import app.mediatech.aggrabandhu.authentication.onboarding.firstOnboarding.convertDateFormatFromYYtoDD
 import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri
+import app.mediatech.aggrabandhu.authentication.onboarding.secondOnboarding.compressImageToUri2
 import app.mediatech.aggrabandhu.dashboard.pages.profile.ProfileViewModel
 import app.mediatech.aggrabandhu.utils.CustomButton
 import app.mediatech.aggrabandhu.utils.DatePickerField
@@ -127,7 +128,7 @@ fun EditProfileScreen(navController: NavController?=null) {
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                profileViewModel.imageUri = compressImageToUri(it, context)
+                profileViewModel.imageUri = compressImageToUri2(it, context)
             }
         }
     )
@@ -266,7 +267,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 }
             )
 
-            if(profileViewModel.maritalStatus == "Married"){
+            if(profileViewModel.maritalStatus == "Married") {
                 // Spacer(modifier = Modifier.height(10.dp))
                 /* ------------------- Name ----------------------- */
                 TextFieldWithIcons(
@@ -282,7 +283,7 @@ fun EditProfileScreen(navController: NavController?=null) {
                 /* ------------- Select Date ------------ */
                 DatePickerField(
                     label = "Date of Marriage",
-                    value = if (profileViewModel.marriageDate.isNotEmpty()) { convertDateFormatFromYYtoDD(profileViewModel.marriageDate)} else {profileViewModel.marriageDate},
+                    value = if (profileViewModel.marriageDate != null) { convertDateFormatFromYYtoDD(profileViewModel.marriageDate!!)} else {profileViewModel.marriageDate},
                     onClick = { date ->
                         if (date.isNotEmpty()) {
                             profileViewModel.marriageDate = (date)
@@ -299,9 +300,9 @@ fun EditProfileScreen(navController: NavController?=null) {
                 profileViewModel.marriageDate = ""
                 profileViewModel.marriageYears = ""
             }
-            if (profileViewModel.marriageDate.isNotEmpty() && profileViewModel.marriageDate != "No") {
+            if (profileViewModel.maritalStatus == "Married" && profileViewModel.marriageDate != null && profileViewModel.marriageDate != "No") {
                 if (calculateAge(profileViewModel.marriageDate) != 0) {
-                    Log.d("marriageDate", profileViewModel.marriageDate)
+                    Log.d("marriageDate", profileViewModel.marriageDate.toString())
                     DropDownField(
                         selectedValue = profileViewModel.marriageYears,
                         options = emptyList(),
@@ -419,6 +420,6 @@ fun EditProfileScreen(navController: NavController?=null) {
                 profileViewModel.editProfile(context)
             }
         }
-
     }
+
 }
