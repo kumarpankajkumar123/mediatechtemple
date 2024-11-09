@@ -60,7 +60,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val allMembers : StateFlow<List<AllMemberData>>
         get() = _allMembers
 
-    private val _loginResponse = MutableStateFlow<LoginResponse>(LoginResponse( "", 0, ""))
+    private val _loginResponse = MutableStateFlow<LoginResponse>(LoginResponse( "", 0, "",""))
     val loginResponse : StateFlow<LoginResponse>
         get() = _loginResponse
     private var _loginResponseCode = 0
@@ -250,6 +250,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
                 sp.saveLoginStatus(true)
                 sp.savePhone(mobileNumber)
                 sp.saveFullName(response.body()!!.username)
+                sp.saveProfileUrl(response.body()!!.profileUrl)
 
                 Log.d(
                     "LoginResponse",

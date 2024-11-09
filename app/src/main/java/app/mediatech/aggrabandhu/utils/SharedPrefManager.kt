@@ -149,7 +149,7 @@ class SharedPrefManager(private val context : Context) {
     }
 
     /*  ------------------------------------------------------------------*/
-    fun savProfileUrl(url : String){
+    fun saveProfileUrl(url : String){
         editor.putString("profileUrl",url)
         editor.apply()
     }
