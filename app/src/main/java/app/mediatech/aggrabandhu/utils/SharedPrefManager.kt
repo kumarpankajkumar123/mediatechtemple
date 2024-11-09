@@ -148,4 +148,13 @@ class SharedPrefManager(private val context : Context) {
         editor.apply()  // or editor.commit()
     }
 
+    /*  ------------------------------------------------------------------*/
+    fun savProfileUrl(url : String){
+        editor.putString("profileUrl",url)
+        editor.apply()
+    }
+    fun getProfileUrl(): String? {
+        return sharedPreferences.getString("profileUrl", "")
+    }
+
 }

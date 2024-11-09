@@ -85,6 +85,7 @@ import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LogoutDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.viewmodel.LiveDonationsViewModel
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -98,8 +99,10 @@ fun DashboardScreen(navController : NavController ?= null) {
 
     val sharedPref = SharedPrefManager(context)
     var name by remember { mutableStateOf("") }
+    var profile by remember { mutableStateOf("") }
 
     name = sharedPref.getFullName().toString()
+    profile = sharedPref.getProfileUrl().toString()
 
     val logoutDialog = remember { mutableStateOf(false) }
 
@@ -166,7 +169,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 )
                                 CircularImage(
                                     size = 30.dp,
-                                    painter = painterResource(id = R.drawable.png_logo)
+                                    painter = rememberAsyncImagePainter(model = profile)
                                 )
                             }
                         },

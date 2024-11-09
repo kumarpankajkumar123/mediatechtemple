@@ -158,32 +158,6 @@ fun SecondOnboardingScreen(
         }
     }
 
-
-//    if (validation.value != 0) {
-//        if (validation.value == 200) {
-//            onboarding2Viewmodel.isAdharVerified = true
-//            if (validationAdha.intValue == 0) {
-//                showProgressDialog.value = false
-//                Toasty.success(context, "Verified", Toast.LENGTH_SHORT).show()
-//                validationAdha.intValue = 1
-//            }
-//        } else if (validation.value == 406) {
-//            onboarding2Viewmodel.isAdharVerified = false
-//            if (validationAdha.intValue == 0) {
-//                showProgressDialog.value = false
-//                Toasty.error(context, "This id already exist", Toast.LENGTH_SHORT).show()
-//                validationAdha.intValue = 1
-//            }
-//        } else {
-//            onboarding2Viewmodel.isAdharVerified = false
-//            if (validationAdha.intValue == 0) {
-//                showProgressDialog.value = false
-//                Toasty.error(context, "Reselect Image", Toast.LENGTH_SHORT).show()
-//                validationAdha.intValue = 1
-//            }
-//        }
-//    }
-
     if (otherDocValidation.value != 0) {
         if (otherDocValidation.value == 200) {
             onboarding2Viewmodel.isOtherDocVerified = true
@@ -228,6 +202,7 @@ fun SecondOnboardingScreen(
                     showProgressDialog.value = false
                     onboarding2Viewmodel.isSignUp = true
                     sp.saveLoginStatus(true)
+                    sp.saveProfileImageUri(signupResponse.value.memberAdd!!.profileUrl)
                     Log.d("userID", signupResponse.value.memberAdd?.id.toString())
                     Toast.makeText(context, "Created", Toast.LENGTH_SHORT).show()
                         navController?.navigate("dashboard_screen"){

@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -110,6 +112,22 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
                 )
             }
         }
+//        Card(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(horizontal = 10.dp, vertical = 3.dp)
+//                .background(Color.White),
+//            elevation = CardDefaults.cardElevation(2.dp),
+//            colors = CardDefaults.cardColors(containerColor = Color.White)
+//        ) {
+            Text(
+                text = "Total Users Joined Using your reference id : ${allMembers.value.size}",
+                fontSize = 16.sp,
+                modifier = Modifier.padding(vertical = 10.dp, horizontal = 10.dp),
+                fontWeight = FontWeight.SemiBold,
+                color = Color.Black
+            )
+//        }
         LazyColumn(content = {
             items(allMembers.value) {
                 DonorsCard(allMemberData = it, true)
