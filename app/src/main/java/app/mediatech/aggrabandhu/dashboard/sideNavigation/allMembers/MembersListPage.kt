@@ -170,7 +170,7 @@ fun DonorsCard (
                     color = Color.Black,
                 )
                 Text(
-                    text = allMemberData.profession,
+                    text = allMemberData.father_name,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = Color.Black,
@@ -199,21 +199,21 @@ fun DonorsCard (
             ) {
                 Column {
                     Text(
-                        text = "Member ID : ${allMemberData.id}",
+                        text = "Member ID : ${allMemberData.reference_id}",
                         fontSize = 14.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black,
                     )
-                    Text(
-                        text = "${
-                            convertDateFormat(
-                                allMemberData.createdAt
-                            )
-                        }",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Blue,
-                    )
+//                    Text(
+//                        text = "${
+//                            convertDateFormat(
+//                                allMemberData.createdAt
+//                            )
+//                        }",
+//                        fontSize = 14.sp,
+//                        fontWeight = FontWeight.SemiBold,
+//                        color = Color.Blue,
+//                    )
                 }
             }
         }

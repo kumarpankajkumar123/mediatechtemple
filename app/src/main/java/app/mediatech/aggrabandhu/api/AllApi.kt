@@ -196,7 +196,9 @@ interface AllApi {
     ) : Response<SignupResponse>
 
     @GET("member")
-    suspend fun getAllMembers() : Response<AllMembersData>
+    suspend fun getAllMembers(
+        @Query("limit") limit : Int ?= 10000
+    ) : Response<AllMembersData>
 
     @GET("notification")
     suspend fun getNotification() : Response<NotificationData>

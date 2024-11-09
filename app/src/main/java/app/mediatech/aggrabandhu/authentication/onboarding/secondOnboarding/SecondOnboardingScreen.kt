@@ -56,6 +56,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.R
+import app.mediatech.aggrabandhu.authentication.FileRequestBody
 import app.mediatech.aggrabandhu.utils.CustomAlertDialog
 import app.mediatech.aggrabandhu.utils.CustomButton2
 import app.mediatech.aggrabandhu.utils.CustomCheckbox
@@ -64,11 +65,14 @@ import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SelectImageCardWithButton
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
+import app.mediatech.aggrabandhu.utils.compressImage
 import app.mediatech.aggrabandhu.utils.prepareFilePart
 import app.mediatech.aggrabandhu.viewmodel.Onboarding2Viewmodel
 import es.dmoral.toasty.Toasty
+import okhttp3.MultipartBody
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -355,7 +359,7 @@ fun SecondOnboardingScreen(
         TextFieldWithIcons(
             label = "Address",
             placeholder = "Full Address",
-            maxLength = 26,
+            maxLength = 46,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.LocationOn,
         ) { text ->
@@ -389,10 +393,23 @@ fun SecondOnboardingScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             SelectImageCardWithButton(docType = "Aadhar Card") { uri ->
-                val compressed = compressImageToUri2(uri, context)
+                val compressed = compressImage(uri, context)
+//                val parcelFileDescriptor = context.contentResolver.openFileDescriptor(
+//                    compressed!!,"r",null
+//                )?: return@SelectImageCardWithButton
+//
+//                val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+//                val file =  File(context.cacheDir, "cropped_Profile${System.currentTimeMillis()}.jpg")
+//                val outputStream = FileOutputStream(file)
+//                inputStream.copyTo(outputStream)
+//                val body = FileRequestBody(file,"file")
+//
+//                val img = MultipartBody.Part.createFormData("file", file.name, body)
+
                 onboarding2Viewmodel.adharUri = compressed
                 validationAdha.intValue = 0
                 showProgressDialog.value = true
+//                onboarding2Viewmodel.file = img
                 onboarding2Viewmodel.file = prepareFilePart(compressed!!, "file", context)
                 onboarding2Viewmodel.validateDoc(
                     onboarding2Viewmodel.adharNumber!!,
@@ -445,7 +462,20 @@ fun SecondOnboardingScreen(
             if ((selectedDoc.value == "Driving License" && isDocNumb.length == 16)) {
                 Spacer(modifier = Modifier.height(10.dp))
                 SelectImageCardWithButton(selectedDoc.value) {
-                    val compressed = compressImageToUri2(it, context)
+                    val compressed = compressImageToUri(it, context)
+//                    val parcelFileDescriptor = context.contentResolver.openFileDescriptor(
+//                        compressed!!,"r",null
+//                    )?: return@SelectImageCardWithButton
+//
+//                    val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+//                    val file =  File(context.cacheDir, "cropped_Profile${System.currentTimeMillis()}.jpg")
+//                    val outputStream = FileOutputStream(file)
+//                    inputStream.copyTo(outputStream)
+//                    val body = FileRequestBody(file,"file2")
+//
+//                    val img = MultipartBody.Part.createFormData("file", file.name, body)
+//                    val img2 = MultipartBody.Part.createFormData("file2", file.name, body)
+
                     onboarding2Viewmodel.panUri = compressed
                     onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
@@ -466,8 +496,22 @@ fun SecondOnboardingScreen(
             } else if ((selectedDoc.value == "Voter ID" || selectedDoc.value == "PAN Card") && isDocNumb.length == 10) {
                 Spacer(modifier = Modifier.height(10.dp))
                 SelectImageCardWithButton(selectedDoc.value) {
-                    val compressed = compressImageToUri2(it, context)
+                    val compressed = compressImage(it, context)
+//                    val parcelFileDescriptor = context.contentResolver.openFileDescriptor(
+//                        compressed!!,"r",null
+//                    )?: return@SelectImageCardWithButton
+//
+//                    val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+//                    val file =  File(context.cacheDir, "cropped_Profile${System.currentTimeMillis()}.jpg")
+//                    val outputStream = FileOutputStream(file)
+//                    inputStream.copyTo(outputStream)
+//                    val body = FileRequestBody(file,"file2")
+//
+//                    val img = MultipartBody.Part.createFormData("file", file.name, body)
+//                    val img2 = MultipartBody.Part.createFormData("file2", file.name, body)
+
                     onboarding2Viewmodel.panUri = compressed
+//                    onboarding2Viewmodel.file2 = img2
                     onboarding2Viewmodel.file2 = prepareFilePart(compressed!!, "file2", context)
 
                     showProgressDialog.value = true
@@ -504,7 +548,7 @@ fun SecondOnboardingScreen(
         TextFieldWithIcons(
             label = "Nominee",
             placeholder = "Nominee 1 Name",
-            maxLength = 26,
+            maxLength = 46,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2
         ) { text ->
@@ -514,7 +558,7 @@ fun SecondOnboardingScreen(
         TextFieldWithIcons(
             label = "Relation",
             placeholder = "Relation with Nominee 1",
-            maxLength = 26,
+            maxLength = 46,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
         ) { text ->
@@ -523,9 +567,9 @@ fun SecondOnboardingScreen(
         // Spacer(modifier = Modifier.height(15.dp))
         /*   - ------------ Nominee 2 ---------------- */
         TextFieldWithIcons(
-            label = "Nominee 2 (OPTIONAL)",
+            label = "Nominee 2",
             placeholder = "Nominee 2 Name (OPTIONAL)",
-            maxLength = 26,
+            maxLength = 46,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.Person2,
             isRequired = false
@@ -537,7 +581,7 @@ fun SecondOnboardingScreen(
         TextFieldWithIcons(
             label = "Relation",
             placeholder = "Relation with Nominee 2 (OPTIONAL)",
-            maxLength = 26,
+            maxLength = 46,
             keyboardType = KeyboardType.Text,
             leadingIcon = Icons.Default.PeopleOutline,
             isRequired = false
@@ -602,6 +646,20 @@ fun SecondOnboardingScreen(
             } else if (!onboarding2Viewmodel.isDeclaration) {
                 Toasty.error(context, "Self Declaration is required", Toast.LENGTH_SHORT).show()
             } else {
+//                val compress = compressImageToUri2(profileUri, context)
+//                val parcelFileDescriptor = context.contentResolver.openFileDescriptor(
+//                    profileUri,"r",null
+//                )?: return@CustomButton2
+//
+//                val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+//                val file =  File(context.cacheDir, "cropped_Profile${System.currentTimeMillis()}.jpg")
+//                val outputStream = FileOutputStream(file)
+//                inputStream.copyTo(outputStream)
+//                val body = FileRequestBody(file,"profile")
+//
+//                val img = MultipartBody.Part.createFormData("profile", file.name, body)
+
+//                onboarding2Viewmodel.profileFile = img
                 onboarding2Viewmodel.profileFile = prepareFilePart(profileUri, "profile", context)
                 if (onboarding2Viewmodel.isDisease) {
                     if (onboarding2Viewmodel.diseaseFile != null) {
@@ -732,14 +790,25 @@ fun compressImageToUri2(uri: Uri, context: Context): Uri? {
         val inputStream: InputStream? = contentResolver.openInputStream(uri)
 
         inputStream?.use {
-            val bitmap = BitmapFactory.decodeStream(it)
-            val compressedBitmap = compressBitmap(bitmap)
+            var bitmap = BitmapFactory.decodeStream(it)
+
+            // Correct the rotation if necessary
+            val rotation = getImageRotation(uri, context)
+            if (rotation != 0) {
+                bitmap = rotateBitmap(bitmap, rotation)
+            }
+
+            // Resize the bitmap (reduce resolution by half in this example)
+            bitmap = resizeBitmap(bitmap, maxWidth = 800, maxHeight = 800)
+
+            // Compress the resized bitmap with lower quality
+            val compressedBitmap = compressBitmap(bitmap, quality = 30)
 
             // Save compressed bitmap to cache directory
             val cacheDir = context.cacheDir
             val compressedFile = File(cacheDir, "compressed_image_${System.currentTimeMillis()}.jpg")
             compressedFile.outputStream().use { fileOutputStream ->
-                compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 85, fileOutputStream)
+                compressedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, fileOutputStream)
             }
             Uri.fromFile(compressedFile)
         }
@@ -748,10 +817,47 @@ fun compressImageToUri2(uri: Uri, context: Context): Uri? {
         null
     }
 }
+// Function to resize the bitmap
+private fun resizeBitmap(bitmap: Bitmap, maxWidth: Int, maxHeight: Int): Bitmap {
+    val aspectRatio = bitmap.width.toFloat() / bitmap.height.toFloat()
+    val (newWidth, newHeight) = if (bitmap.width > bitmap.height) {
+        maxWidth to (maxWidth / aspectRatio).toInt()
+    } else {
+        (maxHeight * aspectRatio).toInt() to maxHeight
+    }
+    return Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+}
 
-private fun compressBitmap(bitmap: Bitmap): Bitmap {
+// Function to get the rotation from Exif data
+private fun getImageRotation(uri: Uri, context: Context): Int {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        inputStream?.use {
+            val exif = ExifInterface(it)
+            when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> 270
+                else -> 0
+            }
+        } ?: 0
+    } catch (e: Exception) {
+        e.printStackTrace()
+        0
+    }
+}
+
+// Function to rotate bitmap
+private fun rotateBitmap(bitmap: Bitmap, rotation: Int): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(rotation.toFloat())
+    return Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+}
+
+// Function to compress the bitmap with a specific quality
+private fun compressBitmap(bitmap: Bitmap, quality: Int): Bitmap {
     val outputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
     return BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size())
 }
 

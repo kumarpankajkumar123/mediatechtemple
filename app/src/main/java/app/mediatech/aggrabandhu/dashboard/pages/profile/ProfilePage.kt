@@ -94,7 +94,7 @@ fun ProfilePage (navController: NavController?= null) {
 
     val profileUrl = "$baseUrl${profileData.value.profileUrl}"
     val referenceID = profileData.value.reference_id
-    val memberID = profileData.value.id.toString()
+    val memberID = profileData.value.reference_id.toString()
     val name = profileData.value.name
     val fatherName = profileData.value.father_name
     val motherName = profileData.value.mother_name
@@ -175,7 +175,9 @@ fun ProfilePage (navController: NavController?= null) {
                     shareText(context, referenceID)
                 }
             }) {
-                navController?.navigate("joined_users_page")
+                if (sharedPref.getLoginStatus()) {
+                    navController?.navigate("joined_users_page")
+                }
             }
 
             ProfileInfoCard(Icons.Default.Person, heading = "Member ID", text = memberID)
@@ -222,6 +224,11 @@ fun ProfilePage (navController: NavController?= null) {
             Spacer(modifier = Modifier.height(30.dp))
         }
 
+        Box(
+            modifier = Modifier
+                .background(if (!sharedPref.getLoginStatus()) Color.White.copy(alpha = 0.7f) else Color.Transparent)
+                .fillMaxSize()
+        ){}
         if (!sharedPref.getLoginStatus()) {
             Column(
                 modifier = Modifier

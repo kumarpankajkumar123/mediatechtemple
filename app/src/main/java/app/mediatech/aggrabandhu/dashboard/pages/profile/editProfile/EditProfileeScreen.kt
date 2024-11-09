@@ -66,6 +66,7 @@ import app.mediatech.aggrabandhu.utils.EditProfileButton
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
+import app.mediatech.aggrabandhu.utils.compressImage
 import coil.compose.rememberAsyncImagePainter
 import es.dmoral.toasty.Toasty
 
@@ -128,7 +129,7 @@ fun EditProfileScreen(navController: NavController?=null) {
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                profileViewModel.imageUri = compressImageToUri2(it, context)
+                profileViewModel.imageUri = compressImage(it, context)
             }
         }
     )

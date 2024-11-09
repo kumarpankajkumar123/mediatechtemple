@@ -1,7 +1,15 @@
 package app.mediatech.aggrabandhu.utils
 
+import android.content.ContentValues
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.media.MediaScannerConnection
 import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
@@ -21,6 +29,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 @Composable
 fun CircularImage (
@@ -60,4 +69,98 @@ fun getRandomString(length: Int) : String {
     return (1..length)
         .map { allowedChars.random() }
         .joinToString("")
+}
+
+fun compressImage2(imageUri: Uri, context: Context): Uri? {
+    var compressed: Uri? = null
+    try {
+        val imageBitmap: Bitmap =
+            MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
+
+        val compressedDisplayName = "compressed_${System.currentTimeMillis()}.jpg" // Unique display name
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, compressedDisplayName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        }
+
+        val contentResolver = context.contentResolver
+        val compressedUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        compressedUri?.let {
+            val outputStream = contentResolver.openOutputStream(it)
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 30, outputStream!!)
+            outputStream?.flush()
+            outputStream?.close()
+
+            compressed = compressedUri
+
+            // Update the media scanner
+            MediaScannerConnection.scanFile(context, arrayOf(compressedUri.toString()), null, null)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Log.e("error Compress", "${e.message} Catch IO")
+    } catch (e: NullPointerException) {
+        Log.e("error Compress", "${e.message} Catch Null")
+    }
+    return compressed
+}
+
+fun compressImage(imageUri: Uri, context: Context): Uri? {
+    var compressed: Uri? = null
+    try {
+        // Load the bitmap and correct the rotation
+        val contentResolver = context.contentResolver
+        val inputStream = contentResolver.openInputStream(imageUri)
+        val imageBitmap = BitmapFactory.decodeStream(inputStream)
+        val rotatedBitmap = correctBitmapRotation(imageUri, imageBitmap, context)
+
+        // Set up the output file details
+        val compressedDisplayName = "compressed_${System.currentTimeMillis()}.jpg"
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, compressedDisplayName)
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+        }
+
+        val compressedUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        compressedUri?.let {
+            val outputStream = contentResolver.openOutputStream(it)
+            rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, outputStream!!)
+            outputStream.flush()
+            outputStream.close()
+            compressed = compressedUri
+
+            // Update the media scanner
+            MediaScannerConnection.scanFile(context, arrayOf(compressedUri.toString()), null, null)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+        Log.e("error Compress", "${e.message} Catch IO")
+    } catch (e: NullPointerException) {
+        Log.e("error Compress", "${e.message} Catch Null")
+    }
+    return compressed
+}
+
+// Function to read Exif rotation and adjust the bitmap accordingly
+private fun correctBitmapRotation(uri: Uri, bitmap: Bitmap, context: Context): Bitmap {
+    val inputStream = context.contentResolver.openInputStream(uri)
+    val exif = inputStream?.use { ExifInterface(it) }
+    val rotation = when (exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> 90
+        ExifInterface.ORIENTATION_ROTATE_180 -> 180
+        ExifInterface.ORIENTATION_ROTATE_270 -> 270
+        else -> 0
+    }
+    inputStream?.close()
+
+    // Rotate the bitmap if necessary
+    return if (rotation != 0) {
+        val matrix = Matrix()
+        matrix.postRotate(rotation.toFloat())
+        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    } else {
+        bitmap
+    }
 }

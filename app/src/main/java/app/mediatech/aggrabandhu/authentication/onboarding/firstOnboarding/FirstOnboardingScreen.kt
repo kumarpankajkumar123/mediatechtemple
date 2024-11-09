@@ -66,6 +66,7 @@ import app.mediatech.aggrabandhu.utils.EditProfileButton
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
+import app.mediatech.aggrabandhu.utils.compressImage
 import coil.compose.rememberAsyncImagePainter
 import es.dmoral.toasty.Toasty
 import java.text.SimpleDateFormat
@@ -115,7 +116,8 @@ fun FirstOnboardingScreen(navController: NavController?=null) {
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             uri?.let {
-                val compressed = compressImageToUri2(uri, context)
+//                onboarding1Viewmodel.onImageUriChanged(uri)
+                val compressed = compressImage(uri, context)
                 compressed?.let { it1 -> onboarding1Viewmodel.onImageUriChanged(it1) }
             }
         }
