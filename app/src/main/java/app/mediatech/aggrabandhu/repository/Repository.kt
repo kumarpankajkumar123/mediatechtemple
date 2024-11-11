@@ -630,7 +630,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
             if (response.isSuccessful && response.body() != null) {
                 _profileResponseCode.emit(response.code())
                 _profileData.emit(response.body()!!)
-                Log.d("Profile", "${response.body().toString()} ${response.code()}")
+                Log.d("Profile Got", "${response.body().toString()} ${response.code()}")
             } else {
                 _profileResponseCode.emit(response.code())
                 Log.d("Profile", "${response.message()} ${response.code()} ")
@@ -707,7 +707,7 @@ class Repository @Inject constructor(private val allApi: AllApi){
     val referenceCode : StateFlow<Int>
         get() = _referenceCode
 
-    suspend fun checkReferenceCode(referenceID: String, context: Context){
+    suspend fun checkReferenceCode(referenceID: String, context: Context) {
         _referenceCode.emit(0)
         try {
             val response = allApi.checkReferenceCode(referenceID)

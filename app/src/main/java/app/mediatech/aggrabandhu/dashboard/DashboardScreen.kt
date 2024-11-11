@@ -81,6 +81,7 @@ import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.FB
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.IG
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.SupportPage
 import app.mediatech.aggrabandhu.dashboard.sideNavigation.supportPage.intentToWeb
+import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
 import app.mediatech.aggrabandhu.utils.LogoutDialog
 import app.mediatech.aggrabandhu.utils.SharedPrefManager
@@ -169,7 +170,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 )
                                 CircularImage(
                                     size = 30.dp,
-                                    painter = rememberAsyncImagePainter(model = profile)
+                                    painter = rememberAsyncImagePainter(model = "$baseUrl$profile")
                                 )
                             }
                         },

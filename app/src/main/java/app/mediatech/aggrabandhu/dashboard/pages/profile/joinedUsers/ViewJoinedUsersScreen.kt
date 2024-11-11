@@ -130,7 +130,7 @@ fun ViewJoinedUsersScreen(navController: NavController?= null) {
 //        }
         LazyColumn(content = {
             items(allMembers.value) {
-                DonorsCard(allMemberData = it, true)
+                DonorsCard(allMemberData = it, true, context = context)
             }
         })
     }

@@ -5,6 +5,9 @@ INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-39
 INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-39:12
 INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml:2:1-39:12
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\67d41251146a6bc733b909a3a505dc04\transformed\coil-compose-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:2:1-7:12
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:17:1-25:12
 MERGED from [com.google.maps.android:maps-compose:4.3.3] C:\Users\MTT PC\.gradle\caches\transforms-4\747fc7e005686f08d474afca0acf3572\transformed\maps-compose-4.3.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.hilt:hilt-navigation-compose:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\409d38b951b952fd70b79d80112dcaeb\transformed\hilt-navigation-compose-1.2.0\AndroidManifest.xml:2:1-7:12
@@ -16,9 +19,6 @@ MERGED from [androidx.navigation:navigation-compose:2.8.0] C:\Users\MTT PC\.grad
 MERGED from [androidx.compose.material3:material3-android:1.2.1] C:\Users\MTT PC\.gradle\caches\transforms-4\be6df13b14fc08641befe81247f24c35\transformed\material3-release\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\0b8bf3b7d949dc4f244d3368030318aa\transformed\hilt-navigation-1.2.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.dagger:hilt-android:2.49] C:\Users\MTT PC\.gradle\caches\transforms-4\9c2e060462791115446a0d6e74f1e62c\transformed\hilt-android-2.49\AndroidManifest.xml:16:1-19:12
-MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:2:1-7:12
-MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:2:1-7:12
-MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:18:1-23:12
 MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-base:18.0.1] C:\Users\MTT PC\.gradle\caches\transforms-4\f51c2b264bd0e5b41784347d680f5d44\transformed\play-services-base-18.0.1\AndroidManifest.xml:16:1-24:12
@@ -205,6 +205,12 @@ INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml
 INJECTED from D:\MTT Project\Aggrabandhu\app\src\main\AndroidManifest.xml
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\67d41251146a6bc733b909a3a505dc04\transformed\coil-compose-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [io.coil-kt:coil-compose:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\67d41251146a6bc733b909a3a505dc04\transformed\coil-compose-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
+MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:21:5-23:42
 MERGED from [com.google.accompanist:accompanist-insets:0.31.2-alpha] C:\Users\MTT PC\.gradle\caches\transforms-4\09151557eec8274141b83d81dd74b995\transformed\accompanist-insets-0.31.2-alpha\AndroidManifest.xml:21:5-23:42
 MERGED from [com.google.maps.android:maps-compose:4.3.3] C:\Users\MTT PC\.gradle\caches\transforms-4\747fc7e005686f08d474afca0acf3572\transformed\maps-compose-4.3.3\AndroidManifest.xml:20:5-44
@@ -227,12 +233,6 @@ MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\MTT PC\.gradle\caches
 MERGED from [androidx.hilt:hilt-navigation:1.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\0b8bf3b7d949dc4f244d3368030318aa\transformed\hilt-navigation-1.2.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.dagger:hilt-android:2.49] C:\Users\MTT PC\.gradle\caches\transforms-4\9c2e060462791115446a0d6e74f1e62c\transformed\hilt-android-2.49\AndroidManifest.xml:18:3-42
 MERGED from [com.google.dagger:hilt-android:2.49] C:\Users\MTT PC\.gradle\caches\transforms-4\9c2e060462791115446a0d6e74f1e62c\transformed\hilt-android-2.49\AndroidManifest.xml:18:3-42
-MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
-MERGED from [io.coil-kt:coil-compose-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\28e46802f5f3e2bbbb73d5cc0127fb03\transformed\coil-compose-base-2.4.0\AndroidManifest.xml:5:5-44
-MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
-MERGED from [io.coil-kt:coil:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\895f9d0dc05e4b1ffe811e9230028306\transformed\coil-2.4.0\AndroidManifest.xml:5:5-44
-MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
-MERGED from [io.coil-kt:coil-base:2.4.0] C:\Users\MTT PC\.gradle\caches\transforms-4\ce00441a16707ef32926302a7a57fa2c\transformed\coil-base-2.4.0\AndroidManifest.xml:5:5-44
 MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:21:5-44
 MERGED from [com.google.maps.android:maps-ktx:5.0.0] C:\Users\MTT PC\.gradle\caches\transforms-4\276c6cbfda9d58bd7eaa0986c8171579\transformed\maps-ktx-5.0.0\AndroidManifest.xml:21:5-44
 MERGED from [com.google.android.gms:play-services-maps:18.2.0] C:\Users\MTT PC\.gradle\caches\transforms-4\982a71f79985da7ac3d482e95dbc7556\transformed\play-services-maps-18.2.0\AndroidManifest.xml:20:5-44

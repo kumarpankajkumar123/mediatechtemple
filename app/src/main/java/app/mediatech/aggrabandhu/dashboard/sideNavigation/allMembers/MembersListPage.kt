@@ -1,5 +1,8 @@
 package app.mediatech.aggrabandhu.dashboard.sideNavigation.allMembers
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -41,6 +44,7 @@ import androidx.navigation.NavController
 import app.mediatech.aggrabandhu.dashboard.pages.liveDonation.convertDateFormat
 import app.mediatech.aggrabandhu.di.baseUrl
 import app.mediatech.aggrabandhu.utils.CircularImage
+import app.mediatech.aggrabandhu.utils.CustomButton
 import app.mediatech.aggrabandhu.utils.LoadingAlertDialog
 import app.mediatech.aggrabandhu.utils.TextFieldWithIcons
 import coil.compose.rememberAsyncImagePainter
@@ -140,7 +144,8 @@ fun DonorsPage(navController: NavController ?= null) {
 @Composable
 fun DonorsCard (
     allMemberData: AllMemberData,
-    isReferred : Boolean = false
+    isReferred : Boolean = false,
+    context: Context ?= null
 ) {
     Card(
         modifier = Modifier
@@ -150,60 +155,63 @@ fun DonorsCard (
         elevation = CardDefaults.cardElevation(2.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            CircularImage(
-                size = 54.dp,
-                painter = rememberAsyncImagePainter(baseUrl+allMemberData.profileUrl)
-            )
-            Column(modifier = Modifier
-                .fillMaxWidth(.58f)
-                .padding(start = 5.dp)) {
-                Text(
-                    text = allMemberData.name,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CircularImage(
+                    size = 54.dp,
+                    painter = rememberAsyncImagePainter(baseUrl + allMemberData.profileUrl)
                 )
-                Text(
-                    text = allMemberData.father_name,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
-                )
-                if (isReferred) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(.58f)
+                        .padding(start = 5.dp)
+                ) {
                     Text(
-                        text = allMemberData.mobile_no,
+                        text = allMemberData.name,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                    Text(
+                        text = allMemberData.father_name,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black,
+                    )
+                    if (isReferred) {
+                        Text(
+                            text = allMemberData.mobile_no,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black,
+                        )
+                    }
+                    Text(
+                        text = "${allMemberData.district},${allMemberData.state}",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black,
                     )
                 }
-                Text(
-                    text = "${allMemberData.district},${allMemberData.state}",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black,
-                )
-            }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp, end = 5.dp),
-                contentAlignment = Alignment.CenterEnd
-            ) {
-                Column {
-                    Text(
-                        text = "Member ID : ${allMemberData.reference_id}",
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
-                    )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, end = 5.dp),
+                    contentAlignment = Alignment.CenterEnd
+                ) {
+                    Column {
+                        Text(
+                            text = "Member ID : ${allMemberData.reference_id}",
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Black,
+                        )
 //                    Text(
 //                        text = "${
 //                            convertDateFormat(
@@ -214,6 +222,15 @@ fun DonorsCard (
 //                        fontWeight = FontWeight.SemiBold,
 //                        color = Color.Blue,
 //                    )
+                    }
+                }
+            }
+            if (isReferred) {
+                CustomButton(text = "Call", background = Color.Black) {
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:${allMemberData.mobile_no}") // Replace with desired phone number
+                    }
+                    context?.startActivity(intent)
                 }
             }
         }

@@ -283,7 +283,7 @@ fun SignupScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(10.dp))
 
             /* ---------- Sign up Button -------------- */
-            CustomButton("Next", colorResource(id = R.color.green)) {
+                CustomButton("Next", colorResource(id = R.color.green)) {
 //                navController.navigate("first_on_screen/ABSSUTTFIR40/Test/0987650929/12345")
                 if (signUpViewmodel.referenceIDSP.length < 8) {
                     Toasty.error(context, "Please enter Reference ID", Toast.LENGTH_SHORT).show()
