@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-66:/values-kk/values-kk.xml",
+            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-67:/values-kk/values-kk.xml",
             "map": [
                 {
                     "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\47d10f92b87d7b62eafc231f4c1c6c7b\\transformed\\foundation-release\\res\\values-kk\\values-kk.xml",
@@ -106,7 +106,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\cdee0212aeaac27fbe5acd38c184712a\\transformed\\play-services-basement-18.0.0\\res\\values-kk\\values.xml",
+                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\e1d9bbe61bea2a5e5075f07d61d649c8\\transformed\\play-services-basement-18.1.0\\res\\values-kk\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",

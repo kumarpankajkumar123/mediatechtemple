@@ -154,7 +154,7 @@ class SharedPrefManager(private val context : Context) {
         editor.apply()
     }
     fun getProfileUrl(): String? {
-        return sharedPreferences.getString("profileUrl", "")
+        return sharedPreferences.getString("profileUrl", "https://aggrabandhuss.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FabssLogo.d9508beb.png&w=256&q=75")
     }
 
 }

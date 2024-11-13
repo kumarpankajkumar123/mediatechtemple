@@ -13,8 +13,8 @@ android {
         applicationId = "app.mediatech.aggrabandhu"
         minSdk = 26
         targetSdk = 34
-        versionCode = 5
-        versionName = "1.1.4"
+        versionCode = 6
+        versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -108,6 +108,11 @@ dependencies {
     implementation("androidx.hilt:hilt-navigation:1.2.0")
 
     implementation ("com.google.accompanist:accompanist-insets:0.31.2-alpha")
+
+    // In-App update
+    implementation("com.google.android.play:app-update:2.1.0")
+    // For Kotlin users also import the Kotlin extensions library for Play In-App Update:
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
 
     // Google Maps
     implementation("com.google.maps.android:maps-compose:4.3.3")

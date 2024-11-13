@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-66:/values-ar/values-ar.xml",
+            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-67:/values-ar/values-ar.xml",
             "map": [
                 {
                     "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\f51c2b264bd0e5b41784347d680f5d44\\transformed\\play-services-base-18.0.1\\res\\values-ar\\values.xml",
@@ -55,23 +55,6 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\cdee0212aeaac27fbe5acd38c184712a\\transformed\\play-services-basement-18.0.0\\res\\values-ar\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "125",
-                        "endOffsets": "320"
-                    },
-                    "to": {
-                        "startLines": "46",
-                        "startColumns": "4",
-                        "startOffsets": "4597",
-                        "endColumns": "129",
-                        "endOffsets": "4722"
-                    }
-                },
-                {
                     "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\7d772c38d4054ee7be920e05bc3b8ff2\\transformed\\core-1.13.1\\res\\values-ar\\values-ar.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
@@ -86,6 +69,23 @@
                         "startOffsets": "2759,2852,2954,3049,3152,3255,3357,13062",
                         "endColumns": "92,101,94,102,102,101,113,100",
                         "endOffsets": "2847,2949,3044,3147,3250,3352,3466,13158"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\e1d9bbe61bea2a5e5075f07d61d649c8\\transformed\\play-services-basement-18.1.0\\res\\values-ar\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "125",
+                        "endOffsets": "320"
+                    },
+                    "to": {
+                        "startLines": "46",
+                        "startColumns": "4",
+                        "startOffsets": "4597",
+                        "endColumns": "129",
+                        "endOffsets": "4722"
                     }
                 },
                 {

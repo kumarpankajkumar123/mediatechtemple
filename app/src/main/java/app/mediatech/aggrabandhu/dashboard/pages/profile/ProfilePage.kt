@@ -228,7 +228,10 @@ fun ProfilePage (navController: NavController?= null) {
             modifier = Modifier
                 .background(if (!sharedPref.getLoginStatus()) Color.White.copy(alpha = 0.7f) else Color.Transparent)
                 .fillMaxSize()
-        ){}
+        ){
+
+        }
+
         if (!sharedPref.getLoginStatus()) {
             Column(
                 modifier = Modifier
@@ -239,6 +242,10 @@ fun ProfilePage (navController: NavController?= null) {
             ) {
                 LogOut(text = "Log in") {
                     navController?.navigate("login_screen")
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                LogOut("Sign up") {
+                    navController?.navigate("signup_screen")
                 }
             }
         }

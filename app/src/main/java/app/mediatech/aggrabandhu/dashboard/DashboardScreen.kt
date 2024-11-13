@@ -121,11 +121,10 @@ fun DashboardScreen(navController : NavController ?= null) {
             sharedPref.logOut()
             logoutDialog.value = false
             navController?.navigate("login_screen") {
-//                popUpTo("dashboard_screen"){
-//                    inclusive = true
-//                }
+
             }
-        }) {
+        }
+    ) {
         logoutDialog.value = false
     }
 
@@ -170,7 +169,7 @@ fun DashboardScreen(navController : NavController ?= null) {
                                 )
                                 CircularImage(
                                     size = 30.dp,
-                                    painter = rememberAsyncImagePainter(model = "$baseUrl$profile")
+                                    painter = rememberAsyncImagePainter(model = if (sharedPref.getLoginStatus()){"$baseUrl$profile"} else {profile})
                                 )
                             }
                         },
@@ -291,6 +290,10 @@ fun DrawerContent(sharedPrefManager: SharedPrefManager, onItemClick: (String) ->
         } else {
             LogOut("Log in") {
                 onItemClick.invoke("login_screen")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            LogOut("Sign up") {
+                onItemClick.invoke("signup_screen")
             }
         }
         Spacer(modifier = Modifier.height(20.dp))

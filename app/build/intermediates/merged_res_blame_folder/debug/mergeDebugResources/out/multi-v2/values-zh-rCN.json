@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-66:/values-zh-rCN/values-zh-rCN.xml",
+            "outputFile": "app.mediatech.aggrabandhu.app-mergeDebugResources-67:/values-zh-rCN/values-zh-rCN.xml",
             "map": [
                 {
                     "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\a6d80f32b0cad145fa5949562de5a29f\\transformed\\appcompat-1.6.1\\res\\values-zh-rCN\\values-zh-rCN.xml",
@@ -18,23 +18,6 @@
                         "startOffsets": "105,200,295,395,477,574,680,757,832,923,1016,1113,1209,1303,1396,1491,1583,1674,1765,1843,1939,2034,2129,2226,2322,2420,2568,11443",
                         "endColumns": "94,94,99,81,96,105,76,74,90,92,96,95,93,92,94,91,90,90,77,95,94,94,96,95,97,147,93,78",
                         "endOffsets": "195,290,390,472,569,675,752,827,918,1011,1108,1204,1298,1391,1486,1578,1669,1760,1838,1934,2029,2124,2221,2317,2415,2563,2657,11517"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\cdee0212aeaac27fbe5acd38c184712a\\transformed\\play-services-basement-18.0.0\\res\\values-zh-rCN\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "199",
-                        "endColumns": "94",
-                        "endOffsets": "293"
-                    },
-                    "to": {
-                        "startLines": "46",
-                        "startColumns": "4",
-                        "startOffsets": "4341",
-                        "endColumns": "98",
-                        "endOffsets": "4435"
                     }
                 },
                 {
@@ -86,6 +69,23 @@
                         "startOffsets": "3326,3403,5293,5378,5469,5546,5620,11142,11220,11295,11368,11522,11590,11663,11735,11907,11980,12046",
                         "endColumns": "76,75,84,90,76,73,76,77,74,72,74,67,72,71,70,72,65,115",
                         "endOffsets": "3398,3474,5373,5464,5541,5615,5692,11215,11290,11363,11438,11585,11658,11730,11801,11975,12041,12157"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\MTT PC\\.gradle\\caches\\transforms-4\\e1d9bbe61bea2a5e5075f07d61d649c8\\transformed\\play-services-basement-18.1.0\\res\\values-zh-rCN\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "199",
+                        "endColumns": "94",
+                        "endOffsets": "293"
+                    },
+                    "to": {
+                        "startLines": "46",
+                        "startColumns": "4",
+                        "startOffsets": "4341",
+                        "endColumns": "98",
+                        "endOffsets": "4435"
                     }
                 },
                 {
